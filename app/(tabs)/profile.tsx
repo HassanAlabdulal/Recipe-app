@@ -47,6 +47,16 @@ export default function profileScreen() {
       title: "Creamy Pasta",
       image: require("../../assets/images/creamyPasta.png"),
     },
+    {
+      id: "7",
+      title: "Creamy Pasta",
+      image: require("../../assets/images/creamyPasta.png"),
+    },
+    {
+      id: "8",
+      title: "Creamy Pasta",
+      image: require("../../assets/images/creamyPasta.png"),
+    },
   ];
 
   const renderRecipe = ({ item }: { item: Recipe }) => (
@@ -85,7 +95,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 20,
     width: "100%",
-    paddingHorizontal: 20, // Add padding to the container
+    paddingHorizontal: 20,
   },
   profileImage: {
     width: 100,
@@ -107,7 +117,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 10,
-    marginLeft: 10,
+    marginLeft: 11,
     textAlign: "left",
     alignSelf: "flex-start",
   },
