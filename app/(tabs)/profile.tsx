@@ -1,9 +1,22 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import React from "react";
-import { View, Text, Image, FlatList, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  FlatList,
+  StyleSheet,
+  Dimensions,
+} from "react-native";
 
-export default function TabTwoScreen() {
-  const recipes = [
+type Recipe = {
+  id: string;
+  title: string;
+  image: any;
+};
+
+export default function profileScreen() {
+  const recipes: Recipe[] = [
     {
       id: "1",
       title: "Creamy Pasta",
@@ -36,7 +49,7 @@ export default function TabTwoScreen() {
     },
   ];
 
-  const renderRecipe = ({ item }) => (
+  const renderRecipe = ({ item }: { item: Recipe }) => (
     <View style={styles.recipeCard}>
       <Image source={item.image} style={styles.recipeImage} />
       <Ionicons name="heart" size={24} color="red" style={styles.heartIcon} />
@@ -59,6 +72,7 @@ export default function TabTwoScreen() {
         keyExtractor={(item) => item.id}
         numColumns={2}
         contentContainerStyle={styles.recipesContainer}
+        columnWrapperStyle={styles.columnWrapper}
       />
     </View>
   );
@@ -70,12 +84,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     paddingTop: 20,
+    width: "100%",
   },
   profileImage: {
     width: 100,
     height: 100,
     borderRadius: 50,
     marginBottom: 10,
+    marginTop: 20,
   },
   profileName: {
     fontSize: 24,
@@ -87,18 +103,20 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   starredRecipesTitle: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "bold",
     marginBottom: 10,
   },
   recipesContainer: {
-    paddingHorizontal: 20,
+    justifyContent: "center",
+  },
+  columnWrapper: {
+    justifyContent: "space-between",
   },
   recipeCard: {
-    flex: 1,
     alignItems: "center",
-    margin: 10,
-    position: "relative",
+    margin: 5,
+    width: Dimensions.get("window").width / 2 - 20,
   },
   recipeImage: {
     width: 150,
@@ -108,7 +126,7 @@ const styles = StyleSheet.create({
   heartIcon: {
     position: "absolute",
     top: 10,
-    right: 10,
+    right: 20,
   },
   recipeTitle: {
     fontSize: 16,
