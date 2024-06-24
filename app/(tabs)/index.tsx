@@ -13,11 +13,12 @@ const LoginScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.topSection}>
+        <Text style={styles.title}>Login</Text>
+
         <Image
           source={require("@/assets/images/loginScreenImage.png")}
           style={styles.image}
         />
-        <Text style={styles.title}>Login</Text>
       </View>
 
       <View style={styles.bottomSection}>
@@ -81,10 +82,9 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 0,
   },
   image: {
-    width: 150,
-    height: 150,
+    width: 170,
+    height: 170,
     borderRadius: 75,
-    marginBottom: 20,
   },
   title: {
     fontSize: 24,
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   button: {
-    backgroundColor: "#FFE4C4", // button color
+    backgroundColor: "#FFE4C4",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
