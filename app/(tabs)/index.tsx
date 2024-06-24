@@ -7,35 +7,50 @@ import {
   Image,
   StyleSheet,
 } from "react-native";
-// import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from "react-native-vector-icons/Ionicons";
 
 const LoginScreen = () => {
   return (
     <View style={styles.container}>
-      <Image
-        source={require("@/assets/images/loginScreenImage.png")}
-        style={styles.image}
-      />
-      <Text style={styles.title}>Login</Text>
-      <View style={styles.inputContainer}>
-        {/* <Icon name="mail-outline" size={20} color="#666" style={styles.icon} /> */}
-        <TextInput
-          placeholder="Email"
-          style={styles.input}
-          keyboardType="email-address"
+      <View style={styles.topSection}>
+        <Image
+          source={require("@/assets/images/loginScreenImage.png")}
+          style={styles.image}
         />
+        <Text style={styles.title}>Login</Text>
       </View>
-      <View style={styles.inputContainer}>
-        {/* <Icon name="lock-closed-outline" size={20} color="#666" style={styles.icon} /> */}
-        <TextInput
-          placeholder="Password"
-          style={styles.input}
-          secureTextEntry
-        />
+
+      <View style={styles.bottomSection}>
+        <View style={styles.inputContainer}>
+          <Icon
+            name="mail-outline"
+            size={20}
+            color="#666"
+            style={styles.icon}
+          />
+          <TextInput
+            placeholder="Email"
+            style={styles.input}
+            keyboardType="email-address"
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Icon
+            name="lock-closed-outline"
+            size={20}
+            color="#666"
+            style={styles.icon}
+          />
+          <TextInput
+            placeholder="Password"
+            style={styles.input}
+            secureTextEntry
+          />
+        </View>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Login</Text>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
     </View>
   );
 };
@@ -43,10 +58,27 @@ const LoginScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFEBCD", // background color
+    backgroundColor: "#FFEFCC",
     justifyContent: "center",
     alignItems: "center",
-    padding: 20,
+  },
+  topSection: {
+    backgroundColor: "#FFEFCC",
+    width: "100%",
+    height: "50%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  bottomSection: {
+    backgroundColor: "white",
+    width: "100%",
+    height: "50%",
+    justifyContent: "center",
+    alignItems: "center",
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
   },
   image: {
     width: 150,
