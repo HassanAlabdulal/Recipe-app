@@ -14,14 +14,18 @@ const LoginScreen = () => {
     <View style={styles.container}>
       <View style={styles.topSection}>
         <Text style={styles.title}>Login</Text>
-
-        <Image
-          source={require("@/assets/images/loginScreenImage.png")}
-          style={styles.image}
-        />
+        <View style={styles.imageOuterBorder}>
+          <View style={styles.imageBorder}>
+            <Image
+              source={require("@/assets/images/loginScreenImage.png")}
+              style={styles.image}
+            />
+          </View>
+        </View>
       </View>
 
       <View style={styles.bottomSection}>
+        <Text style={styles.inputText}>Email</Text>
         <View style={styles.inputContainer}>
           <Icon
             name="mail-outline"
@@ -30,11 +34,13 @@ const LoginScreen = () => {
             style={styles.icon}
           />
           <TextInput
-            placeholder="Email"
+            placeholder="hassan@gmail.com"
             style={styles.input}
             keyboardType="email-address"
           />
         </View>
+
+        <Text style={styles.inputText}>Password</Text>
         <View style={styles.inputContainer}>
           <Icon
             name="lock-closed-outline"
@@ -43,7 +49,7 @@ const LoginScreen = () => {
             style={styles.icon}
           />
           <TextInput
-            placeholder="Password"
+            placeholder="********"
             style={styles.input}
             secureTextEntry
           />
@@ -81,15 +87,35 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
   },
+  imageBorder: {
+    borderRadius: 100,
+    backgroundColor: "rgba(255, 255, 255, 0.3)",
+    padding: 15,
+  },
+  imageOuterBorder: {
+    borderRadius: 100,
+    backgroundColor: "rgba(255, 255, 255, 0.3)",
+    padding: 20,
+  },
   image: {
-    width: 170,
-    height: 170,
-    borderRadius: 75,
+    width: 145,
+    height: 145,
+    borderRadius: 100,
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
+    letterSpacing: 1,
     marginBottom: 20,
+    marginTop: 15,
+  },
+
+  inputText: {
+    width: "90%",
+    marginLeft: 8,
+    marginBottom: 4,
+    fontSize: 16,
+    fontWeight: "bold",
   },
   inputContainer: {
     flexDirection: "row",
@@ -115,10 +141,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: "90%",
     alignItems: "center",
+    marginTop: 10,
   },
   buttonText: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "bold",
+    letterSpacing: 1,
   },
 });
 
