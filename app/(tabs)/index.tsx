@@ -1,27 +1,93 @@
-import { Image, StyleSheet, Platform, View, Text } from "react-native";
+import React from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+} from "react-native";
+// import Icon from 'react-native-vector-icons/Ionicons';
 
-import { HelloWave } from "@/components/HelloWave";
-import ParallaxScrollView from "@/components/ParallaxScrollView";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
-
-export default function HomeScreen() {
+const LoginScreen = () => {
   return (
     <View style={styles.container}>
-      <Text className="text-xl text-red-500">hi hassan</Text>
+      <Image
+        source={require("@/assets/images/loginScreenImage.png")}
+        style={styles.image}
+      />
+      <Text style={styles.title}>Login</Text>
+      <View style={styles.inputContainer}>
+        {/* <Icon name="mail-outline" size={20} color="#666" style={styles.icon} /> */}
+        <TextInput
+          placeholder="Email"
+          style={styles.input}
+          keyboardType="email-address"
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        {/* <Icon name="lock-closed-outline" size={20} color="#666" style={styles.icon} /> */}
+        <TextInput
+          placeholder="Password"
+          style={styles.input}
+          secureTextEntry
+        />
+      </View>
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>Login</Text>
+      </TouchableOpacity>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
+    backgroundColor: "#FFEBCD", // background color
     justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
   },
-  titleContainer: {
+  image: {
+    width: 150,
+    height: 150,
+    borderRadius: 75,
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  inputContainer: {
     flexDirection: "row",
-    gap: 8,
+    alignItems: "center",
+    backgroundColor: "#FFF",
+    borderRadius: 10,
+    marginBottom: 20,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    width: "100%",
+  },
+  icon: {
+    marginRight: 10,
+  },
+  input: {
+    flex: 1,
+    fontSize: 16,
+  },
+  button: {
+    backgroundColor: "#FFE4C4", // button color
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    width: "100%",
+    alignItems: "center",
+  },
+  buttonText: {
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });
+
+export default LoginScreen;
