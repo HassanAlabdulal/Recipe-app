@@ -94,12 +94,12 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#FFF",
+    backgroundColor: "#F2F4FA",
     borderRadius: 10,
     marginBottom: 20,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    width: "100%",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    width: "90%",
   },
   icon: {
     marginRight: 10,
@@ -109,11 +109,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   button: {
-    backgroundColor: "#FFE4C4",
-    paddingVertical: 10,
+    backgroundColor: "#FFEFCC",
+    paddingVertical: 12,
     paddingHorizontal: 20,
     borderRadius: 10,
-    width: "100%",
+    width: "90%",
     alignItems: "center",
   },
   buttonText: {
