@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 20,
     width: "100%",
+    paddingHorizontal: 20, // Add padding to the container
   },
   profileImage: {
     width: 100,
@@ -100,12 +101,15 @@ const styles = StyleSheet.create({
   profileDescription: {
     fontSize: 16,
     color: "#AAAAAA",
-    marginBottom: 20,
+    marginBottom: 30,
   },
   starredRecipesTitle: {
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 10,
+    marginLeft: 10,
+    textAlign: "left",
+    alignSelf: "flex-start",
   },
   recipesContainer: {
     justifyContent: "center",
@@ -116,7 +120,7 @@ const styles = StyleSheet.create({
   recipeCard: {
     alignItems: "center",
     margin: 5,
-    width: Dimensions.get("window").width / 2 - 20,
+    width: Dimensions.get("window").width / 2 - 30,
   },
   recipeImage: {
     width: 150,
