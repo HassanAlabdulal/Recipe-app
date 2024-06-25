@@ -8,6 +8,7 @@ import {
   FlatList,
   ListRenderItem,
 } from "react-native";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 interface Ingredient {
   id: string;
@@ -37,10 +38,19 @@ const Recipe: React.FC = () => {
         style={styles.image}
       />
       <View style={styles.recipeInfo}>
-        <Text style={styles.title}>Creamy Pasta</Text>
+        <View style={styles.header}>
+          <Text style={styles.title}>Creamy Pasta</Text>
+          <Icon name="favorite" size={30} color="red" />
+        </View>
         <View style={styles.details}>
-          <Text style={styles.detailText}>20 Min</Text>
-          <Text style={styles.detailText}>239 Cal</Text>
+          <View style={styles.detailItem}>
+            <Icon name="timer" size={20} color="#666" />
+            <Text style={styles.detailText}>20 Min</Text>
+          </View>
+          <View style={styles.detailItem}>
+            <Icon name="local-fire-department" size={20} color="#666" />
+            <Text style={styles.detailText}>239 Cal</Text>
+          </View>
         </View>
         <Text style={styles.subTitle}>Description</Text>
         <Text style={styles.description}>
@@ -71,19 +81,30 @@ const styles = StyleSheet.create({
   recipeInfo: {
     padding: 16,
   },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 8,
+  },
   title: {
     fontWeight: "bold",
     fontSize: 24,
-    marginBottom: 8,
   },
   details: {
-    flex: 1,
-    justifyContent: "center",
+    width: "50%",
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: 16,
+  },
+  detailItem: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   detailText: {
     fontSize: 16,
     color: "#666",
+    marginLeft: 4,
   },
   description: {
     color: "#666",
