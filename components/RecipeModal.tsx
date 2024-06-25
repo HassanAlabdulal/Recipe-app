@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Modal } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Modal, Pressable } from "react-native";
 import Recipe from "./recipeDetails";
 
 interface RecipeData {
@@ -30,9 +30,9 @@ const RecipeModal: React.FC<RecipeModalProps> = ({
         <View style={styles.modalContent}>
           <Text style={styles.modalTitle}>Recipe Details</Text>
           {recipe && <Recipe recipe={recipe} />}
-          <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+          <Pressable style={styles.closeButton} onPress={onClose}>
             <Text style={styles.closeButtonText}>Close</Text>
-          </TouchableOpacity>
+          </Pressable>
         </View>
       </View>
     </Modal>
@@ -47,11 +47,11 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.5)",
   },
   modalContent: {
-    width: "90%",
+    width: "100%",
     backgroundColor: "white",
     borderRadius: 10,
     padding: 16,
-    maxHeight: "70%",
+    height: "100%",
   },
   modalTitle: {
     fontSize: 20,
