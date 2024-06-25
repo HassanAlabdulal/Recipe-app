@@ -12,12 +12,11 @@ import Icon from "react-native-vector-icons/Ionicons";
 
 const HomeScreen = () => {
   const categories = [
-    { name: "Breakfast", image: require("../../assets/images/category.png") },
-    { name: "Lunch", image: require("../../assets/images/category.png") },
-    { name: "Dinner", image: require("../../assets/images/category.png") },
-    { name: "Dessert", image: require("../../assets/images/category.png") },
-    { name: "Dessert", image: require("../../assets/images/category.png") },
-    { name: "Dessert", image: require("../../assets/images/category.png") },
+    { name: "Breakfast", image: require("../../assets/images/egg.png") },
+    { name: "Lunch", image: require("../../assets/images/burger.png") },
+    { name: "Dinner", image: require("../../assets/images/spaghetti.png") },
+    { name: "Dessert", image: require("../../assets/images/dessert.png") },
+    { name: "Diet", image: require("../../assets/images/vegetable.png") },
   ];
   const [selectedCategory, setSelectedCategory] = useState(0);
 
@@ -162,7 +161,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: 80,
     height: 85,
-    marginRight: 10, // Add spacing between categories
+    marginRight: 10,
   },
   selectedCategory: {
     backgroundColor: "#F6A028",
@@ -172,6 +171,7 @@ const styles = StyleSheet.create({
     height: 45,
     borderRadius: 20,
     marginBottom: 4,
+    objectFit: "contain",
   },
   categoryText: {
     fontSize: 12,
