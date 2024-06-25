@@ -39,18 +39,6 @@ export default function TabLayout() {
           ),
         }}
       />
-      <Tabs.Screen
-        name="recipeDetails"
-        options={{
-          title: "Recipe",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "person-circle" : "person-circle-outline"}
-              color={color}
-            />
-          ),
-        }}
-      />
     </Tabs>
   );
 }

@@ -17,12 +17,12 @@ interface Ingredient {
 }
 
 const ingredients: Ingredient[] = [
-  { id: "1", name: "Chicken", image: require("../../assets/images/egg.png") },
-  { id: "2", name: "Chicken", image: require("../../assets/images/egg.png") },
-  { id: "3", name: "Chicken", image: require("../../assets/images/egg.png") },
-  { id: "4", name: "Chicken", image: require("../../assets/images/egg.png") },
-  { id: "5", name: "Chicken", image: require("../../assets/images/egg.png") },
-  { id: "6", name: "Chicken", image: require("../../assets/images/egg.png") },
+  { id: "1", name: "Chicken", image: require("../assets/images/egg.png") },
+  { id: "2", name: "Chicken", image: require("../assets/images/egg.png") },
+  { id: "3", name: "Chicken", image: require("../assets/images/egg.png") },
+  { id: "4", name: "Chicken", image: require("../assets/images/egg.png") },
+  { id: "5", name: "Chicken", image: require("../assets/images/egg.png") },
+  { id: "6", name: "Chicken", image: require("../assets/images/egg.png") },
 ];
 
 const Recipe: React.FC = () => {
@@ -41,7 +41,7 @@ const Recipe: React.FC = () => {
     >
       <View style={styles.topSection}>
         <Image
-          source={require("../../assets/images/creamyPasta.png")}
+          source={require("../assets/images/creamyPasta.png")}
           style={styles.image}
         />
       </View>
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   },
   topSection: {
     width: "100%",
-    height: 300, // Fixed height for the image
+    height: 300,
     justifyContent: "center",
     alignItems: "center",
   },
