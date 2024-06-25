@@ -8,10 +8,12 @@ import {
   StyleSheet,
   ScrollView,
   Modal,
+  Pressable,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import Recipe from "../recipeDetails";
 import { Link } from "expo-router";
+import RecipeCard from "../../components/recipeCard";
 
 interface RecipeData {
   title: string;
@@ -50,10 +52,12 @@ const HomeScreen: React.FC = () => {
         <Text style={styles.greeting}>Hello,</Text>
         <Text style={styles.name}>Hassan 👋</Text>
         <Link href="/profile">
-          <Image
-            style={styles.profileImage}
-            source={require("../../assets/images/profile.png")}
-          />
+          <Pressable>
+            <Image
+              style={styles.profileImage}
+              source={require("../../assets/images/profile.png")}
+            />
+          </Pressable>
         </Link>
       </View>
       <View style={styles.searchWrapper}>
@@ -98,9 +102,11 @@ const HomeScreen: React.FC = () => {
         {Array(6)
           .fill(0)
           .map((_, index) => (
-            <TouchableOpacity
+            <RecipeCard
               key={index}
-              style={styles.recipeCard}
+              title="Creamy Pasta"
+              time="20 Min"
+              imageSource={require("../../assets/images/creamyPasta.png")}
               onPress={() =>
                 openModal({
                   title: "Creamy Pasta",
@@ -108,14 +114,7 @@ const HomeScreen: React.FC = () => {
                   calories: "239 Cal",
                 })
               }
-            >
-              <Image
-                style={styles.recipeImage}
-                source={require("../../assets/images/creamyPasta.png")}
-              />
-              <Text style={styles.recipeTitle}>Creamy Pasta</Text>
-              <Text style={styles.recipeTime}>⏱️ 20 Min</Text>
-            </TouchableOpacity>
+            />
           ))}
       </View>
 
@@ -237,27 +236,6 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-between",
     width: "100%",
-  },
-  recipeCard: {
-    width: "48%",
-    backgroundColor: "#FFF",
-    borderRadius: 8,
-    paddingVertical: 4,
-    marginBottom: 8,
-  },
-  recipeImage: {
-    width: "100%",
-    height: 150,
-    borderRadius: 8,
-  },
-  recipeTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
-    marginTop: 8,
-  },
-  recipeTime: {
-    fontSize: 14,
-    color: "#888",
   },
   modalContainer: {
     flex: 1,
