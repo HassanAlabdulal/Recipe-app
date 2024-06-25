@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -8,10 +8,17 @@ import {
   StyleSheet,
   ScrollView,
 } from "react-native";
-
 import Icon from "react-native-vector-icons/Ionicons";
 
 const HomeScreen = () => {
+  const categories = [
+    { name: "Breakfast", image: require("../../assets/images/category.png") },
+    { name: "Lunch", image: require("../../assets/images/category.png") },
+    { name: "Dinner", image: require("../../assets/images/category.png") },
+    { name: "Dessert", image: require("../../assets/images/category.png") },
+  ];
+  const [selectedCategory, setSelectedCategory] = useState(0);
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.header}>
@@ -37,18 +44,19 @@ const HomeScreen = () => {
         />
       </View>
       <View style={styles.categories}>
-        <TouchableOpacity style={[styles.category, styles.selectedCategory]}>
-          <Text style={styles.categoryText}>Breakfast</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.category}>
-          <Text style={styles.categoryText}>Lunch</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.category}>
-          <Text style={styles.categoryText}>Dinner</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.category}>
-          <Text style={styles.categoryText}>Dessert</Text>
-        </TouchableOpacity>
+        {categories.map((category, index) => (
+          <TouchableOpacity
+            key={index}
+            style={[
+              styles.category,
+              index === selectedCategory && styles.selectedCategory,
+            ]}
+            onPress={() => setSelectedCategory(index)}
+          >
+            <Image source={category.image} style={styles.categoryImage} />
+            <Text style={styles.categoryText}>{category.name}</Text>
+          </TouchableOpacity>
+        ))}
       </View>
       <Text style={styles.recommendationsTitle}>Recommendations</Text>
       <View style={styles.recommendations}>
@@ -132,14 +140,22 @@ const styles = StyleSheet.create({
   category: {
     padding: 8,
     backgroundColor: "#FFF",
-    borderRadius: 8,
+    borderRadius: 12,
     alignItems: "center",
+    width: 80,
+    height: 90,
   },
   selectedCategory: {
     backgroundColor: "#F6A028",
   },
+  categoryImage: {
+    width: 45,
+    height: 45,
+    borderRadius: 20,
+    marginBottom: 8,
+  },
   categoryText: {
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: "bold",
   },
   recommendationsTitle: {
