@@ -29,20 +29,23 @@ const HomeScreen = () => {
           source={require("../../assets/images/profile.png")}
         />
       </View>
-      <Text style={styles.prompt}>What would you like to cook today?</Text>
-      <View style={styles.inputContainer}>
-        <Icon
-          name="search-outline"
-          size={20}
-          color="#666"
-          style={styles.icon}
-        />
-        <TextInput
-          placeholder="Search any recipe"
-          style={styles.searchInput}
-          keyboardType="default"
-        />
+      <View style={styles.searchWrapper}>
+        <Text style={styles.prompt}>What would you like to cook today?</Text>
+        <View style={styles.inputContainer}>
+          <Icon
+            name="search-outline"
+            size={20}
+            color="#666"
+            style={styles.icon}
+          />
+          <TextInput
+            placeholder="Search any recipe"
+            style={styles.searchInput}
+            keyboardType="default"
+          />
+        </View>
       </View>
+
       <View style={styles.categories}>
         {categories.map((category, index) => (
           <TouchableOpacity
@@ -80,7 +83,7 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     padding: 16,
-    paddingTop: 64,
+    paddingTop: 48,
     backgroundColor: "#fff",
   },
   header: {
@@ -102,6 +105,9 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 25,
     marginLeft: "auto",
+  },
+  searchWrapper: {
+    marginTop: 8,
   },
   prompt: {
     fontSize: 18,
