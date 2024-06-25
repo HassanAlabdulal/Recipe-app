@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import Recipe from "../recipeDetails";
+import { Link } from "expo-router";
 
 interface RecipeData {
   title: string;
@@ -48,10 +49,12 @@ const HomeScreen: React.FC = () => {
       <View style={styles.header}>
         <Text style={styles.greeting}>Hello,</Text>
         <Text style={styles.name}>Hassan 👋</Text>
-        <Image
-          style={styles.profileImage}
-          source={require("../../assets/images/profile.png")}
-        />
+        <Link href="/profile">
+          <Image
+            style={styles.profileImage}
+            source={require("../../assets/images/profile.png")}
+          />
+        </Link>
       </View>
       <View style={styles.searchWrapper}>
         <Text style={styles.prompt}>What would you like to cook today?</Text>
