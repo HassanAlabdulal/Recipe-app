@@ -82,11 +82,11 @@ const Recipe: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#D6D7D9",
   },
   topSection: {
     width: "100%",
-    height: "35%",
+    height: "40%",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -127,8 +127,8 @@ const styles = StyleSheet.create({
   details: {
     flexDirection: "row",
     justifyContent: "space-between",
-    width: "50%",
     marginBottom: 16,
+    width: "50%",
   },
   detailItem: {
     flexDirection: "row",
