@@ -51,7 +51,7 @@ const HomeScreen: React.FC = () => {
       <View style={styles.header}>
         <Text style={styles.greeting}>Hello,</Text>
         <Text style={styles.name}>Hassan 👋</Text>
-        <Link href="/profile">
+        <Link href="/profile" asChild>
           <Pressable>
             <Image
               style={styles.profileImage}
