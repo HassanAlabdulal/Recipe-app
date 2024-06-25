@@ -7,10 +7,18 @@ import {
   Image,
   StyleSheet,
   ScrollView,
+  Modal,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import Recipe from "../recipeDetails"; // Adjust the import path accordingly
 
-const HomeScreen = () => {
+interface RecipeData {
+  title: string;
+  time: string;
+  calories: string;
+}
+
+const HomeScreen: React.FC = () => {
   const categories = [
     { name: "Breakfast", image: require("../../assets/images/egg.png") },
     { name: "Lunch", image: require("../../assets/images/burger.png") },
@@ -18,7 +26,19 @@ const HomeScreen = () => {
     { name: "Dessert", image: require("../../assets/images/dessert.png") },
     { name: "Diet", image: require("../../assets/images/vegetable.png") },
   ];
-  const [selectedCategory, setSelectedCategory] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState<number>(0);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [selectedRecipe, setSelectedRecipe] = useState<RecipeData | null>(null);
+
+  const openModal = (recipe: RecipeData) => {
+    setSelectedRecipe(recipe);
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+    setSelectedRecipe(null);
+  };
 
   return (
     <ScrollView
@@ -75,16 +95,42 @@ const HomeScreen = () => {
         {Array(6)
           .fill(0)
           .map((_, index) => (
-            <View key={index} style={styles.recipeCard}>
+            <TouchableOpacity
+              key={index}
+              style={styles.recipeCard}
+              onPress={() =>
+                openModal({
+                  title: "Creamy Pasta",
+                  time: "20 Min",
+                  calories: "239 Cal",
+                })
+              }
+            >
               <Image
                 style={styles.recipeImage}
                 source={require("../../assets/images/creamyPasta.png")}
               />
               <Text style={styles.recipeTitle}>Creamy Pasta</Text>
               <Text style={styles.recipeTime}>⏱️ 20 Min</Text>
-            </View>
+            </TouchableOpacity>
           ))}
       </View>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={closeModal}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            {selectedRecipe && <Recipe recipe={selectedRecipe} />}
+            <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
+              <Text style={styles.closeButtonText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </ScrollView>
   );
 };
@@ -208,6 +254,31 @@ const styles = StyleSheet.create({
   recipeTime: {
     fontSize: 14,
     color: "#888",
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  modalContent: {
+    width: "90%",
+    backgroundColor: "white",
+    borderRadius: 10,
+    padding: 16,
+    maxHeight: "80%",
+  },
+  closeButton: {
+    alignSelf: "center",
+    marginTop: 16,
+    paddingVertical: 8,
+    paddingHorizontal: 20,
+    backgroundColor: "#F6A028",
+    borderRadius: 20,
+  },
+  closeButtonText: {
+    fontSize: 16,
+    color: "#fff",
   },
 });
 

@@ -4,9 +4,8 @@ import {
   Text,
   Image,
   StyleSheet,
-  ScrollView,
   FlatList,
-  ListRenderItem,
+  ScrollView,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
@@ -14,6 +13,14 @@ interface Ingredient {
   id: string;
   name: string;
   image: any;
+}
+
+interface RecipeProps {
+  recipe: {
+    title: string;
+    time: string;
+    calories: string;
+  };
 }
 
 const ingredients: Ingredient[] = [
@@ -25,8 +32,8 @@ const ingredients: Ingredient[] = [
   { id: "6", name: "Chicken", image: require("../assets/images/egg.png") },
 ];
 
-const Recipe: React.FC = () => {
-  const renderIngredient: ListRenderItem<Ingredient> = ({ item }) => (
+const Recipe: React.FC<RecipeProps> = ({ recipe }) => {
+  const renderIngredient = ({ item }: { item: Ingredient }) => (
     <View style={styles.ingredient}>
       <Image source={item.image} style={styles.ingredientImage} />
       <Text style={styles.ingredientText}>{item.name}</Text>
@@ -36,8 +43,7 @@ const Recipe: React.FC = () => {
   return (
     <ScrollView
       style={styles.container}
-      contentContainerStyle={styles.scrollContainer}
-      showsVerticalScrollIndicator={false}
+      contentContainerStyle={styles.scrollContent}
     >
       <View style={styles.topSection}>
         <Image
@@ -49,17 +55,17 @@ const Recipe: React.FC = () => {
       <View style={styles.bottomSection}>
         <View style={styles.recipeInfo}>
           <View style={styles.header}>
-            <Text style={styles.title}>Creamy Pasta</Text>
+            <Text style={styles.title}>{recipe.title}</Text>
             <Icon name="favorite" size={30} color="red" />
           </View>
           <View style={styles.details}>
             <View style={styles.detailItem}>
               <Icon name="timer" size={20} color="#666" />
-              <Text style={styles.detailText}>20 Min</Text>
+              <Text style={styles.detailText}>{recipe.time}</Text>
             </View>
             <View style={styles.detailItem}>
               <Icon name="local-fire-department" size={20} color="#666" />
-              <Text style={styles.detailText}>239 Cal</Text>
+              <Text style={styles.detailText}>{recipe.calories}</Text>
             </View>
           </View>
           <Text style={styles.subTitle}>Description</Text>
@@ -73,6 +79,7 @@ const Recipe: React.FC = () => {
             renderItem={renderIngredient}
             keyExtractor={(item) => item.id}
             numColumns={2}
+            contentContainerStyle={styles.ingredientsList}
           />
         </View>
       </View>
@@ -85,12 +92,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
-  scrollContainer: {
+  scrollContent: {
     paddingBottom: 16,
   },
   topSection: {
     width: "100%",
-    height: 300,
+    height: 200,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -145,6 +152,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 20,
     marginBottom: 8,
+  },
+  ingredientsList: {
+    alignItems: "center",
   },
   ingredient: {
     flex: 1,
