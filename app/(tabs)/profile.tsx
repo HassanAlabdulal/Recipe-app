@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   Modal,
 } from "react-native";
-import Recipe from "../recipeDetails";
+import Recipe from "../../components/recipeDetails";
 
 type RecipeData = {
   id: string;
