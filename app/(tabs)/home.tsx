@@ -139,7 +139,8 @@ const styles = StyleSheet.create({
     marginVertical: 12,
   },
   category: {
-    padding: 8,
+    paddingTop: 10,
+    paddingBottom: 6,
     backgroundColor: "#FFF",
     borderRadius: 12,
     alignItems: "center",
