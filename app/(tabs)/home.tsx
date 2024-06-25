@@ -16,6 +16,8 @@ const HomeScreen = () => {
     { name: "Lunch", image: require("../../assets/images/category.png") },
     { name: "Dinner", image: require("../../assets/images/category.png") },
     { name: "Dessert", image: require("../../assets/images/category.png") },
+    { name: "Dessert", image: require("../../assets/images/category.png") },
+    { name: "Dessert", image: require("../../assets/images/category.png") },
   ];
   const [selectedCategory, setSelectedCategory] = useState(0);
 
@@ -46,7 +48,11 @@ const HomeScreen = () => {
         </View>
       </View>
 
-      <View style={styles.categories}>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.categories}
+      >
         {categories.map((category, index) => (
           <TouchableOpacity
             key={index}
@@ -60,7 +66,8 @@ const HomeScreen = () => {
             <Text style={styles.categoryText}>{category.name}</Text>
           </TouchableOpacity>
         ))}
-      </View>
+      </ScrollView>
+
       <Text style={styles.recommendationsTitle}>Recommendations</Text>
       <View style={styles.recommendations}>
         {Array(6)
@@ -152,6 +159,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: 80,
     height: 85,
+    marginRight: 10, // Add spacing between categories
   },
   selectedCategory: {
     backgroundColor: "#F6A028",
