@@ -122,6 +122,7 @@ const styles = StyleSheet.create({
   detailItem: {
     flexDirection: "row",
     alignItems: "center",
+    marginRight: 8,
   },
   detailText: {
     fontSize: 16,
