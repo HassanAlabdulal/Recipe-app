@@ -52,16 +52,21 @@ const HomeScreen: React.FC = () => {
       showsVerticalScrollIndicator={false}
     >
       <View style={styles.header}>
-        <Text style={styles.greeting}>Hello,</Text>
-        <Text style={styles.name}>Hassan 👋</Text>
-        <Link href="/profile" asChild>
-          <Pressable>
-            <Image
-              style={styles.profileImage}
-              source={require("../../assets/images/profile.png")}
-            />
-          </Pressable>
-        </Link>
+        <View style={styles.headerLeftSide}>
+          <Text style={styles.greeting}>Hello,</Text>
+          <Text style={styles.name}>Hassan 👋</Text>
+        </View>
+
+        <View>
+          <Link href="/profile" asChild>
+            <Pressable>
+              <Image
+                style={styles.profileImage}
+                source={require("../../assets/images/profile.png")}
+              />
+            </Pressable>
+          </Link>
+        </View>
       </View>
       <View style={styles.searchWrapper}>
         <Text style={styles.prompt}>What would you like to cook today?</Text>
@@ -144,6 +149,10 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
+  },
+  headerLeftSide: {
+    flexDirection: "row",
   },
   greeting: {
     fontSize: 24,
