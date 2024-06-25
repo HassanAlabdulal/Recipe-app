@@ -94,14 +94,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  bottomSection: {
-    backgroundColor: "white",
-    width: "100%",
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingTop: 8,
-  },
   image: {
     width: "100%",
     height: "100%",
