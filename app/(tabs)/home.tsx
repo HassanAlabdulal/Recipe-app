@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
   greeting: {
     fontSize: 24,
     fontWeight: "normal",
+    color: "#666",
   },
   name: {
     fontSize: 24,
@@ -135,7 +136,7 @@ const styles = StyleSheet.create({
   categories: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginVertical: 16,
+    marginVertical: 12,
   },
   category: {
     padding: 8,
@@ -143,7 +144,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: "center",
     width: 80,
-    height: 90,
+    height: 85,
   },
   selectedCategory: {
     backgroundColor: "#F6A028",
@@ -152,7 +153,7 @@ const styles = StyleSheet.create({
     width: 45,
     height: 45,
     borderRadius: 20,
-    marginBottom: 8,
+    marginBottom: 4,
   },
   categoryText: {
     fontSize: 12,
