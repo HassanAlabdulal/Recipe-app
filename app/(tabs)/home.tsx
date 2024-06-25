@@ -1,3 +1,5 @@
+// HomeScreen.tsx
+
 import React, { useState } from "react";
 import {
   View,
@@ -7,13 +9,12 @@ import {
   Image,
   StyleSheet,
   ScrollView,
-  Modal,
   Pressable,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import Recipe from "../recipeDetails";
 import { Link } from "expo-router";
 import RecipeCard from "../../components/recipeCard";
+import RecipeModal from "../../components/RecipeModal";
 
 interface RecipeData {
   title: string;
@@ -118,22 +119,11 @@ const HomeScreen: React.FC = () => {
           ))}
       </View>
 
-      <Modal
-        animationType="slide"
-        transparent={true}
+      <RecipeModal
         visible={modalVisible}
-        onRequestClose={closeModal}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Recipe Details</Text>
-            {selectedRecipe && <Recipe recipe={selectedRecipe} />}
-            <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
-              <Text style={styles.closeButtonText}>Close</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+        recipe={selectedRecipe}
+        onClose={closeModal}
+      />
     </ScrollView>
   );
 };
@@ -236,37 +226,6 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-between",
     width: "100%",
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0,0,0,0.5)",
-  },
-  modalTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 10,
-    textAlign: "center",
-  },
-  modalContent: {
-    width: "90%",
-    backgroundColor: "white",
-    borderRadius: 10,
-    padding: 16,
-    maxHeight: "70%",
-  },
-  closeButton: {
-    alignSelf: "center",
-    marginTop: 16,
-    paddingVertical: 8,
-    paddingHorizontal: 20,
-    backgroundColor: "#F6A028",
-    borderRadius: 20,
-  },
-  closeButtonText: {
-    fontSize: 16,
-    color: "#fff",
   },
 });
 

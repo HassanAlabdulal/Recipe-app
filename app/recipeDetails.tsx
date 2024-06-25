@@ -25,7 +25,6 @@ const ingredients: Ingredient[] = [
   { id: "6", name: "Chicken", image: require("../assets/images/egg.png") },
 ];
 
-// Inside Recipe component
 const Recipe: React.FC<RecipeProps> = ({ recipe }) => {
   const renderIngredient = ({ item }: { item: Ingredient }) => (
     <View style={styles.ingredient}>
