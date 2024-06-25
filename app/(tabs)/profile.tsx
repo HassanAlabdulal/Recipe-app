@@ -1,4 +1,5 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
+
 import React from "react";
 import {
   View,
@@ -91,7 +92,7 @@ export default function profileScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    // backgroundColor: "",
     alignItems: "center",
     paddingTop: 20,
     width: "100%",
