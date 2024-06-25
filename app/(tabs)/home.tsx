@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 10,
     padding: 16,
-    maxHeight: "80%",
+    maxHeight: "70%",
   },
   closeButton: {
     alignSelf: "center",

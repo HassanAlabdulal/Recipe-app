@@ -1,6 +1,5 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
-
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -8,65 +7,91 @@ import {
   FlatList,
   StyleSheet,
   Dimensions,
-  ScrollView,
+  TouchableOpacity,
+  Modal,
 } from "react-native";
+import Recipe from "../recipeDetails";
 
-type Recipe = {
+type RecipeData = {
   id: string;
   title: string;
   image: any;
+  time: string;
+  calories: string;
 };
 
 export default function profileScreen() {
-  const recipes: Recipe[] = [
+  const recipes: RecipeData[] = [
     {
       id: "1",
       title: "Creamy Pasta",
       image: require("../../assets/images/creamyPasta.png"),
+      time: "20 Min",
+      calories: "239 Cal",
     },
     {
       id: "2",
       title: "Creamy Pasta",
       image: require("../../assets/images/creamyPasta.png"),
+      time: "20 Min",
+      calories: "239 Cal",
     },
     {
       id: "3",
       title: "Creamy Pasta",
       image: require("../../assets/images/creamyPasta.png"),
+      time: "20 Min",
+      calories: "239 Cal",
     },
     {
       id: "4",
       title: "Creamy Pasta",
       image: require("../../assets/images/creamyPasta.png"),
+      time: "20 Min",
+      calories: "239 Cal",
     },
     {
       id: "5",
       title: "Creamy Pasta",
       image: require("../../assets/images/creamyPasta.png"),
+      time: "20 Min",
+      calories: "239 Cal",
     },
     {
       id: "6",
       title: "Creamy Pasta",
       image: require("../../assets/images/creamyPasta.png"),
+      time: "20 Min",
+      calories: "239 Cal",
     },
     {
       id: "7",
       title: "Creamy Pasta",
       image: require("../../assets/images/creamyPasta.png"),
-    },
-    {
-      id: "8",
-      title: "Creamy Pasta",
-      image: require("../../assets/images/creamyPasta.png"),
+      time: "20 Min",
+      calories: "239 Cal",
     },
   ];
 
-  const renderRecipe = ({ item }: { item: Recipe }) => (
-    <View style={styles.recipeCard}>
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [selectedRecipe, setSelectedRecipe] = useState<RecipeData | null>(null);
+
+  const openModal = (recipe: RecipeData) => {
+    setSelectedRecipe(recipe);
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+    setSelectedRecipe(null);
+  };
+
+  const renderRecipe = ({ item }: { item: RecipeData }) => (
+    <TouchableOpacity style={styles.recipeCard} onPress={() => openModal(item)}>
       <Image source={item.image} style={styles.recipeImage} />
       <Ionicons name="heart" size={24} color="red" style={styles.heartIcon} />
       <Text style={styles.recipeTitle}>{item.title}</Text>
-    </View>
+    </TouchableOpacity>
   );
 
   return (
@@ -86,6 +111,23 @@ export default function profileScreen() {
         contentContainerStyle={styles.recipesContainer}
         columnWrapperStyle={styles.columnWrapper}
       />
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={closeModal}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Recipe Details</Text>
+            {selectedRecipe && <Recipe recipe={selectedRecipe} />}
+            <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
+              <Text style={styles.closeButtonText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -93,7 +135,6 @@ export default function profileScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: "",
     alignItems: "center",
     paddingTop: 20,
     width: "100%",
@@ -148,5 +189,36 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     marginTop: 10,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  modalContent: {
+    width: "90%",
+    backgroundColor: "white",
+    borderRadius: 10,
+    padding: 16,
+    maxHeight: Dimensions.get("window").height * 0.8,
+  },
+  closeButton: {
+    alignSelf: "center",
+    marginTop: 16,
+    paddingVertical: 8,
+    paddingHorizontal: 20,
+    backgroundColor: "#F6A028",
+    borderRadius: 20,
+  },
+  closeButtonText: {
+    fontSize: 16,
+    color: "#fff",
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 10,
+    textAlign: "center",
   },
 });
