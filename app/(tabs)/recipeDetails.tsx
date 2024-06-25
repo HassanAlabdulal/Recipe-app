@@ -34,7 +34,11 @@ const Recipe: React.FC = () => {
   );
 
   return (
-    <View style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.scrollContainer}
+      showsVerticalScrollIndicator={false}
+    >
       <View style={styles.topSection}>
         <Image
           source={require("../../assets/images/creamyPasta.png")}
@@ -43,50 +47,50 @@ const Recipe: React.FC = () => {
       </View>
 
       <View style={styles.bottomSection}>
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
-          <View style={styles.recipeInfo}>
-            <View style={styles.header}>
-              <Text style={styles.title}>Creamy Pasta</Text>
-              <Icon name="favorite" size={30} color="red" />
-            </View>
-            <View style={styles.details}>
-              <View style={styles.detailItem}>
-                <Icon name="timer" size={20} color="#666" />
-                <Text style={styles.detailText}>20 Min</Text>
-              </View>
-              <View style={styles.detailItem}>
-                <Icon name="local-fire-department" size={20} color="#666" />
-                <Text style={styles.detailText}>239 Cal</Text>
-              </View>
-            </View>
-            <Text style={styles.subTitle}>Description</Text>
-            <Text style={styles.description}>
-              Lorem ipsum is placeholder text commonly used in the graphic,
-              print, and publishing industries for previewing layouts and visual
-              mockups.
-            </Text>
-            <Text style={styles.subTitle}>Ingredients</Text>
-            <FlatList
-              data={ingredients}
-              renderItem={renderIngredient}
-              keyExtractor={(item) => item.id}
-              numColumns={2}
-            />
+        <View style={styles.recipeInfo}>
+          <View style={styles.header}>
+            <Text style={styles.title}>Creamy Pasta</Text>
+            <Icon name="favorite" size={30} color="red" />
           </View>
-        </ScrollView>
+          <View style={styles.details}>
+            <View style={styles.detailItem}>
+              <Icon name="timer" size={20} color="#666" />
+              <Text style={styles.detailText}>20 Min</Text>
+            </View>
+            <View style={styles.detailItem}>
+              <Icon name="local-fire-department" size={20} color="#666" />
+              <Text style={styles.detailText}>239 Cal</Text>
+            </View>
+          </View>
+          <Text style={styles.subTitle}>Description</Text>
+          <Text style={styles.description}>
+            Lorem ipsum is placeholder text commonly used in the graphic, print,
+            and publishing industries for previewing layouts and visual mockups.
+          </Text>
+          <Text style={styles.subTitle}>Ingredients</Text>
+          <FlatList
+            data={ingredients}
+            renderItem={renderIngredient}
+            keyExtractor={(item) => item.id}
+            numColumns={2}
+          />
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#D6D7D9",
+    backgroundColor: "#fff",
+  },
+  scrollContainer: {
+    paddingBottom: 16,
   },
   topSection: {
     width: "100%",
-    height: "40%",
+    height: 300, // Fixed height for the image
     justifyContent: "center",
     alignItems: "center",
   },
@@ -97,13 +101,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingTop: 8,
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
-  },
-  scrollContainer: {
-    paddingBottom: 16,
   },
   image: {
     width: "100%",
