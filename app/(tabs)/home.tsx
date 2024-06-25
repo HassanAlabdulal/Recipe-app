@@ -22,7 +22,10 @@ const HomeScreen = () => {
   const [selectedCategory, setSelectedCategory] = useState(0);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView
+      contentContainerStyle={styles.container}
+      showsVerticalScrollIndicator={false}
+    >
       <View style={styles.header}>
         <Text style={styles.greeting}>Hello,</Text>
         <Text style={styles.name}>Hassan 👋</Text>
