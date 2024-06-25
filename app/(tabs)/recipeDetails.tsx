@@ -21,6 +21,8 @@ const ingredients: Ingredient[] = [
   { id: "2", name: "Chicken", image: require("../../assets/images/egg.png") },
   { id: "3", name: "Chicken", image: require("../../assets/images/egg.png") },
   { id: "4", name: "Chicken", image: require("../../assets/images/egg.png") },
+  { id: "5", name: "Chicken", image: require("../../assets/images/egg.png") },
+  { id: "6", name: "Chicken", image: require("../../assets/images/egg.png") },
 ];
 
 const Recipe: React.FC = () => {
@@ -32,40 +34,48 @@ const Recipe: React.FC = () => {
   );
 
   return (
-    <ScrollView style={styles.container}>
-      <Image
-        source={require("../../assets/images/creamyPasta.png")}
-        style={styles.image}
-      />
-      <View style={styles.recipeInfo}>
-        <View style={styles.header}>
-          <Text style={styles.title}>Creamy Pasta</Text>
-          <Icon name="favorite" size={30} color="red" />
-        </View>
-        <View style={styles.details}>
-          <View style={styles.detailItem}>
-            <Icon name="timer" size={20} color="#666" />
-            <Text style={styles.detailText}>20 Min</Text>
-          </View>
-          <View style={styles.detailItem}>
-            <Icon name="local-fire-department" size={20} color="#666" />
-            <Text style={styles.detailText}>239 Cal</Text>
-          </View>
-        </View>
-        <Text style={styles.subTitle}>Description</Text>
-        <Text style={styles.description}>
-          Lorem ipsum is placeholder text commonly used in the graphic, print,
-          and publishing industries for previewing layouts and visual mockups.
-        </Text>
-        <Text style={styles.subTitle}>Ingredients</Text>
-        <FlatList
-          data={ingredients}
-          renderItem={renderIngredient}
-          keyExtractor={(item) => item.id}
-          numColumns={2}
+    <View style={styles.container}>
+      <View style={styles.topSection}>
+        <Image
+          source={require("../../assets/images/creamyPasta.png")}
+          style={styles.image}
         />
       </View>
-    </ScrollView>
+
+      <View style={styles.bottomSection}>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <View style={styles.recipeInfo}>
+            <View style={styles.header}>
+              <Text style={styles.title}>Creamy Pasta</Text>
+              <Icon name="favorite" size={30} color="red" />
+            </View>
+            <View style={styles.details}>
+              <View style={styles.detailItem}>
+                <Icon name="timer" size={20} color="#666" />
+                <Text style={styles.detailText}>20 Min</Text>
+              </View>
+              <View style={styles.detailItem}>
+                <Icon name="local-fire-department" size={20} color="#666" />
+                <Text style={styles.detailText}>239 Cal</Text>
+              </View>
+            </View>
+            <Text style={styles.subTitle}>Description</Text>
+            <Text style={styles.description}>
+              Lorem ipsum is placeholder text commonly used in the graphic,
+              print, and publishing industries for previewing layouts and visual
+              mockups.
+            </Text>
+            <Text style={styles.subTitle}>Ingredients</Text>
+            <FlatList
+              data={ingredients}
+              renderItem={renderIngredient}
+              keyExtractor={(item) => item.id}
+              numColumns={2}
+            />
+          </View>
+        </ScrollView>
+      </View>
+    </View>
   );
 };
 
@@ -74,12 +84,35 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
+  topSection: {
+    width: "100%",
+    height: "35%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  bottomSection: {
+    backgroundColor: "white",
+    width: "100%",
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 8,
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+  },
+  scrollContainer: {
+    paddingBottom: 16,
+  },
   image: {
     width: "100%",
-    height: 300,
+    height: "100%",
+    resizeMode: "cover",
   },
   recipeInfo: {
     padding: 16,
+    width: "100%",
   },
   header: {
     flexDirection: "row",
@@ -92,9 +125,9 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   details: {
-    width: "50%",
     flexDirection: "row",
     justifyContent: "space-between",
+    width: "50%",
     marginBottom: 16,
   },
   detailItem: {
