@@ -1,5 +1,3 @@
-// RecipeModal.tsx
-
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Modal } from "react-native";
 import Recipe from "./recipeDetails";

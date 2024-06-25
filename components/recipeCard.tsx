@@ -1,5 +1,3 @@
-// RecipeCard.tsx
-
 import React from "react";
 import {
   View,
@@ -28,7 +26,13 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onPress }) => {
   return (
     <TouchableOpacity style={styles.recipeCard} onPress={onPress}>
       <Image source={recipe.image} style={styles.recipeImage} />
-      <Ionicons name="heart" size={24} color="red" style={styles.heartIcon} />
+      <Ionicons
+        // name="heart-outline"
+        name="heart"
+        size={24}
+        color="red"
+        style={styles.heartIcon}
+      />
       <Text style={styles.recipeTitle}>{recipe.title}</Text>
     </TouchableOpacity>
   );
