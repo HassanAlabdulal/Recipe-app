@@ -89,9 +89,9 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   profileImage: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
     marginLeft: "auto",
   },
   prompt: {
@@ -151,12 +151,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
+    width: "100%",
   },
   recipeCard: {
     width: "48%",
     backgroundColor: "#FFF",
     borderRadius: 8,
-    padding: 6,
+    paddingVertical: 4,
     marginBottom: 8,
   },
   recipeImage: {
