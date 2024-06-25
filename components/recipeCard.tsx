@@ -1,49 +1,59 @@
+// RecipeCard.tsx
+
 import React from "react";
-import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+} from "react-native";
+import Ionicons from "@expo/vector-icons/Ionicons";
+
+type RecipeData = {
+  id: string;
+  title: string;
+  image: any;
+  time: string;
+  calories: string;
+};
 
 interface RecipeCardProps {
-  title: string;
-  time: string;
-  imageSource: any;
+  recipe: RecipeData;
   onPress: () => void;
 }
 
-const RecipeCard: React.FC<RecipeCardProps> = ({
-  title,
-  time,
-  imageSource,
-  onPress,
-}) => {
+const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onPress }) => {
   return (
     <TouchableOpacity style={styles.recipeCard} onPress={onPress}>
-      <Image style={styles.recipeImage} source={imageSource} />
-      <Text style={styles.recipeTitle}>{title}</Text>
-      <Text style={styles.recipeTime}>⏱️ {time}</Text>
+      <Image source={recipe.image} style={styles.recipeImage} />
+      <Ionicons name="heart" size={24} color="red" style={styles.heartIcon} />
+      <Text style={styles.recipeTitle}>{recipe.title}</Text>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   recipeCard: {
-    width: "48%",
-    backgroundColor: "#FFF",
-    borderRadius: 8,
-    paddingVertical: 4,
-    marginBottom: 8,
+    alignItems: "center",
+    margin: 5,
+    width: Dimensions.get("window").width / 2 - 30,
   },
   recipeImage: {
-    width: "100%",
+    width: 150,
     height: 150,
-    borderRadius: 8,
+    borderRadius: 10,
+  },
+  heartIcon: {
+    position: "absolute",
+    top: 10,
+    right: 10,
   },
   recipeTitle: {
     fontSize: 16,
     fontWeight: "bold",
-    marginTop: 8,
-  },
-  recipeTime: {
-    fontSize: 14,
-    color: "#888",
+    marginTop: 10,
   },
 });
 

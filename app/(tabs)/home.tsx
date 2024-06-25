@@ -16,11 +16,12 @@ import { Link } from "expo-router";
 import RecipeCard from "../../components/recipeCard";
 import RecipeModal from "../../components/RecipeModal";
 
-interface RecipeData {
+type RecipeData = {
   title: string;
   time: string;
   calories: string;
-}
+  image: any;
+};
 
 const HomeScreen: React.FC = () => {
   const categories = [
@@ -30,6 +31,7 @@ const HomeScreen: React.FC = () => {
     { name: "Dessert", image: require("../../assets/images/dessert.png") },
     { name: "Diet", image: require("../../assets/images/vegetable.png") },
   ];
+
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [selectedRecipe, setSelectedRecipe] = useState<RecipeData | null>(null);
@@ -105,14 +107,19 @@ const HomeScreen: React.FC = () => {
           .map((_, index) => (
             <RecipeCard
               key={index}
-              title="Creamy Pasta"
-              time="20 Min"
-              imageSource={require("../../assets/images/creamyPasta.png")}
+              recipe={{
+                id: "1",
+                title: "Creamy Pasta",
+                time: "20 Min",
+                calories: "239 Cal",
+                image: require("../../assets/images/creamyPasta.png"),
+              }}
               onPress={() =>
                 openModal({
                   title: "Creamy Pasta",
                   time: "20 Min",
                   calories: "239 Cal",
+                  image: require("../../assets/images/creamyPasta.png"),
                 })
               }
             />
