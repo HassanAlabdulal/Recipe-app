@@ -23,7 +23,6 @@ const HomeScreen = () => {
         />
       </View>
       <Text style={styles.prompt}>What would you like to cook today?</Text>
-      {/* <TextInput style={styles.searchInput} placeholder="Search any recipe" /> */}
       <View style={styles.inputContainer}>
         <Icon
           name="search-outline"
@@ -100,13 +99,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginVertical: 16,
   },
-  //   searchInput: {
-  //     height: 40,
-  //     borderColor: "#DDD",
-  //     borderWidth: 1,
-  //     borderRadius: 8,
-  //     paddingLeft: 8,
-  //   },
   inputText: {
     width: "100%",
     marginLeft: 8,
@@ -165,7 +157,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
     borderRadius: 8,
     padding: 8,
-    marginBottom: 16,
+    marginBottom: 8,
   },
   recipeImage: {
     width: "100%",
