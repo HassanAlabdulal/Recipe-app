@@ -44,6 +44,7 @@ const Recipe: React.FC<RecipeProps> = ({ recipe }) => {
     <ScrollView
       style={styles.container}
       contentContainerStyle={styles.scrollContent}
+      showsVerticalScrollIndicator={false}
     >
       <View style={styles.topSection}>
         <Image
