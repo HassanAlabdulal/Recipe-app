@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
   heartIcon: {
     position: "absolute",
     top: 10,
-    right: 20,
+    right: 10,
   },
   recipeTitle: {
     fontSize: 16,
