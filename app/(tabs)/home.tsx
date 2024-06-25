@@ -10,7 +10,7 @@ import {
   Modal,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import Recipe from "../../components/recipeDetails";
+import Recipe from "../recipeDetails";
 
 interface RecipeData {
   title: string;
@@ -124,6 +124,7 @@ const HomeScreen: React.FC = () => {
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Recipe Details</Text>
             {selectedRecipe && <Recipe recipe={selectedRecipe} />}
             <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
               <Text style={styles.closeButtonText}>Close</Text>
@@ -260,6 +261,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 10,
+    textAlign: "center",
   },
   modalContent: {
     width: "90%",

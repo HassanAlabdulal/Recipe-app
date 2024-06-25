@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  FlatList,
-  ScrollView,
-} from "react-native";
+import { View, Text, Image, StyleSheet, FlatList } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 interface Ingredient {
@@ -40,12 +33,8 @@ const Recipe: React.FC<RecipeProps> = ({ recipe }) => {
     </View>
   );
 
-  return (
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={styles.scrollContent}
-      showsVerticalScrollIndicator={false}
-    >
+  const renderHeader = () => (
+    <>
       <View style={styles.topSection}>
         <Image
           source={require("../assets/images/creamyPasta.png")}
@@ -53,38 +42,42 @@ const Recipe: React.FC<RecipeProps> = ({ recipe }) => {
         />
       </View>
 
-      <View style={styles.bottomSection}>
-        <View style={styles.recipeInfo}>
-          <View style={styles.header}>
-            <Text style={styles.title}>{recipe.title}</Text>
-            <Icon name="favorite" size={30} color="red" />
-          </View>
-          <View style={styles.details}>
-            <View style={styles.detailItem}>
-              <Icon name="timer" size={20} color="#666" />
-              <Text style={styles.detailText}>{recipe.time}</Text>
-            </View>
-            <View style={styles.detailItem}>
-              <Icon name="local-fire-department" size={20} color="#666" />
-              <Text style={styles.detailText}>{recipe.calories}</Text>
-            </View>
-          </View>
-          <Text style={styles.subTitle}>Description</Text>
-          <Text style={styles.description}>
-            Lorem ipsum is placeholder text commonly used in the graphic, print,
-            and publishing industries for previewing layouts and visual mockups.
-          </Text>
-          <Text style={styles.subTitle}>Ingredients</Text>
-          <FlatList
-            data={ingredients}
-            renderItem={renderIngredient}
-            keyExtractor={(item) => item.id}
-            numColumns={2}
-            contentContainerStyle={styles.ingredientsList}
-          />
+      <View style={styles.recipeInfo}>
+        <View style={styles.header}>
+          <Text style={styles.title}>{recipe.title}</Text>
+          <Icon name="favorite" size={30} color="red" />
         </View>
+        <View style={styles.details}>
+          <View style={styles.detailItem}>
+            <Icon name="timer" size={20} color="#666" />
+            <Text style={styles.detailText}>{recipe.time}</Text>
+          </View>
+          <View style={styles.detailItem}>
+            <Icon name="local-fire-department" size={20} color="#666" />
+            <Text style={styles.detailText}>{recipe.calories}</Text>
+          </View>
+        </View>
+        <Text style={styles.subTitle}>Description</Text>
+        <Text style={styles.description}>
+          Lorem ipsum is placeholder text commonly used in the graphic, print,
+          and publishing industries for previewing layouts and visual mockups.
+        </Text>
+        <Text style={styles.subTitle}>Ingredients</Text>
       </View>
-    </ScrollView>
+    </>
+  );
+
+  return (
+    <FlatList
+      style={styles.container}
+      data={ingredients}
+      renderItem={renderIngredient}
+      keyExtractor={(item) => item.id}
+      numColumns={2}
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={styles.scrollContent}
+      ListHeaderComponent={renderHeader}
+    />
   );
 };
 
