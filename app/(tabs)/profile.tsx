@@ -8,6 +8,7 @@ import {
   FlatList,
   StyleSheet,
   Dimensions,
+  ScrollView,
 } from "react-native";
 
 type Recipe = {
