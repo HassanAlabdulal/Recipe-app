@@ -10,7 +10,7 @@ import {
   Modal,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import Recipe from "../recipeDetails";
+import Recipe from "../../components/recipeDetails";
 
 interface RecipeData {
   title: string;
