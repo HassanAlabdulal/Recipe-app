@@ -4,7 +4,6 @@ import {
   Text,
   TextInput,
   ScrollView,
-  Image,
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
@@ -14,6 +13,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import LottieView from "lottie-react-native";
 
 import { router } from "expo-router";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
@@ -48,11 +48,13 @@ const SignUpScreen = () => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <View style={styles.topSection}>
-            <View style={styles.imageOuterBorder}>
-              <View style={styles.imageBorder}>
-                <Image
-                  source={require("@/assets/images/loginScreenImage.png")}
-                  style={styles.image}
+            <View style={styles.animationOuterBorder}>
+              <View style={styles.animationBorder}>
+                <LottieView
+                  source={require("../assets/animations/food-animation.json")}
+                  autoPlay
+                  loop
+                  style={styles.animation}
                 />
               </View>
             </View>
@@ -157,18 +159,18 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     paddingTop: 40,
   },
-  imageBorder: {
+  animationBorder: {
     borderRadius: 100,
     backgroundColor: "rgba(255, 255, 255, 0.3)",
     padding: 15,
   },
-  imageOuterBorder: {
+  animationOuterBorder: {
     borderRadius: 100,
     backgroundColor: "rgba(255, 255, 255, 0.3)",
     padding: 20,
     marginTop: 20,
   },
-  image: {
+  animation: {
     width: 145,
     height: 145,
     borderRadius: 100,
