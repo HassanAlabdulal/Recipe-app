@@ -12,11 +12,31 @@ import {
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import { router } from "expo-router";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { app, auth } from "@/firebaseConfig";
 
 const LoginScreen = () => {
   const [isInputFocused, setIsInputFocused] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSignUp = async () => {
+    if (email && password) {
+      try {
+        const auth = getAuth(app);
+        await signInWithEmailAndPassword(auth, email, password);
+        router.push("/home");
+      } catch (error: any) {
+        Alert.alert("Error", error.message);
+      }
+    } else {
+      Alert.alert("Error", "Please fill in all fields");
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -56,6 +76,8 @@ const LoginScreen = () => {
                   placeholder="hassan@lazywait.com"
                   style={styles.input}
                   keyboardType="email-address"
+                  value={email}
+                  onChangeText={(text) => setEmail(text)}
                   onFocus={() => setIsInputFocused(true)}
                   onBlur={() => setIsInputFocused(false)}
                 />
@@ -72,17 +94,17 @@ const LoginScreen = () => {
                   placeholder="********"
                   style={styles.input}
                   secureTextEntry
+                  value={password}
+                  onChangeText={(text) => setPassword(text)}
                   onFocus={() => setIsInputFocused(true)}
                   onBlur={() => setIsInputFocused(false)}
                 />
               </View>
             </View>
 
-            <Link href="/home" asChild>
-              <Pressable style={styles.loginButton}>
-                <Text style={styles.loginButtonText}>Login</Text>
-              </Pressable>
-            </Link>
+            <Pressable onPress={handleSignUp} style={styles.loginButton}>
+              <Text style={styles.loginButtonText}>Login</Text>
+            </Pressable>
             <Link href="/signUp" asChild>
               <Pressable style={styles.signUpButton}>
                 <Text style={styles.signUpButtonText}>
