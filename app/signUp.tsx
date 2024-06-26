@@ -33,6 +33,20 @@ const LoginScreen = () => {
         </View>
 
         <View style={styles.bottomSection}>
+          <Text style={styles.inputText}>Name</Text>
+          <View style={styles.inputContainer}>
+            <Icon
+              name="person-outline"
+              size={20}
+              color="#666"
+              style={styles.icon}
+            />
+            <TextInput
+              placeholder="Hassan Alabdulal"
+              style={styles.input}
+              keyboardType="email-address"
+            />
+          </View>
           <Text style={styles.inputText}>Email</Text>
           <View style={styles.inputContainer}>
             <Icon
@@ -42,7 +56,7 @@ const LoginScreen = () => {
               style={styles.icon}
             />
             <TextInput
-              placeholder="lazywait@gmail.com"
+              placeholder="hassan@lazywait.com"
               style={styles.input}
               keyboardType="email-address"
             />

@@ -42,7 +42,7 @@ const LoginScreen = () => {
               style={styles.icon}
             />
             <TextInput
-              placeholder="lazywait@gmail.com"
+              placeholder="hassan@lazywait.com"
               style={styles.input}
               keyboardType="email-address"
             />
