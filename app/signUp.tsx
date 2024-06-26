@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "expo-router";
+// import { router } from "expo-router";
+// import auth from "@react-native-firebase/auth";
 import {
   View,
   Text,
@@ -12,11 +13,48 @@ import {
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
+  TouchableOpacity,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
+import { router } from "expo-router";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { app, auth } from "@/firebaseConfig";
+
 const SignUpScreen = () => {
   const [isInputFocused, setIsInputFocused] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  //   const handleSignUp = async () => {
+  //     if (email && password) {
+  //       try {
+  //         await auth().createUserWithEmailAndPassword(email, password);
+  //         Alert.alert("Account created successfully");
+  //         router.push("/home");
+  //       } catch (err) {
+  //         Alert.alert("Error");
+  //       }
+  //     } else {
+  //       Alert.alert("Error", "Please fill in all fields");
+  //     }
+  //   };
+
+  const handleSignUp = async () => {
+    try {
+      console.log("Trying to getAuth");
+      const auth = getAuth(app);
+      console.log("Got the auth");
+      await createUserWithEmailAndPassword(auth, email, password);
+      console.log("completed signup");
+      router.push("/home");
+    } catch (error) {
+      Alert.alert("Error");
+      console.log("Error sigh.", error);
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -56,6 +94,8 @@ const SignUpScreen = () => {
                   placeholder="Hassan Alabdulal"
                   style={styles.input}
                   keyboardType="default"
+                  value={name}
+                  onChangeText={(text) => setName(text)}
                   onFocus={() => setIsInputFocused(true)}
                   onBlur={() => setIsInputFocused(false)}
                 />
@@ -72,6 +112,8 @@ const SignUpScreen = () => {
                   placeholder="hassan@lazywait.com"
                   style={styles.input}
                   keyboardType="email-address"
+                  value={email}
+                  onChangeText={(text) => setEmail(text)}
                   onFocus={() => setIsInputFocused(true)}
                   onBlur={() => setIsInputFocused(false)}
                 />
@@ -88,24 +130,23 @@ const SignUpScreen = () => {
                   placeholder="********"
                   style={styles.input}
                   secureTextEntry
+                  value={password}
+                  onChangeText={(text) => setPassword(text)}
                   onFocus={() => setIsInputFocused(true)}
                   onBlur={() => setIsInputFocused(false)}
                 />
               </View>
             </View>
 
-            <Link href="/home" asChild>
-              <Pressable style={styles.loginButton}>
-                <Text style={styles.loginButtonText}>Sign Up</Text>
-              </Pressable>
-            </Link>
+            <TouchableOpacity onPress={handleSignUp} style={styles.loginButton}>
+              <Text style={styles.loginButtonText}>Sign Up</Text>
+            </TouchableOpacity>
           </ScrollView>
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
