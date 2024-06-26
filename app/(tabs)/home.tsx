@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+// screens/home.tsx
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -13,15 +14,8 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { Link } from "expo-router";
 import RecipeCard from "../../components/recipeCard";
 import RecipeModal from "../../components/RecipeModal";
-
-type RecipeData = {
-  id: string;
-  title: string;
-  time: string;
-  calories: string;
-  image: any;
-  favorite: boolean;
-};
+import { getDummyRecipes } from "../../utils/recipeUtils";
+import { RecipeData } from "../../types";
 
 const HomeScreen: React.FC = () => {
   const categories = [
@@ -32,28 +26,15 @@ const HomeScreen: React.FC = () => {
     { name: "Diet", image: require("../../assets/images/vegetable.png") },
   ];
 
-  const [recipes, setRecipes] = useState<RecipeData[]>([
-    {
-      id: "1",
-      title: "Creamy Pasta",
-      time: "20 Min",
-      calories: "239 Cal",
-      image: require("../../assets/images/creamyPasta.png"),
-      favorite: false,
-    },
-    {
-      id: "2",
-      title: "Spaghetti",
-      time: "30 Min",
-      calories: "350 Cal",
-      image: require("../../assets/images/spaghetti.png"),
-      favorite: false,
-    },
-  ]);
-
+  const [recipes, setRecipes] = useState<RecipeData[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [selectedRecipe, setSelectedRecipe] = useState<RecipeData | null>(null);
+
+  useEffect(() => {
+    const loadedRecipes = getDummyRecipes();
+    setRecipes(loadedRecipes);
+  }, []);
 
   const openModal = (recipeId: string) => {
     const recipe = recipes.find((r) => r.id === recipeId);
@@ -72,9 +53,6 @@ const HomeScreen: React.FC = () => {
         recipe.id === id ? { ...recipe, favorite: !recipe.favorite } : recipe
       )
     );
-    // Ensure the selected recipe is updated
-    const updatedRecipe = recipes.find((r) => r.id === id);
-    setSelectedRecipe(updatedRecipe || null);
   };
 
   return (

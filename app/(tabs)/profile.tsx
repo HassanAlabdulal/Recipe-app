@@ -1,69 +1,26 @@
-import React, { useState } from "react";
+// screens/profile.tsx
+import React, { useState, useEffect } from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
 import RecipeCard from "../../components/recipeCard";
 import ProfileHeader from "../../components/ProfileHeader";
 import RecipeModal from "../../components/RecipeModal";
-import Recipe from "../../components/recipeDetails";
-
-type RecipeData = {
-  id: string;
-  title: string;
-  image: any;
-  time: string;
-  calories: string;
-};
+import { getFavoritedRecipes, getDummyRecipes } from "../../utils/recipeUtils";
+import { RecipeData } from "../../types";
 
 export default function ProfileScreen() {
-  const recipes: RecipeData[] = [
-    {
-      id: "1",
-      title: "Creamy Pasta",
-      image: require("../../assets/images/creamyPasta.png"),
-      time: "20 Min",
-      calories: "239 Cal",
-    },
-    {
-      id: "2",
-      title: "Creamy Pasta",
-      image: require("../../assets/images/creamyPasta.png"),
-      time: "20 Min",
-      calories: "239 Cal",
-    },
-    {
-      id: "3",
-      title: "Creamy Pasta",
-      image: require("../../assets/images/creamyPasta.png"),
-      time: "20 Min",
-      calories: "239 Cal",
-    },
-    {
-      id: "4",
-      title: "Creamy Pasta",
-      image: require("../../assets/images/creamyPasta.png"),
-      time: "20 Min",
-      calories: "239 Cal",
-    },
-    {
-      id: "5",
-      title: "Creamy Pasta",
-      image: require("../../assets/images/creamyPasta.png"),
-      time: "20 Min",
-      calories: "239 Cal",
-    },
-    {
-      id: "6",
-      title: "Creamy Pasta",
-      image: require("../../assets/images/creamyPasta.png"),
-      time: "20 Min",
-      calories: "239 Cal",
-    },
-  ];
-
+  const [recipes, setRecipes] = useState<RecipeData[]>([]);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [selectedRecipe, setSelectedRecipe] = useState<RecipeData | null>(null);
 
-  const openModal = (recipe: RecipeData) => {
-    setSelectedRecipe(recipe);
+  useEffect(() => {
+    // Load the favorited recipes
+    const favoritedRecipes = getFavoritedRecipes();
+    setRecipes(favoritedRecipes);
+  }, []);
+
+  const openModal = (recipeId: string) => {
+    const recipe = recipes.find((r) => r.id === recipeId);
+    setSelectedRecipe(recipe || null);
     setModalVisible(true);
   };
 
@@ -72,8 +29,20 @@ export default function ProfileScreen() {
     setSelectedRecipe(null);
   };
 
+  const toggleFavorite = (id: string) => {
+    setRecipes((prevRecipes) =>
+      prevRecipes.map((recipe) =>
+        recipe.id === id ? { ...recipe, favorite: !recipe.favorite } : recipe
+      )
+    );
+  };
+
   const renderRecipe = ({ item }: { item: RecipeData }) => (
-    <RecipeCard recipe={item} onPress={() => openModal(item)} />
+    <RecipeCard
+      recipe={item}
+      onPress={() => openModal(item.id)}
+      onToggleFavorite={() => toggleFavorite(item.id)}
+    />
   );
 
   return (

@@ -1,3 +1,4 @@
+// components/recipeCard.tsx
 import React from "react";
 import {
   View,
@@ -8,15 +9,7 @@ import {
   Dimensions,
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
-
-type RecipeData = {
-  id: string;
-  title: string;
-  image: any;
-  time: string;
-  calories: string;
-  favorite: boolean;
-};
+import { RecipeData } from "../types";
 
 interface RecipeCardProps {
   recipe: RecipeData;
