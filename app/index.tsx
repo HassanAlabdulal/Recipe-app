@@ -42,7 +42,7 @@ const LoginScreen = () => {
               style={styles.icon}
             />
             <TextInput
-              placeholder="hassan@gmail.com"
+              placeholder="lazywait@gmail.com"
               style={styles.input}
               keyboardType="email-address"
             />
@@ -173,7 +173,8 @@ const styles = StyleSheet.create({
   signUpButton: {
     width: "90%",
     alignItems: "center",
-    marginTop: 16,
+    marginTop: 8,
+    paddingVertical: 8,
   },
   signUpButtonText: {
     fontSize: 14,

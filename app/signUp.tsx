@@ -29,7 +29,7 @@ const LoginScreen = () => {
               />
             </View>
           </View>
-          <Text style={styles.title}>Login</Text>
+          <Text style={styles.title}>Sign Up</Text>
         </View>
 
         <View style={styles.bottomSection}>
@@ -42,7 +42,7 @@ const LoginScreen = () => {
               style={styles.icon}
             />
             <TextInput
-              placeholder="hassan@gmail.com"
+              placeholder="lazywait@gmail.com"
               style={styles.input}
               keyboardType="email-address"
             />
@@ -64,13 +64,6 @@ const LoginScreen = () => {
           <Link href="/home" asChild>
             <Pressable style={styles.loginButton}>
               <Text style={styles.loginButtonText}>Login</Text>
-            </Pressable>
-          </Link>
-          <Link href="/home" asChild>
-            <Pressable style={styles.signUpButton}>
-              <Text style={styles.signUpButtonText}>
-                Don't have an account? Sign Up
-              </Text>
             </Pressable>
           </Link>
         </View>
