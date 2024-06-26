@@ -1,18 +1,14 @@
+// RecipeModal.tsx
+
 import React from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Modal,
-  Pressable,
-} from "react-native";
+import { View, Text, StyleSheet, Modal, Pressable } from "react-native";
 import Recipe from "./recipeDetails";
 
 interface RecipeData {
   title: string;
   time: string;
   calories: string;
+  favorite: boolean;
 }
 
 interface RecipeModalProps {

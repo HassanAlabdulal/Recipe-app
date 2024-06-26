@@ -15,23 +15,29 @@ type RecipeData = {
   image: any;
   time: string;
   calories: string;
+  favorite: boolean;
 };
 
 interface RecipeCardProps {
   recipe: RecipeData;
   onPress: () => void;
+  onToggleFavorite: () => void;
 }
 
-const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onPress }) => {
+const RecipeCard: React.FC<RecipeCardProps> = ({
+  recipe,
+  onPress,
+  onToggleFavorite,
+}) => {
   return (
     <TouchableOpacity style={styles.recipeCard} onPress={onPress}>
       <Image source={recipe.image} style={styles.recipeImage} />
       <Ionicons
-        // name="heart-outline"
-        name="heart"
+        name={recipe.favorite ? "heart" : "heart-outline"}
         size={24}
         color="red"
         style={styles.heartIcon}
+        onPress={onToggleFavorite}
       />
       <Text style={styles.recipeTitle}>{recipe.title}</Text>
     </TouchableOpacity>

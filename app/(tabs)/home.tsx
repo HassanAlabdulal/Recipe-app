@@ -15,10 +15,12 @@ import RecipeCard from "../../components/recipeCard";
 import RecipeModal from "../../components/RecipeModal";
 
 type RecipeData = {
+  id: string;
   title: string;
   time: string;
   calories: string;
   image: any;
+  favorite: boolean;
 };
 
 const HomeScreen: React.FC = () => {
@@ -30,18 +32,49 @@ const HomeScreen: React.FC = () => {
     { name: "Diet", image: require("../../assets/images/vegetable.png") },
   ];
 
+  const [recipes, setRecipes] = useState<RecipeData[]>([
+    {
+      id: "1",
+      title: "Creamy Pasta",
+      time: "20 Min",
+      calories: "239 Cal",
+      image: require("../../assets/images/creamyPasta.png"),
+      favorite: false,
+    },
+    {
+      id: "2",
+      title: "Spaghetti",
+      time: "30 Min",
+      calories: "350 Cal",
+      image: require("../../assets/images/spaghetti.png"),
+      favorite: false,
+    },
+  ]);
+
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [selectedRecipe, setSelectedRecipe] = useState<RecipeData | null>(null);
 
-  const openModal = (recipe: RecipeData) => {
-    setSelectedRecipe(recipe);
+  const openModal = (recipeId: string) => {
+    const recipe = recipes.find((r) => r.id === recipeId);
+    setSelectedRecipe(recipe || null);
     setModalVisible(true);
   };
 
   const closeModal = () => {
     setModalVisible(false);
     setSelectedRecipe(null);
+  };
+
+  const toggleFavorite = (id: string) => {
+    setRecipes((prevRecipes) =>
+      prevRecipes.map((recipe) =>
+        recipe.id === id ? { ...recipe, favorite: !recipe.favorite } : recipe
+      )
+    );
+    // Ensure the selected recipe is updated
+    const updatedRecipe = recipes.find((r) => r.id === id);
+    setSelectedRecipe(updatedRecipe || null);
   };
 
   return (
@@ -105,28 +138,14 @@ const HomeScreen: React.FC = () => {
 
       <Text style={styles.recommendationsTitle}>Recommendations</Text>
       <View style={styles.recommendations}>
-        {Array(6)
-          .fill(0)
-          .map((_, index) => (
-            <RecipeCard
-              key={index}
-              recipe={{
-                id: "1",
-                title: "Creamy Pasta",
-                time: "20 Min",
-                calories: "239 Cal",
-                image: require("../../assets/images/creamyPasta.png"),
-              }}
-              onPress={() =>
-                openModal({
-                  title: "Creamy Pasta",
-                  time: "20 Min",
-                  calories: "239 Cal",
-                  image: require("../../assets/images/creamyPasta.png"),
-                })
-              }
-            />
-          ))}
+        {recipes.map((recipe) => (
+          <RecipeCard
+            key={recipe.id}
+            recipe={recipe}
+            onPress={() => openModal(recipe.id)}
+            onToggleFavorite={() => toggleFavorite(recipe.id)}
+          />
+        ))}
       </View>
 
       <RecipeModal
