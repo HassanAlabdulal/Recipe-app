@@ -1,5 +1,12 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Modal, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Modal,
+  Pressable,
+} from "react-native";
 import Recipe from "./recipeDetails";
 
 interface RecipeData {
@@ -47,11 +54,11 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.5)",
   },
   modalContent: {
-    width: "100%",
+    width: "90%",
     backgroundColor: "white",
     borderRadius: 10,
     padding: 16,
-    height: "100%",
+    height: "80%",
   },
   modalTitle: {
     fontSize: 20,
