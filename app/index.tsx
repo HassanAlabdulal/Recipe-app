@@ -24,7 +24,7 @@ const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSignUp = async () => {
+  const handleLogin = async () => {
     if (email && password) {
       try {
         const auth = getAuth(app);
@@ -102,7 +102,7 @@ const LoginScreen = () => {
               </View>
             </View>
 
-            <Pressable onPress={handleSignUp} style={styles.loginButton}>
+            <Pressable onPress={handleLogin} style={styles.loginButton}>
               <Text style={styles.loginButtonText}>Login</Text>
             </Pressable>
             <Link href="/signUp" asChild>
