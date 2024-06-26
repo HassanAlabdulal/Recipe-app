@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   topSection: {
     backgroundColor: "#F6A028",
     width: "100%",
-    height: "50%",
+    height: "45%",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
   signUpButton: {
     width: "90%",
     alignItems: "center",
-    marginTop: 8,
+    marginTop: 12,
     paddingVertical: 8,
   },
   signUpButtonText: {

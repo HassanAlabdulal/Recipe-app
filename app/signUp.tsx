@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "expo-router";
 import {
   View,
@@ -10,78 +10,98 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
-const LoginScreen = () => {
+const SignUpScreen = () => {
+  const [isInputFocused, setIsInputFocused] = useState(false);
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <View style={styles.container}>
-        <View style={styles.topSection}>
-          <View style={styles.imageOuterBorder}>
-            <View style={styles.imageBorder}>
-              <Image
-                source={require("@/assets/images/loginScreenImage.png")}
-                style={styles.image}
-              />
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          <View style={styles.topSection}>
+            <View style={styles.imageOuterBorder}>
+              <View style={styles.imageBorder}>
+                <Image
+                  source={require("@/assets/images/loginScreenImage.png")}
+                  style={styles.image}
+                />
+              </View>
             </View>
+            <Text style={styles.title}>Sign Up</Text>
           </View>
-          <Text style={styles.title}>Sign Up</Text>
-        </View>
 
-        <View style={styles.bottomSection}>
-          <Text style={styles.inputText}>Name</Text>
-          <View style={styles.inputContainer}>
-            <Icon
-              name="person-outline"
-              size={20}
-              color="#666"
-              style={styles.icon}
-            />
-            <TextInput
-              placeholder="Hassan Alabdulal"
-              style={styles.input}
-              keyboardType="email-address"
-            />
-          </View>
-          <Text style={styles.inputText}>Email</Text>
-          <View style={styles.inputContainer}>
-            <Icon
-              name="mail-outline"
-              size={20}
-              color="#666"
-              style={styles.icon}
-            />
-            <TextInput
-              placeholder="hassan@lazywait.com"
-              style={styles.input}
-              keyboardType="email-address"
-            />
-          </View>
-          <Text style={styles.inputText}>Password</Text>
-          <View style={styles.inputContainer}>
-            <Icon
-              name="lock-closed-outline"
-              size={20}
-              color="#666"
-              style={styles.icon}
-            />
-            <TextInput
-              placeholder="********"
-              style={styles.input}
-              secureTextEntry
-            />
-          </View>
-          <Link href="/home" asChild>
-            <Pressable style={styles.loginButton}>
-              <Text style={styles.loginButtonText}>Login</Text>
-            </Pressable>
-          </Link>
+          <ScrollView
+            contentContainerStyle={[
+              styles.bottomSection,
+              isInputFocused && styles.bottomSectionFocused,
+            ]}
+          >
+            <View style={styles.inputWrapper}>
+              <Text style={styles.inputText}>Name</Text>
+              <View style={styles.inputContainer}>
+                <Icon
+                  name="person-outline"
+                  size={20}
+                  color="#666"
+                  style={styles.icon}
+                />
+                <TextInput
+                  placeholder="Hassan Alabdulal"
+                  style={styles.input}
+                  keyboardType="default"
+                  onFocus={() => setIsInputFocused(true)}
+                  onBlur={() => setIsInputFocused(false)}
+                />
+              </View>
+              <Text style={styles.inputText}>Email</Text>
+              <View style={styles.inputContainer}>
+                <Icon
+                  name="mail-outline"
+                  size={20}
+                  color="#666"
+                  style={styles.icon}
+                />
+                <TextInput
+                  placeholder="hassan@lazywait.com"
+                  style={styles.input}
+                  keyboardType="email-address"
+                  onFocus={() => setIsInputFocused(true)}
+                  onBlur={() => setIsInputFocused(false)}
+                />
+              </View>
+              <Text style={styles.inputText}>Password</Text>
+              <View style={styles.inputContainer}>
+                <Icon
+                  name="lock-closed-outline"
+                  size={20}
+                  color="#666"
+                  style={styles.icon}
+                />
+                <TextInput
+                  placeholder="********"
+                  style={styles.input}
+                  secureTextEntry
+                  onFocus={() => setIsInputFocused(true)}
+                  onBlur={() => setIsInputFocused(false)}
+                />
+              </View>
+            </View>
+
+            <Link href="/home" asChild>
+              <Pressable style={styles.loginButton}>
+                <Text style={styles.loginButtonText}>Sign Up</Text>
+              </Pressable>
+            </Link>
+          </ScrollView>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );
 };
@@ -89,31 +109,28 @@ const LoginScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: "100%",
-    width: "100%",
     backgroundColor: "#F6A028",
-    justifyContent: "center",
-    alignItems: "center",
-    elevation: 10,
   },
   topSection: {
     backgroundColor: "#F6A028",
     width: "100%",
-    height: "50%",
+    height: "45%",
     justifyContent: "center",
     alignItems: "center",
   },
   bottomSection: {
     backgroundColor: "white",
     width: "100%",
-    height: "50%",
-    overflow: "hidden",
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
+    paddingVertical: 20,
+  },
+  bottomSectionFocused: {
+    justifyContent: "flex-start",
+    paddingTop: 40,
   },
   imageBorder: {
     borderRadius: 100,
@@ -129,7 +146,6 @@ const styles = StyleSheet.create({
   image: {
     width: 145,
     height: 145,
-    overflow: "visible",
     borderRadius: 100,
   },
   title: {
@@ -138,7 +154,10 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     marginTop: 15,
   },
-
+  inputWrapper: {
+    width: "100%",
+    alignItems: "center",
+  },
   inputText: {
     width: "90%",
     marginLeft: 8,
@@ -180,7 +199,8 @@ const styles = StyleSheet.create({
   signUpButton: {
     width: "90%",
     alignItems: "center",
-    marginTop: 16,
+    marginTop: 8,
+    paddingVertical: 8,
   },
   signUpButtonText: {
     fontSize: 14,
@@ -189,4 +209,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default SignUpScreen;
