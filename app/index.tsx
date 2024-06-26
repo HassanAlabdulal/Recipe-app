@@ -18,6 +18,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { router } from "expo-router";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { app, auth } from "@/firebaseConfig";
+import LottieView from "lottie-react-native";
 
 const LoginScreen = () => {
   const [isInputFocused, setIsInputFocused] = useState(false);
@@ -48,8 +49,10 @@ const LoginScreen = () => {
           <View style={styles.topSection}>
             <View style={styles.imageOuterBorder}>
               <View style={styles.imageBorder}>
-                <Image
-                  source={require("@/assets/images/loginScreenImage.png")}
+                <LottieView
+                  source={require("../assets/animations/food-animation.json")}
+                  autoPlay
+                  loop
                   style={styles.image}
                 />
               </View>
