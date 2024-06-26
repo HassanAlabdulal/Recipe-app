@@ -1,12 +1,9 @@
 import React, { useState } from "react";
-// import { router } from "expo-router";
-// import auth from "@react-native-firebase/auth";
 import {
   View,
   Text,
   TextInput,
   ScrollView,
-  Pressable,
   Image,
   StyleSheet,
   KeyboardAvoidingView,
@@ -28,31 +25,18 @@ const SignUpScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  //   const handleSignUp = async () => {
-  //     if (email && password) {
-  //       try {
-  //         await auth().createUserWithEmailAndPassword(email, password);
-  //         Alert.alert("Account created successfully");
-  //         router.push("/home");
-  //       } catch (err) {
-  //         Alert.alert("Error");
-  //       }
-  //     } else {
-  //       Alert.alert("Error", "Please fill in all fields");
-  //     }
-  //   };
-
   const handleSignUp = async () => {
-    try {
-      console.log("Trying to getAuth");
-      const auth = getAuth(app);
-      console.log("Got the auth");
-      await createUserWithEmailAndPassword(auth, email, password);
-      console.log("completed signup");
-      router.push("/home");
-    } catch (error) {
-      Alert.alert("Error");
-      console.log("Error sigh.", error);
+    if (email && password) {
+      try {
+        const auth = getAuth(app);
+        await createUserWithEmailAndPassword(auth, email, password);
+        Alert.alert("Account Created Successfully! ");
+        router.push("/home");
+      } catch (error: any) {
+        Alert.alert("Error", error.message);
+      }
+    } else {
+      Alert.alert("Error", "Please fill in all fields");
     }
   };
 
