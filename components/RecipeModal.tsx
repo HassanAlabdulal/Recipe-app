@@ -1,13 +1,9 @@
+// RecipeModal.tsx
+
 import React from "react";
 import { View, Text, StyleSheet, Modal, Pressable } from "react-native";
-import Recipe from "./recipeDetails";
-
-interface RecipeData {
-  title: string;
-  time: string;
-  calories: string;
-  favorite: boolean;
-}
+import RecipeDetails from "./recipeDetails";
+import { RecipeData } from "../types";
 
 interface RecipeModalProps {
   visible: boolean;
@@ -30,7 +26,7 @@ const RecipeModal: React.FC<RecipeModalProps> = ({
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
           <Text style={styles.modalTitle}>Recipe Details</Text>
-          {recipe && <Recipe recipe={recipe} />}
+          {recipe && <RecipeDetails recipe={recipe} />}
           <Pressable style={styles.closeButton} onPress={onClose}>
             <Text style={styles.closeButtonText}>Close</Text>
           </Pressable>

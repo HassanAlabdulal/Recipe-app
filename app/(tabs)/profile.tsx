@@ -3,15 +3,21 @@ import { View, Text, FlatList, StyleSheet } from "react-native";
 import RecipeCard from "../../components/recipeCard";
 import ProfileHeader from "../../components/ProfileHeader";
 import RecipeModal from "../../components/RecipeModal";
-import { getFavoritedRecipes, getDummyRecipes } from "../../utils/recipeUtils";
 import { RecipeData } from "../../types";
 
-export default function ProfileScreen() {
-  const [recipes, setRecipes] = useState<RecipeData[]>(getDummyRecipes());
+interface ProfileScreenProps {
+  recipes: RecipeData[];
+  toggleFavorite: (id: string) => void;
+}
+
+const ProfileScreen: React.FC<ProfileScreenProps> = ({
+  recipes,
+  toggleFavorite,
+}) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [selectedRecipe, setSelectedRecipe] = useState<RecipeData | null>(null);
 
-  const favoritedRecipes = getFavoritedRecipes(recipes);
+  const favoritedRecipes = recipes.filter((recipe) => recipe.favorite);
 
   const openModal = (recipeId: string) => {
     const recipe = recipes.find((r) => r.id === recipeId);
@@ -22,14 +28,6 @@ export default function ProfileScreen() {
   const closeModal = () => {
     setModalVisible(false);
     setSelectedRecipe(null);
-  };
-
-  const toggleFavorite = (id: string) => {
-    setRecipes((prevRecipes) =>
-      prevRecipes.map((recipe) =>
-        recipe.id === id ? { ...recipe, favorite: !recipe.favorite } : recipe
-      )
-    );
   };
 
   const renderRecipe = ({ item }: { item: RecipeData }) => (
@@ -63,7 +61,7 @@ export default function ProfileScreen() {
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -88,3 +86,5 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
 });
+
+export default ProfileScreen;

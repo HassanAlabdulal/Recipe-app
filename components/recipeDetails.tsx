@@ -1,32 +1,16 @@
+// recipeDetails.tsx
+
 import React from "react";
 import { View, Text, Image, StyleSheet, FlatList } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { RecipeData } from "../types";
 
-interface Ingredient {
-  id: string;
-  name: string;
-  image: any;
-}
-
-interface RecipeProps {
-  recipe: {
-    title: string;
-    time: string;
-    calories: string;
-  };
-}
-
-const ingredients: Ingredient[] = [
-  { id: "1", name: "Chicken", image: require("../assets/images/egg.png") },
-  { id: "2", name: "Chicken", image: require("../assets/images/egg.png") },
-  { id: "3", name: "Chicken", image: require("../assets/images/egg.png") },
-  { id: "4", name: "Chicken", image: require("../assets/images/egg.png") },
-  { id: "5", name: "Chicken", image: require("../assets/images/egg.png") },
-  { id: "6", name: "Chicken", image: require("../assets/images/egg.png") },
-];
-
-const Recipe: React.FC<RecipeProps> = ({ recipe }) => {
-  const renderIngredient = ({ item }: { item: Ingredient }) => (
+const RecipeDetails: React.FC<{ recipe: RecipeData }> = ({ recipe }) => {
+  const renderIngredient = ({
+    item,
+  }: {
+    item: { id: string; name: string; image: any };
+  }) => (
     <View style={styles.ingredient}>
       <Image source={item.image} style={styles.ingredientImage} />
       <Text style={styles.ingredientText}>{item.name}</Text>
@@ -36,10 +20,7 @@ const Recipe: React.FC<RecipeProps> = ({ recipe }) => {
   const renderHeader = () => (
     <>
       <View style={styles.topSection}>
-        <Image
-          source={require("../assets/images/creamyPasta.png")}
-          style={styles.image}
-        />
+        <Image source={recipe.image} style={styles.image} />
       </View>
       <View style={styles.recipeInfo}>
         <View style={styles.header}>
@@ -57,10 +38,7 @@ const Recipe: React.FC<RecipeProps> = ({ recipe }) => {
           </View>
         </View>
         <Text style={styles.subTitle}>Description</Text>
-        <Text style={styles.description}>
-          Lorem ipsum is placeholder text commonly used in the graphic, print,
-          and publishing industries for previewing layouts and visual mockups.
-        </Text>
+        <Text style={styles.description}>{recipe.description}</Text>
         <Text style={styles.subTitle}>Ingredients</Text>
       </View>
     </>
@@ -69,7 +47,7 @@ const Recipe: React.FC<RecipeProps> = ({ recipe }) => {
   return (
     <FlatList
       style={styles.container}
-      data={ingredients}
+      data={recipe.ingredients}
       renderItem={renderIngredient}
       keyExtractor={(item) => item.id}
       numColumns={2}
@@ -159,4 +137,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Recipe;
+export default RecipeDetails;

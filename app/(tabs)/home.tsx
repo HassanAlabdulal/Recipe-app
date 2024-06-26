@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+// home.tsx
+
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -13,8 +15,8 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { Link } from "expo-router";
 import RecipeCard from "../../components/recipeCard";
 import RecipeModal from "../../components/RecipeModal";
-import { getDummyRecipes } from "../../utils/recipeUtils";
 import { RecipeData } from "../../types";
+import { getDummyRecipes } from "../../utils/recipeUtils";
 
 const HomeScreen: React.FC = () => {
   const categories = [
@@ -25,10 +27,15 @@ const HomeScreen: React.FC = () => {
     { name: "Diet", image: require("../../assets/images/vegetable.png") },
   ];
 
-  const [recipes, setRecipes] = useState<RecipeData[]>(getDummyRecipes());
+  const [recipes, setRecipes] = useState<RecipeData[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [selectedRecipe, setSelectedRecipe] = useState<RecipeData | null>(null);
+
+  useEffect(() => {
+    const dummyRecipes = getDummyRecipes();
+    setRecipes(dummyRecipes);
+  }, []);
 
   const openModal = (recipeId: string) => {
     const recipe = recipes.find((r) => r.id === recipeId);
