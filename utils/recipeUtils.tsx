@@ -158,7 +158,7 @@ export const getDummyRecipes = (): RecipeData[] => {
       time: "40 Min",
       calories: "350 Cal",
       image: require("../assets/images/spaghetti.png"),
-      favorite: false,
+      favorite: true,
       description: "Classic spaghetti with a rich and flavorful sauce.",
       ingredients: [
         {
@@ -220,7 +220,7 @@ export const getDummyRecipes = (): RecipeData[] => {
       time: "40 Min",
       calories: "350 Cal",
       image: require("../assets/images/spaghetti.png"),
-      favorite: false,
+      favorite: true,
       description: "Classic spaghetti with a rich and flavorful sauce.",
       ingredients: [
         {
