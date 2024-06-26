@@ -66,7 +66,7 @@ const LoginScreen = () => {
               <Text style={styles.loginButtonText}>Login</Text>
             </Pressable>
           </Link>
-          <Link href="/signUp" asChild>
+          <Link href="/home" asChild>
             <Pressable style={styles.signUpButton}>
               <Text style={styles.signUpButtonText}>
                 Don't have an account? Sign Up

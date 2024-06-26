@@ -33,7 +33,7 @@ export const getDummyRecipes = (): RecipeData[] => {
       title: "Spaghetti",
       time: "40 Min",
       calories: "350 Cal",
-      image: require("../assets/images/spaghetti.png"),
+      image: require("../assets/images/creamyPasta.png"),
       favorite: false,
       description: "Classic spaghetti with a rich and flavorful sauce.",
       ingredients: [
@@ -64,7 +64,7 @@ export const getDummyRecipes = (): RecipeData[] => {
       title: "Spaghetti",
       time: "40 Min",
       calories: "350 Cal",
-      image: require("../assets/images/spaghetti.png"),
+      image: require("../assets/images/creamyPasta.png"),
       favorite: false,
       description: "Classic spaghetti with a rich and flavorful sauce.",
       ingredients: [
@@ -95,7 +95,7 @@ export const getDummyRecipes = (): RecipeData[] => {
       title: "Spaghetti",
       time: "40 Min",
       calories: "350 Cal",
-      image: require("../assets/images/spaghetti.png"),
+      image: require("../assets/images/creamyPasta.png"),
       favorite: false,
       description: "Classic spaghetti with a rich and flavorful sauce.",
       ingredients: [
