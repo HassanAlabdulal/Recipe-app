@@ -12,7 +12,7 @@ export const getDummyRecipes = (): RecipeData[] => {
     },
     {
       id: "2",
-      title: "Spaghetti Bolognese",
+      title: "Spaghetti",
       time: "30 Min",
       calories: "350 Cal",
       image: require("../assets/images/spaghetti.png"),
@@ -28,7 +28,7 @@ export const getDummyRecipes = (): RecipeData[] => {
     },
     {
       id: "4",
-      title: "Spaghetti Bolognese",
+      title: "Spaghetti",
       time: "30 Min",
       calories: "350 Cal",
       image: require("../assets/images/spaghetti.png"),
@@ -44,7 +44,7 @@ export const getDummyRecipes = (): RecipeData[] => {
     },
     {
       id: "6",
-      title: "Spaghetti Bolognese",
+      title: "Spaghetti",
       time: "30 Min",
       calories: "350 Cal",
       image: require("../assets/images/spaghetti.png"),
