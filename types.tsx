@@ -1,4 +1,3 @@
-// types.ts
 export type RecipeData = {
   id: string;
   title: string;
