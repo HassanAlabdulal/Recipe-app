@@ -8,35 +8,51 @@ export const getDummyRecipes = (): RecipeData[] => {
       time: "20 Min",
       calories: "239 Cal",
       image: require("../assets/images/creamyPasta.png"),
-      favorite: false,
+      favorite: true,
     },
     {
       id: "2",
-      title: "Spaghetti",
-      time: "40 Min",
+      title: "Spaghetti Bolognese",
+      time: "30 Min",
+      calories: "350 Cal",
+      image: require("../assets/images/spaghetti.png"),
+      favorite: true,
+    },
+    {
+      id: "3",
+      title: "Creamy Pasta",
+      time: "20 Min",
+      calories: "239 Cal",
+      image: require("../assets/images/creamyPasta.png"),
+      favorite: true,
+    },
+    {
+      id: "4",
+      title: "Spaghetti Bolognese",
+      time: "30 Min",
       calories: "350 Cal",
       image: require("../assets/images/spaghetti.png"),
       favorite: false,
     },
     {
-      id: "3",
+      id: "5",
       title: "Creamy Pasta",
-      time: "10 Min",
-      calories: "350 Cal",
+      time: "20 Min",
+      calories: "239 Cal",
       image: require("../assets/images/creamyPasta.png"),
-      favorite: false,
+      favorite: true,
     },
     {
-      id: "4",
-      title: "Spaghetti",
+      id: "6",
+      title: "Spaghetti Bolognese",
       time: "30 Min",
       calories: "350 Cal",
-      image: require("../assets/images/creamyPasta.png"),
+      image: require("../assets/images/spaghetti.png"),
       favorite: false,
     },
   ];
 };
 
-export const getFavoritedRecipes = (): RecipeData[] => {
-  return getDummyRecipes().filter((recipe) => recipe.favorite);
+export const getFavoritedRecipes = (recipes: RecipeData[]): RecipeData[] => {
+  return recipes.filter((recipe) => recipe.favorite);
 };

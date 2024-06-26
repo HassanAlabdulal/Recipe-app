@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -25,15 +25,10 @@ const HomeScreen: React.FC = () => {
     { name: "Diet", image: require("../../assets/images/vegetable.png") },
   ];
 
-  const [recipes, setRecipes] = useState<RecipeData[]>([]);
+  const [recipes, setRecipes] = useState<RecipeData[]>(getDummyRecipes());
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [selectedRecipe, setSelectedRecipe] = useState<RecipeData | null>(null);
-
-  useEffect(() => {
-    const loadedRecipes = getDummyRecipes();
-    setRecipes(loadedRecipes);
-  }, []);
 
   const openModal = (recipeId: string) => {
     const recipe = recipes.find((r) => r.id === recipeId);
@@ -64,7 +59,6 @@ const HomeScreen: React.FC = () => {
           <Text style={styles.greeting}>Hello,</Text>
           <Text style={styles.name}>Hassan 👋</Text>
         </View>
-
         <View>
           <Link href="/profile" asChild>
             <Pressable>

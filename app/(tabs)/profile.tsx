@@ -7,15 +7,11 @@ import { getFavoritedRecipes, getDummyRecipes } from "../../utils/recipeUtils";
 import { RecipeData } from "../../types";
 
 export default function ProfileScreen() {
-  const [recipes, setRecipes] = useState<RecipeData[]>([]);
+  const [recipes, setRecipes] = useState<RecipeData[]>(getDummyRecipes());
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [selectedRecipe, setSelectedRecipe] = useState<RecipeData | null>(null);
 
-  useEffect(() => {
-    // Load the favorited recipes
-    const favoritedRecipes = getFavoritedRecipes();
-    setRecipes(favoritedRecipes);
-  }, []);
+  const favoritedRecipes = getFavoritedRecipes(recipes);
 
   const openModal = (recipeId: string) => {
     const recipe = recipes.find((r) => r.id === recipeId);
@@ -53,7 +49,7 @@ export default function ProfileScreen() {
       />
       <Text style={styles.starredRecipesTitle}>My Starred Recipes</Text>
       <FlatList
-        data={recipes}
+        data={favoritedRecipes}
         renderItem={renderRecipe}
         keyExtractor={(item) => item.id}
         numColumns={2}
