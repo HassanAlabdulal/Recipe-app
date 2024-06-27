@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   View,
   Text,
@@ -8,7 +8,7 @@ import {
   StyleSheet,
   ScrollView,
   Pressable,
-  ActivityIndicator,
+  Animated,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Link } from "expo-router";
@@ -17,6 +17,8 @@ import RecipeModal from "../../components/RecipeModal";
 import { RecipeData } from "../../types";
 import { fetchRecipes } from "../../utils/recipeUtils";
 import * as Progress from "react-native-progress";
+import { auth, db } from "@/firebaseConfig";
+import { doc, getDoc } from "firebase/firestore";
 
 const HomeScreen: React.FC = () => {
   const categories = [
@@ -33,6 +35,8 @@ const HomeScreen: React.FC = () => {
   const [selectedRecipe, setSelectedRecipe] = useState<RecipeData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [userName, setUserName] = useState<string | null>(null);
+  const animatedValue = useRef(new Animated.Value(-200)).current;
 
   useEffect(() => {
     const loadRecipes = async () => {
@@ -46,8 +50,24 @@ const HomeScreen: React.FC = () => {
       }
     };
 
+    const fetchProfileData = async () => {
+      const currentUser = auth.currentUser;
+      if (currentUser) {
+        const userDoc = await getDoc(doc(db, "users", currentUser.uid));
+        if (userDoc.exists()) {
+          setUserName(userDoc.data().name);
+          Animated.timing(animatedValue, {
+            toValue: 0,
+            duration: 500,
+            useNativeDriver: true,
+          }).start();
+        }
+      }
+    };
+
     loadRecipes();
-  }, []);
+    fetchProfileData();
+  }, [animatedValue]);
 
   const openModal = (recipeId: string) => {
     const recipe = recipes.find((r) => r.id === recipeId);
@@ -77,7 +97,16 @@ const HomeScreen: React.FC = () => {
         <View style={styles.header}>
           <View style={styles.headerLeftSide}>
             <Text style={styles.greeting}>Hello,</Text>
-            <Text style={styles.name}>Hassan 👋</Text>
+            <Animated.Text
+              style={[
+                styles.name,
+                {
+                  transform: [{ translateX: animatedValue }],
+                },
+              ]}
+            >
+              {userName ? userName : ""} 👋
+            </Animated.Text>
           </View>
           <View>
             <Link href="/profile" asChild>
