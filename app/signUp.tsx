@@ -18,12 +18,17 @@ import LottieView from "lottie-react-native";
 import { router } from "expo-router";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { app, auth } from "@/firebaseConfig";
+import CustomAlert from "../components/CustomAlert";
+import { getErrorMessage } from "../utils/firebaseErrorMessages";
 
 const SignUpScreen = () => {
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertTitle, setAlertTitle] = useState("");
+  const [alertMessage, setAlertMessage] = useState("");
 
   const handleSignUp = async () => {
     if (email && password) {
@@ -33,10 +38,15 @@ const SignUpScreen = () => {
         Alert.alert("Account Created Successfully! ");
         router.push("/home");
       } catch (error: any) {
-        Alert.alert("Error", error.message);
+        const errorMessage = getErrorMessage(error.code);
+        setAlertTitle("Error");
+        setAlertMessage(errorMessage);
+        setAlertVisible(true);
       }
     } else {
-      Alert.alert("Error", "Please fill in all fields");
+      setAlertTitle("Error");
+      setAlertMessage("Please fill in all fields");
+      setAlertVisible(true);
     }
   };
 
@@ -128,6 +138,13 @@ const SignUpScreen = () => {
               <Text style={styles.loginButtonText}>Sign Up</Text>
             </TouchableOpacity>
           </ScrollView>
+
+          <CustomAlert
+            title={alertTitle}
+            message={alertMessage}
+            visible={alertVisible}
+            onClose={() => setAlertVisible(false)}
+          />
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>

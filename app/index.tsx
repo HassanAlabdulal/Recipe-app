@@ -19,7 +19,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { app } from "@/firebaseConfig";
 import LottieView from "lottie-react-native";
 import CustomAlert from "../components/CustomAlert";
-import { getErrorMessage } from "../utils/firebaseErrorMessages"; // Import the utility function
+import { getErrorMessage } from "../utils/firebaseErrorMessages";
 
 const LoginScreen = () => {
   const [isInputFocused, setIsInputFocused] = useState(false);
