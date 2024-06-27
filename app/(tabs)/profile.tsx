@@ -99,7 +99,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
     paddingTop: 20,
     width: "100%",
     paddingHorizontal: 20,
@@ -113,10 +112,12 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
   },
   recipesContainer: {
-    justifyContent: "center",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
   },
   columnWrapper: {
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
+    width: "100%",
   },
   ProgressBar: {
     flex: 1,
