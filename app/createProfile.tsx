@@ -20,45 +20,26 @@ import { app } from "@/firebaseConfig";
 import CustomAlert from "../components/CustomAlert";
 import { getErrorMessage } from "../utils/firebaseErrorMessages";
 
-const SignUpScreen = () => {
+const CreateProfileScreen = () => {
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [age, setAge] = useState("");
+  const [bio, setBio] = useState("");
+  const [location, setLocation] = useState("");
   const [alertVisible, setAlertVisible] = useState(false);
   const [alertTitle, setAlertTitle] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
   const [navigateAfterAlert, setNavigateAfterAlert] = useState(false);
 
   const handleSignUp = async () => {
-    if (email && password) {
-      try {
-        const auth = getAuth(app);
-        await createUserWithEmailAndPassword(auth, email, password);
-        setAlertTitle("Success!");
-        setAlertMessage(
-          "Your account has been created successfully! Welcome aboard! 🎉"
-        );
-        setAlertVisible(true);
-        setNavigateAfterAlert(true);
-      } catch (error: any) {
-        const errorMessage = getErrorMessage(error.code);
-        setAlertTitle("Error");
-        setAlertMessage(errorMessage);
-        setAlertVisible(true);
-      }
-    } else {
-      setAlertTitle("Error");
-      setAlertMessage("Please fill in all fields");
-      setAlertVisible(true);
-    }
+    // Sign up logic
   };
 
   const handleCloseAlert = () => {
     setAlertVisible(false);
     if (navigateAfterAlert) {
       setNavigateAfterAlert(false);
-      router.push("/createProfile");
+      router.push("/home");
     }
   };
 
@@ -80,7 +61,6 @@ const SignUpScreen = () => {
                 />
               </View>
             </View>
-            <Text style={styles.title}>Sign Up</Text>
           </View>
 
           <ScrollView
@@ -90,38 +70,77 @@ const SignUpScreen = () => {
             ]}
           >
             <View style={styles.inputWrapper}>
-              <Text style={styles.inputText}>Email</Text>
+              <Text style={styles.inputText}>Name</Text>
               <View style={styles.inputContainer}>
                 <Icon
-                  name="mail-outline"
+                  name="person-outline"
                   size={20}
                   color="#666"
                   style={styles.icon}
                 />
                 <TextInput
-                  placeholder="hassan@lazywait.com"
+                  placeholder="Hassan Alabdulal"
                   style={styles.input}
-                  keyboardType="email-address"
-                  value={email}
-                  onChangeText={(text) => setEmail(text)}
+                  keyboardType="default"
+                  value={name}
+                  onChangeText={(text) => setName(text)}
                   onFocus={() => setIsInputFocused(true)}
                   onBlur={() => setIsInputFocused(false)}
                 />
               </View>
-              <Text style={styles.inputText}>Password</Text>
+
+              <Text style={styles.inputText}>Age</Text>
               <View style={styles.inputContainer}>
                 <Icon
-                  name="lock-closed-outline"
+                  name="calendar-outline"
                   size={20}
                   color="#666"
                   style={styles.icon}
                 />
                 <TextInput
-                  placeholder="********"
+                  placeholder="Enter your age"
                   style={styles.input}
-                  secureTextEntry
-                  value={password}
-                  onChangeText={(text) => setPassword(text)}
+                  keyboardType="numeric"
+                  value={age}
+                  onChangeText={(text) => setAge(text)}
+                  onFocus={() => setIsInputFocused(true)}
+                  onBlur={() => setIsInputFocused(false)}
+                />
+              </View>
+
+              <Text style={styles.inputText}>Bio</Text>
+              <View style={styles.inputContainer}>
+                <Icon
+                  name="information-circle-outline"
+                  size={20}
+                  color="#666"
+                  style={styles.icon}
+                />
+                <TextInput
+                  placeholder="A brief bio about yourself"
+                  style={styles.input}
+                  keyboardType="default"
+                  value={bio}
+                  onChangeText={(text) => setBio(text)}
+                  onFocus={() => setIsInputFocused(true)}
+                  onBlur={() => setIsInputFocused(false)}
+                />
+              </View>
+
+              <Text style={styles.inputText}>Location</Text>
+              <View style={styles.inputContainer}>
+                <Icon
+                  name="location-outline"
+                  size={20}
+                  color="#666"
+                  style={styles.icon}
+                />
+                <TextInput
+                  placeholder="Enter your location"
+                  style={styles.input}
+                  keyboardType="default"
+                  value={location}
+                  onChangeText={(text) => setLocation(text)}
                   onFocus={() => setIsInputFocused(true)}
                   onBlur={() => setIsInputFocused(false)}
                 />
@@ -132,7 +151,7 @@ const SignUpScreen = () => {
               onPress={handleSignUp}
               style={styles.signUpButton}
             >
-              <Text style={styles.signUpButtonText}>Next</Text>
+              <Text style={styles.signUpButtonText}>Sign Up</Text>
             </TouchableOpacity>
           </ScrollView>
 
@@ -156,7 +175,7 @@ const styles = StyleSheet.create({
   topSection: {
     backgroundColor: "#F6A028",
     width: "100%",
-    height: "45%",
+    height: "35%",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -242,4 +261,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUpScreen;
+export default CreateProfileScreen;
