@@ -15,6 +15,7 @@ import RecipeCard from "../../components/recipeCard";
 import RecipeModal from "../../components/RecipeModal";
 import { RecipeData } from "../../types";
 import { fetchRecipes } from "../../utils/recipeUtils";
+import * as Progress from "react-native-progress";
 
 const HomeScreen: React.FC = () => {
   const categories = [
@@ -127,7 +128,15 @@ const HomeScreen: React.FC = () => {
       <Text style={styles.recommendationsTitle}>Recommendations</Text>
 
       {loading ? (
-        <Text>Loading...</Text>
+        <View>
+          <Progress.Circle
+            size={40}
+            indeterminate={true}
+            thickness={3}
+            borderColor={"#F6A028"}
+            borderWidth={2}
+          />
+        </View>
       ) : error ? (
         <Text>Error: {error}</Text>
       ) : (
