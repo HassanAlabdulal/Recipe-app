@@ -3,20 +3,26 @@ import { View, Text, Image, StyleSheet } from "react-native";
 
 interface ProfileHeaderProps {
   name: string;
-  description: string;
+  age: number;
+  bio: string;
+  location: string;
   imageSource: any;
 }
 
 const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   name,
-  description,
+  age,
+  bio,
+  location,
   imageSource,
 }) => {
   return (
     <View style={styles.headerContainer}>
       <Image source={imageSource} style={styles.profileImage} />
       <Text style={styles.profileName}>{name}</Text>
-      <Text style={styles.profileDescription}>{description}</Text>
+      <Text style={styles.profilebio}>{age}</Text>
+      <Text style={styles.profilebio}>{bio}</Text>
+      <Text style={styles.profilebio}>{location}</Text>
     </View>
   );
 };
@@ -37,7 +43,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
   },
-  profileDescription: {
+  profilebio: {
     fontSize: 16,
     color: "#AAAAAA",
   },

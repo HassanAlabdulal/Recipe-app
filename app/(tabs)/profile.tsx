@@ -6,6 +6,8 @@ import RecipeModal from "../../components/RecipeModal";
 import { fetchRecipes } from "../../utils/recipeUtils";
 import { RecipeData } from "../../types";
 import * as Progress from "react-native-progress";
+import { auth, db } from "@/firebaseConfig";
+import { doc, getDoc } from "firebase/firestore";
 
 export default function ProfileScreen() {
   const [recipes, setRecipes] = useState<RecipeData[]>([]);
@@ -13,6 +15,26 @@ export default function ProfileScreen() {
   const [selectedRecipe, setSelectedRecipe] = useState<RecipeData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [profileData, setProfileData] = useState<any>({
+    name: "",
+    age: "",
+    bio: "",
+    location: "",
+  });
+
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      const currentUser = auth.currentUser;
+      if (currentUser) {
+        const userDoc = await getDoc(doc(db, "users", currentUser.uid));
+        if (userDoc.exists()) {
+          setProfileData(userDoc.data());
+        }
+      }
+    };
+
+    fetchProfileData();
+  }, []);
 
   useEffect(() => {
     const loadRecipes = async () => {
@@ -59,8 +81,10 @@ export default function ProfileScreen() {
   return (
     <View style={styles.container}>
       <ProfileHeader
-        name="Hassan Alabdulal"
-        description="I love to cook amazing food"
+        name={profileData.name}
+        age={profileData.age}
+        bio={profileData.bio}
+        location={profileData.location}
         imageSource={require("../../assets/images/profile.png")}
       />
       <Text style={styles.starredRecipesTitle}>My Starred Recipes</Text>
