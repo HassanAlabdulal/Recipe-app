@@ -9,10 +9,10 @@ const RecipeDetails: React.FC<{ recipe: RecipeData }> = ({ recipe }) => {
   const renderIngredient = ({
     item,
   }: {
-    item: { id: string; name: string; image: any };
+    item: { id: string; name: string; image: string };
   }) => (
     <View style={styles.ingredient}>
-      <Image source={item.image} style={styles.ingredientImage} />
+      <Image source={{ uri: item.image }} style={styles.ingredientImage} />
       <Text style={styles.ingredientText}>{item.name}</Text>
     </View>
   );
@@ -20,7 +20,7 @@ const RecipeDetails: React.FC<{ recipe: RecipeData }> = ({ recipe }) => {
   const renderHeader = () => (
     <>
       <View style={styles.topSection}>
-        <Image source={recipe.image} style={styles.image} />
+        <Image source={{ uri: recipe.image }} style={styles.image} />
       </View>
       <View style={styles.recipeInfo}>
         <View style={styles.header}>

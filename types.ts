@@ -1,16 +1,16 @@
-export type Ingredient = {
+export interface Ingredient {
   id: string;
   name: string;
-  image: any;
-};
+  image: string;
+}
 
-export type RecipeData = {
+export interface RecipeData {
   id: string;
   title: string;
   time: string;
   calories: string;
-  image: any;
+  image: string;
   favorite: boolean;
   description: string;
   ingredients: Ingredient[];
-};
+}

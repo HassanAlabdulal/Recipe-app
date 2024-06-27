@@ -3,15 +3,30 @@ import { View, Text, FlatList, StyleSheet } from "react-native";
 import RecipeCard from "../../components/recipeCard";
 import ProfileHeader from "../../components/ProfileHeader";
 import RecipeModal from "../../components/RecipeModal";
-import { getFavoritedRecipes, getDummyRecipes } from "../../utils/recipeUtils";
+import { fetchRecipes } from "../../utils/recipeUtils";
 import { RecipeData } from "../../types";
 
 export default function ProfileScreen() {
-  const [recipes, setRecipes] = useState<RecipeData[]>(getDummyRecipes());
+  const [recipes, setRecipes] = useState<RecipeData[]>([]);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [selectedRecipe, setSelectedRecipe] = useState<RecipeData | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const favoritedRecipes = getFavoritedRecipes(recipes);
+  useEffect(() => {
+    const loadRecipes = async () => {
+      try {
+        const data = await fetchRecipes();
+        setRecipes(data.filter((recipe) => recipe.favorite));
+      } catch (error: any) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadRecipes();
+  }, []);
 
   const openModal = (recipeId: string) => {
     const recipe = recipes.find((r) => r.id === recipeId);
@@ -48,14 +63,20 @@ export default function ProfileScreen() {
         imageSource={require("../../assets/images/profile.png")}
       />
       <Text style={styles.starredRecipesTitle}>My Starred Recipes</Text>
-      <FlatList
-        data={favoritedRecipes}
-        renderItem={renderRecipe}
-        keyExtractor={(item) => item.id}
-        numColumns={2}
-        contentContainerStyle={styles.recipesContainer}
-        columnWrapperStyle={styles.columnWrapper}
-      />
+      {loading ? (
+        <Text>Loading...</Text>
+      ) : error ? (
+        <Text>Error: {error}</Text>
+      ) : (
+        <FlatList
+          data={recipes}
+          renderItem={renderRecipe}
+          keyExtractor={(item) => item.id}
+          numColumns={2}
+          contentContainerStyle={styles.recipesContainer}
+          columnWrapperStyle={styles.columnWrapper}
+        />
+      )}
       <RecipeModal
         visible={modalVisible}
         recipe={selectedRecipe}

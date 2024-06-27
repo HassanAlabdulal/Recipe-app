@@ -24,7 +24,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({
 }) => {
   return (
     <TouchableOpacity style={styles.recipeCard} onPress={onPress}>
-      <Image source={recipe.image} style={styles.recipeImage} />
+      <Image source={{ uri: recipe.image }} style={styles.recipeImage} />
       <Ionicons
         name={recipe.favorite ? "heart" : "heart-outline"}
         size={24}

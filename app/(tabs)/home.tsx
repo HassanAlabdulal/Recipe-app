@@ -1,5 +1,3 @@
-// home.tsx
-
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -16,7 +14,7 @@ import { Link } from "expo-router";
 import RecipeCard from "../../components/recipeCard";
 import RecipeModal from "../../components/RecipeModal";
 import { RecipeData } from "../../types";
-import { getDummyRecipes } from "../../utils/recipeUtils";
+import { fetchRecipes } from "../../utils/recipeUtils"; // Import the fetch function
 
 const HomeScreen: React.FC = () => {
   const categories = [
@@ -31,10 +29,22 @@ const HomeScreen: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [selectedRecipe, setSelectedRecipe] = useState<RecipeData | null>(null);
+  const [loading, setLoading] = useState<boolean>(true); // Add loading state
+  const [error, setError] = useState<string | null>(null); // Add error state
 
   useEffect(() => {
-    const dummyRecipes = getDummyRecipes();
-    setRecipes(dummyRecipes);
+    const loadRecipes = async () => {
+      try {
+        const data = await fetchRecipes();
+        setRecipes(data);
+      } catch (error: any) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadRecipes();
   }, []);
 
   const openModal = (recipeId: string) => {
@@ -115,16 +125,23 @@ const HomeScreen: React.FC = () => {
       </ScrollView>
 
       <Text style={styles.recommendationsTitle}>Recommendations</Text>
-      <View style={styles.recommendations}>
-        {recipes.map((recipe) => (
-          <RecipeCard
-            key={recipe.id}
-            recipe={recipe}
-            onPress={() => openModal(recipe.id)}
-            onToggleFavorite={() => toggleFavorite(recipe.id)}
-          />
-        ))}
-      </View>
+
+      {loading ? (
+        <Text>Loading...</Text>
+      ) : error ? (
+        <Text>Error: {error}</Text>
+      ) : (
+        <View style={styles.recommendations}>
+          {recipes.map((recipe) => (
+            <RecipeCard
+              key={recipe.id}
+              recipe={recipe}
+              onPress={() => openModal(recipe.id)}
+              onToggleFavorite={() => toggleFavorite(recipe.id)}
+            />
+          ))}
+        </View>
+      )}
 
       <RecipeModal
         visible={modalVisible}
