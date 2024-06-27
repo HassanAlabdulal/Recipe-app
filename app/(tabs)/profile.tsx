@@ -5,6 +5,7 @@ import ProfileHeader from "../../components/ProfileHeader";
 import RecipeModal from "../../components/RecipeModal";
 import { fetchRecipes } from "../../utils/recipeUtils";
 import { RecipeData } from "../../types";
+import * as Progress from "react-native-progress";
 
 export default function ProfileScreen() {
   const [recipes, setRecipes] = useState<RecipeData[]>([]);
@@ -64,7 +65,15 @@ export default function ProfileScreen() {
       />
       <Text style={styles.starredRecipesTitle}>My Starred Recipes</Text>
       {loading ? (
-        <Text>Loading...</Text>
+        <View style={styles.ProgressBar}>
+          <Progress.Circle
+            size={40}
+            indeterminate={true}
+            thickness={3}
+            borderColor={"#F6A028"}
+            borderWidth={2}
+          />
+        </View>
       ) : error ? (
         <Text>Error: {error}</Text>
       ) : (
@@ -108,5 +117,11 @@ const styles = StyleSheet.create({
   },
   columnWrapper: {
     justifyContent: "space-between",
+  },
+  ProgressBar: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: 64,
   },
 });
