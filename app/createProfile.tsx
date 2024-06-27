@@ -175,9 +175,9 @@ const CreateProfileScreen = () => {
 
             <TouchableOpacity
               onPress={handleProfileCreation}
-              style={styles.signUpButton}
+              style={styles.Button}
             >
-              <Text style={styles.signUpButtonText}>Create Profile</Text>
+              <Text style={styles.ButtonText}>Create Profile</Text>
             </TouchableOpacity>
           </ScrollView>
 
@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
   },
-  signUpButton: {
+  Button: {
     backgroundColor: "#F6A028",
     paddingVertical: 12,
     paddingHorizontal: 20,
@@ -272,7 +272,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 10,
   },
-  signUpButtonText: {
+  ButtonText: {
     fontSize: 20,
     fontWeight: "bold",
     color: "white",
