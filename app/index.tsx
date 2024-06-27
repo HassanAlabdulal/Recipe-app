@@ -1,4 +1,3 @@
-// LoginScreen.tsx
 import React, { useState } from "react";
 import { Link } from "expo-router";
 import {
@@ -35,12 +34,12 @@ const LoginScreen = () => {
         await signInWithEmailAndPassword(auth, email, password);
         router.push("/home");
       } catch (error: any) {
-        setAlertTitle("Error");
+        setAlertTitle("Error Message");
         setAlertMessage(error.message);
         setAlertVisible(true);
       }
     } else {
-      setAlertTitle("Error");
+      setAlertTitle("Error Message");
       setAlertMessage("Please fill in all fields");
       setAlertVisible(true);
     }

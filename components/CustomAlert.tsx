@@ -67,15 +67,16 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   button: {
-    borderRadius: 10,
-    padding: 10,
-    elevation: 2,
+    alignSelf: "center",
+    marginTop: 16,
+    paddingVertical: 8,
+    paddingHorizontal: 28,
     backgroundColor: "#F6A028",
+    borderRadius: 20,
   },
   buttonText: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
+    fontSize: 16,
+    color: "#fff",
   },
 });
 
