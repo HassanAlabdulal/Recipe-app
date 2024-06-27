@@ -1,3 +1,4 @@
+// LoginScreen.tsx
 import React, { useState } from "react";
 import { Link } from "expo-router";
 import {
@@ -18,6 +19,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { app } from "@/firebaseConfig";
 import LottieView from "lottie-react-native";
 import CustomAlert from "../components/CustomAlert";
+import { getErrorMessage } from "../utils/firebaseErrorMessages"; // Import the utility function
 
 const LoginScreen = () => {
   const [isInputFocused, setIsInputFocused] = useState(false);
@@ -34,12 +36,13 @@ const LoginScreen = () => {
         await signInWithEmailAndPassword(auth, email, password);
         router.push("/home");
       } catch (error: any) {
-        setAlertTitle("Error Message");
-        setAlertMessage(error.message);
+        const errorMessage = getErrorMessage(error.code);
+        setAlertTitle("Error");
+        setAlertMessage(errorMessage);
         setAlertVisible(true);
       }
     } else {
-      setAlertTitle("Error Message");
+      setAlertTitle("Error");
       setAlertMessage("Please fill in all fields");
       setAlertVisible(true);
     }
