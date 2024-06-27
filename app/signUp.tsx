@@ -9,7 +9,6 @@ import {
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
-  Alert,
   TouchableOpacity,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -17,7 +16,7 @@ import LottieView from "lottie-react-native";
 
 import { router } from "expo-router";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { app, auth } from "@/firebaseConfig";
+import { app } from "@/firebaseConfig";
 import CustomAlert from "../components/CustomAlert";
 import { getErrorMessage } from "../utils/firebaseErrorMessages";
 
@@ -29,6 +28,7 @@ const SignUpScreen = () => {
   const [alertVisible, setAlertVisible] = useState(false);
   const [alertTitle, setAlertTitle] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
+  const [navigateAfterAlert, setNavigateAfterAlert] = useState(false); // New state
 
   const handleSignUp = async () => {
     if (email && password) {
@@ -40,7 +40,7 @@ const SignUpScreen = () => {
           "Your account has been created successfully! Welcome aboard! 🎉"
         );
         setAlertVisible(true);
-        router.push("/home");
+        setNavigateAfterAlert(true);
       } catch (error: any) {
         const errorMessage = getErrorMessage(error.code);
         setAlertTitle("Error");
@@ -51,6 +51,14 @@ const SignUpScreen = () => {
       setAlertTitle("Error");
       setAlertMessage("Please fill in all fields");
       setAlertVisible(true);
+    }
+  };
+
+  const handleCloseAlert = () => {
+    setAlertVisible(false);
+    if (navigateAfterAlert) {
+      setNavigateAfterAlert(false);
+      router.push("/home");
     }
   };
 
@@ -147,13 +155,14 @@ const SignUpScreen = () => {
             title={alertTitle}
             message={alertMessage}
             visible={alertVisible}
-            onClose={() => setAlertVisible(false)}
+            onClose={handleCloseAlert} // Handle close alert
           />
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
