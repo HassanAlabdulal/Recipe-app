@@ -28,7 +28,7 @@ const SignUpScreen = () => {
   const [alertVisible, setAlertVisible] = useState(false);
   const [alertTitle, setAlertTitle] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
-  const [navigateAfterAlert, setNavigateAfterAlert] = useState(false); // New state
+  const [navigateAfterAlert, setNavigateAfterAlert] = useState(false);
 
   const handleSignUp = async () => {
     if (email && password) {
@@ -158,7 +158,7 @@ const SignUpScreen = () => {
             title={alertTitle}
             message={alertMessage}
             visible={alertVisible}
-            onClose={handleCloseAlert} // Handle close alert
+            onClose={handleCloseAlert}
           />
         </View>
       </TouchableWithoutFeedback>
@@ -211,6 +211,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
+    color: "white",
     letterSpacing: 1,
     marginTop: 15,
   },
@@ -254,6 +255,7 @@ const styles = StyleSheet.create({
   signUpButtonText: {
     fontSize: 20,
     fontWeight: "bold",
+    color: "white",
     letterSpacing: 1,
   },
 });
