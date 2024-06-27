@@ -1,5 +1,3 @@
-// recipeDetails.tsx
-
 import React from "react";
 import { View, Text, Image, StyleSheet, FlatList } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
