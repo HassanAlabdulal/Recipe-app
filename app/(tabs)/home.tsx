@@ -8,6 +8,7 @@ import {
   StyleSheet,
   ScrollView,
   Pressable,
+  ActivityIndicator,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Link } from "expo-router";
@@ -68,104 +69,109 @@ const HomeScreen: React.FC = () => {
   };
 
   return (
-    <ScrollView
-      contentContainerStyle={styles.container}
-      showsVerticalScrollIndicator={false}
-    >
-      <View style={styles.header}>
-        <View style={styles.headerLeftSide}>
-          <Text style={styles.greeting}>Hello,</Text>
-          <Text style={styles.name}>Hassan 👋</Text>
-        </View>
-        <View>
-          <Link href="/profile" asChild>
-            <Pressable>
-              <Image
-                style={styles.profileImage}
-                source={require("../../assets/images/profile.png")}
-              />
-            </Pressable>
-          </Link>
-        </View>
-      </View>
-      <View style={styles.searchWrapper}>
-        <Text style={styles.prompt}>What would you like to cook today?</Text>
-        <View style={styles.inputContainer}>
-          <Icon
-            name="search-outline"
-            size={20}
-            color="#666"
-            style={styles.icon}
-          />
-          <TextInput
-            placeholder="Search any recipe"
-            style={styles.searchInput}
-            keyboardType="default"
-          />
-        </View>
-      </View>
-
+    <View style={styles.container}>
       <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.categories}
+        contentContainerStyle={styles.scrollContainer}
+        showsVerticalScrollIndicator={false}
       >
-        {categories.map((category, index) => (
-          <TouchableOpacity
-            key={index}
-            style={[
-              styles.category,
-              index === selectedCategory && styles.selectedCategory,
-            ]}
-            onPress={() => setSelectedCategory(index)}
-          >
-            <Image source={category.image} style={styles.categoryImage} />
-            <Text style={styles.categoryText}>{category.name}</Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
-
-      <Text style={styles.recommendationsTitle}>Recommendations</Text>
-
-      {loading ? (
-        <View style={styles.ProgressBar}>
-          <Progress.Circle
-            size={40}
-            indeterminate={true}
-            thickness={3}
-            borderColor={"#F6A028"}
-            borderWidth={2}
-          />
+        <View style={styles.header}>
+          <View style={styles.headerLeftSide}>
+            <Text style={styles.greeting}>Hello,</Text>
+            <Text style={styles.name}>Hassan 👋</Text>
+          </View>
+          <View>
+            <Link href="/profile" asChild>
+              <Pressable>
+                <Image
+                  style={styles.profileImage}
+                  source={require("../../assets/images/profile.png")}
+                />
+              </Pressable>
+            </Link>
+          </View>
         </View>
-      ) : error ? (
-        <Text>Error: {error}</Text>
-      ) : (
-        <View style={styles.recommendations}>
-          {recipes.map((recipe) => (
-            <RecipeCard
-              key={recipe.id}
-              recipe={recipe}
-              onPress={() => openModal(recipe.id)}
-              onToggleFavorite={() => toggleFavorite(recipe.id)}
+        <View style={styles.searchWrapper}>
+          <Text style={styles.prompt}>What would you like to cook today?</Text>
+          <View style={styles.inputContainer}>
+            <Icon
+              name="search-outline"
+              size={20}
+              color="#666"
+              style={styles.icon}
             />
-          ))}
+            <TextInput
+              placeholder="Search any recipe"
+              style={styles.searchInput}
+              keyboardType="default"
+            />
+          </View>
         </View>
-      )}
 
-      <RecipeModal
-        visible={modalVisible}
-        recipe={selectedRecipe}
-        onClose={closeModal}
-      />
-    </ScrollView>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.categories}
+        >
+          {categories.map((category, index) => (
+            <TouchableOpacity
+              key={index}
+              style={[
+                styles.category,
+                index === selectedCategory && styles.selectedCategory,
+              ]}
+              onPress={() => setSelectedCategory(index)}
+            >
+              <Image source={category.image} style={styles.categoryImage} />
+              <Text style={styles.categoryText}>{category.name}</Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+
+        <Text style={styles.recommendationsTitle}>Recommendations</Text>
+
+        {loading ? (
+          <View style={styles.loadingContainer}>
+            <Progress.Circle
+              size={40}
+              indeterminate={true}
+              thickness={3}
+              borderColor={"#F6A028"}
+              borderWidth={2}
+            />
+          </View>
+        ) : error ? (
+          <Text>Error: {error}</Text>
+        ) : (
+          <View style={styles.recommendations}>
+            {recipes.map((recipe) => (
+              <RecipeCard
+                key={recipe.id}
+                recipe={recipe}
+                onPress={() => openModal(recipe.id)}
+                onToggleFavorite={() => toggleFavorite(recipe.id)}
+              />
+            ))}
+          </View>
+        )}
+
+        <RecipeModal
+          visible={modalVisible}
+          recipe={selectedRecipe}
+          onClose={closeModal}
+        />
+      </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+  scrollContainer: {
     paddingHorizontal: 20,
     paddingTop: 48,
-    backgroundColor: "#fff",
   },
   header: {
     flexDirection: "row",
@@ -256,6 +262,8 @@ const styles = StyleSheet.create({
   recommendationsTitle: {
     fontSize: 18,
     fontWeight: "bold",
+    textAlign: "left",
+    alignSelf: "flex-start",
     marginVertical: 8,
   },
   recommendations: {
@@ -264,11 +272,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "100%",
   },
-  ProgressBar: {
+  loadingContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginVertical: 64,
+    height: 200,
   },
 });
 
