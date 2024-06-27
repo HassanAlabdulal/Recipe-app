@@ -1,8 +1,9 @@
-import firestore from "@react-native-firebase/firestore";
+import { db } from "../firebaseConfig";
 import { RecipeData, Ingredient } from "../types";
+import { collection, getDocs } from "firebase/firestore";
 
 export const fetchRecipes = async (): Promise<RecipeData[]> => {
-  const recipeCollection = await firestore().collection("recipes").get();
+  const recipeCollection = await getDocs(collection(db, "recipes"));
   const recipes: RecipeData[] = [];
 
   for (const doc of recipeCollection.docs) {
@@ -18,11 +19,9 @@ export const fetchRecipes = async (): Promise<RecipeData[]> => {
       ingredients: [],
     };
 
-    const ingredientsCollection = await firestore()
-      .collection("recipes")
-      .doc(doc.id)
-      .collection("ingredients")
-      .get();
+    const ingredientsCollection = await getDocs(
+      collection(db, "recipes", doc.id, "ingredients")
+    );
 
     const ingredients: Ingredient[] = ingredientsCollection.docs.map(
       (ingredientDoc) => {
@@ -40,8 +39,4 @@ export const fetchRecipes = async (): Promise<RecipeData[]> => {
   }
 
   return recipes;
-};
-
-export const getFavoritedRecipes = (recipes: RecipeData[]): RecipeData[] => {
-  return recipes.filter((recipe) => recipe.favorite);
 };

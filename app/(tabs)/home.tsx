@@ -14,7 +14,7 @@ import { Link } from "expo-router";
 import RecipeCard from "../../components/recipeCard";
 import RecipeModal from "../../components/RecipeModal";
 import { RecipeData } from "../../types";
-import { fetchRecipes } from "../../utils/recipeUtils"; // Import the fetch function
+import { fetchRecipes } from "../../utils/recipeUtils";
 
 const HomeScreen: React.FC = () => {
   const categories = [
@@ -29,8 +29,8 @@ const HomeScreen: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [selectedRecipe, setSelectedRecipe] = useState<RecipeData | null>(null);
-  const [loading, setLoading] = useState<boolean>(true); // Add loading state
-  const [error, setError] = useState<string | null>(null); // Add error state
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const loadRecipes = async () => {
