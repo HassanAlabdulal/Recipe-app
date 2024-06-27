@@ -1,4 +1,3 @@
-// LoginScreen.tsx
 import React, { useState } from "react";
 import { Link } from "expo-router";
 import {
@@ -126,7 +125,6 @@ const LoginScreen = () => {
             </Link>
           </ScrollView>
 
-          {/* Custom Alert Component */}
           <CustomAlert
             title={alertTitle}
             message={alertMessage}
@@ -184,6 +182,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
+    color: "white",
     letterSpacing: 1,
     marginTop: 15,
   },
@@ -227,6 +226,7 @@ const styles = StyleSheet.create({
   loginButtonText: {
     fontSize: 20,
     fontWeight: "bold",
+    color: "white",
     letterSpacing: 1,
   },
   signUpButton: {
