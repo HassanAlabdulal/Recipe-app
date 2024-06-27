@@ -14,9 +14,10 @@ import {
 import Icon from "react-native-vector-icons/Ionicons";
 import LottieView from "lottie-react-native";
 
-import { router } from "expo-router";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { app } from "@/firebaseConfig";
+import { useRouter } from "expo-router";
+import { getAuth } from "firebase/auth";
+import { app, db } from "@/firebaseConfig";
+import { setDoc, doc } from "firebase/firestore";
 import CustomAlert from "../components/CustomAlert";
 import { getErrorMessage } from "../utils/firebaseErrorMessages";
 
@@ -31,8 +32,36 @@ const CreateProfileScreen = () => {
   const [alertMessage, setAlertMessage] = useState("");
   const [navigateAfterAlert, setNavigateAfterAlert] = useState(false);
 
-  const handleSignUp = async () => {
-    // Sign up logic
+  const router = useRouter();
+
+  const handleProfileCreation = async () => {
+    if (name && age && bio && location) {
+      try {
+        const auth = getAuth(app);
+        const user = auth.currentUser;
+        if (user) {
+          await setDoc(doc(db, "users", user.uid), {
+            name,
+            age,
+            bio,
+            location,
+          });
+          setAlertTitle("Success!");
+          setAlertMessage("Your profile has been created successfully! 🎉");
+          setAlertVisible(true);
+          setNavigateAfterAlert(true);
+        }
+      } catch (error: any) {
+        const errorMessage = getErrorMessage(error.code);
+        setAlertTitle("Error");
+        setAlertMessage(errorMessage);
+        setAlertVisible(true);
+      }
+    } else {
+      setAlertTitle("Error");
+      setAlertMessage("Please fill in all fields");
+      setAlertVisible(true);
+    }
   };
 
   const handleCloseAlert = () => {
@@ -44,10 +73,7 @@ const CreateProfileScreen = () => {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
+    <ScrollView style={{ flex: 1 }}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <View style={styles.topSection}>
@@ -148,10 +174,10 @@ const CreateProfileScreen = () => {
             </View>
 
             <TouchableOpacity
-              onPress={handleSignUp}
+              onPress={handleProfileCreation}
               style={styles.signUpButton}
             >
-              <Text style={styles.signUpButtonText}>Sign Up</Text>
+              <Text style={styles.signUpButtonText}>Create Profile</Text>
             </TouchableOpacity>
           </ScrollView>
 
@@ -163,7 +189,7 @@ const CreateProfileScreen = () => {
           />
         </View>
       </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 
@@ -208,13 +234,6 @@ const styles = StyleSheet.create({
     width: 145,
     height: 145,
     borderRadius: 100,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "white",
-    letterSpacing: 1,
-    marginTop: 15,
   },
   inputWrapper: {
     width: "100%",

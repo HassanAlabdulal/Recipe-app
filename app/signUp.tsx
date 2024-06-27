@@ -14,7 +14,7 @@ import {
 import Icon from "react-native-vector-icons/Ionicons";
 import LottieView from "lottie-react-native";
 
-import { router } from "expo-router";
+import { useRouter } from "expo-router";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { app } from "@/firebaseConfig";
 import CustomAlert from "../components/CustomAlert";
@@ -29,17 +29,14 @@ const SignUpScreen = () => {
   const [alertMessage, setAlertMessage] = useState("");
   const [navigateAfterAlert, setNavigateAfterAlert] = useState(false);
 
+  const router = useRouter();
+
   const handleSignUp = async () => {
     if (email && password) {
       try {
         const auth = getAuth(app);
         await createUserWithEmailAndPassword(auth, email, password);
-        setAlertTitle("Success!");
-        setAlertMessage(
-          "Your account has been created successfully! Welcome aboard! 🎉"
-        );
-        setAlertVisible(true);
-        setNavigateAfterAlert(true);
+        router.push("/createProfile");
       } catch (error: any) {
         const errorMessage = getErrorMessage(error.code);
         setAlertTitle("Error");
@@ -55,10 +52,6 @@ const SignUpScreen = () => {
 
   const handleCloseAlert = () => {
     setAlertVisible(false);
-    if (navigateAfterAlert) {
-      setNavigateAfterAlert(false);
-      router.push("/createProfile");
-    }
   };
 
   return (
