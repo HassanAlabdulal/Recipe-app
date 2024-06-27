@@ -35,7 +35,11 @@ const SignUpScreen = () => {
       try {
         const auth = getAuth(app);
         await createUserWithEmailAndPassword(auth, email, password);
-        Alert.alert("Account Created Successfully! ");
+        setAlertTitle("Success!");
+        setAlertMessage(
+          "Your account has been created successfully! Welcome aboard! 🎉"
+        );
+        setAlertVisible(true);
         router.push("/home");
       } catch (error: any) {
         const errorMessage = getErrorMessage(error.code);
