@@ -35,14 +35,14 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
           <Icon
             name="calendar-outline"
             size={16}
-            color="#FF0000"
+            color="#F6A028"
             style={styles.icon}
           />
           <Text style={styles.profileInfo}>{age} years</Text>
           <Icon
             name="location-outline"
             size={16}
-            color="#FF0000"
+            color="#F6A028"
             style={[styles.icon, styles.locationIcon]}
           />
           <Text style={styles.profileInfo}>{location}</Text>
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#fff",
     padding: 20,
-    borderRadius: 10,
+    borderRadius: 12,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
     marginBottom: 30,
-    marginTop: 20,
+    marginTop: 32,
   },
   profileImage: {
     width: 80,
