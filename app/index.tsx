@@ -1,3 +1,4 @@
+// LoginScreen.tsx
 import React, { useState } from "react";
 import { Link } from "expo-router";
 import {
@@ -11,18 +12,21 @@ import {
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
-  Alert,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { router } from "expo-router";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { app, auth } from "@/firebaseConfig";
+import { app } from "@/firebaseConfig";
 import LottieView from "lottie-react-native";
+import CustomAlert from "../components/CustomAlert";
 
 const LoginScreen = () => {
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertTitle, setAlertTitle] = useState("");
+  const [alertMessage, setAlertMessage] = useState("");
 
   const handleLogin = async () => {
     if (email && password) {
@@ -31,10 +35,14 @@ const LoginScreen = () => {
         await signInWithEmailAndPassword(auth, email, password);
         router.push("/home");
       } catch (error: any) {
-        Alert.alert("Error", error.message);
+        setAlertTitle("Error");
+        setAlertMessage(error.message);
+        setAlertVisible(true);
       }
     } else {
-      Alert.alert("Error", "Please fill in all fields");
+      setAlertTitle("Error");
+      setAlertMessage("Please fill in all fields");
+      setAlertVisible(true);
     }
   };
 
@@ -115,6 +123,14 @@ const LoginScreen = () => {
               </Pressable>
             </Link>
           </ScrollView>
+
+          {/* Custom Alert Component */}
+          <CustomAlert
+            title={alertTitle}
+            message={alertMessage}
+            visible={alertVisible}
+            onClose={() => setAlertVisible(false)}
+          />
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
