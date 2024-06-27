@@ -21,6 +21,7 @@ export default function ProfileScreen() {
     bio: "",
     location: "",
   });
+  const [profileLoading, setProfileLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -31,6 +32,7 @@ export default function ProfileScreen() {
           setProfileData(userDoc.data());
         }
       }
+      setProfileLoading(false);
     };
 
     fetchProfileData();
@@ -80,16 +82,28 @@ export default function ProfileScreen() {
 
   return (
     <View style={styles.container}>
-      <ProfileHeader
-        name={profileData.name}
-        age={profileData.age}
-        bio={profileData.bio}
-        location={profileData.location}
-        imageSource={require("../../assets/images/profile.png")}
-      />
+      {profileLoading ? (
+        <View style={styles.progressBar}>
+          <Progress.Circle
+            size={40}
+            indeterminate={true}
+            thickness={3}
+            borderColor={"#F6A028"}
+            borderWidth={2}
+          />
+        </View>
+      ) : (
+        <ProfileHeader
+          name={profileData.name}
+          age={profileData.age}
+          bio={profileData.bio}
+          location={profileData.location}
+          imageSource={require("../../assets/images/profile.png")}
+        />
+      )}
       <Text style={styles.starredRecipesTitle}>My Starred Recipes</Text>
       {loading ? (
-        <View style={styles.ProgressBar}>
+        <View style={styles.progressBar}>
           <Progress.Circle
             size={40}
             indeterminate={true}
@@ -143,7 +157,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     width: "100%",
   },
-  ProgressBar: {
+  progressBar: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
