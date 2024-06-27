@@ -146,8 +146,11 @@ const SignUpScreen = () => {
               </View>
             </View>
 
-            <TouchableOpacity onPress={handleSignUp} style={styles.loginButton}>
-              <Text style={styles.loginButtonText}>Sign Up</Text>
+            <TouchableOpacity
+              onPress={handleSignUp}
+              style={styles.signUpButton}
+            >
+              <Text style={styles.signUpButtonText}>Sign Up</Text>
             </TouchableOpacity>
           </ScrollView>
 
@@ -239,7 +242,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
   },
-  loginButton: {
+  signUpButton: {
     backgroundColor: "#F6A028",
     paddingVertical: 12,
     paddingHorizontal: 20,
@@ -248,20 +251,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 10,
   },
-  loginButtonText: {
+  signUpButtonText: {
     fontSize: 20,
     fontWeight: "bold",
-    letterSpacing: 1,
-  },
-  signUpButton: {
-    width: "90%",
-    alignItems: "center",
-    marginTop: 8,
-    paddingVertical: 8,
-  },
-  signUpButtonText: {
-    fontSize: 14,
-    textDecorationLine: "underline",
     letterSpacing: 1,
   },
 });
