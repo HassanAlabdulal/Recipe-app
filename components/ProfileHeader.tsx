@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   locationIcon: {
-    marginLeft: 10,
+    marginLeft: 5,
   },
   profileInfo: {
     fontSize: 16,
