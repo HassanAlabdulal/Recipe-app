@@ -128,7 +128,7 @@ const HomeScreen: React.FC = () => {
       <Text style={styles.recommendationsTitle}>Recommendations</Text>
 
       {loading ? (
-        <View>
+        <View style={styles.ProgressBar}>
           <Progress.Circle
             size={40}
             indeterminate={true}
@@ -263,6 +263,12 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-between",
     width: "100%",
+  },
+  ProgressBar: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: 64,
   },
 });
 
