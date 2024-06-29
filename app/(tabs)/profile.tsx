@@ -7,7 +7,14 @@ import { fetchRecipes } from "../../utils/recipeUtils";
 import { RecipeData } from "../../types";
 import * as Progress from "react-native-progress";
 import { auth, db } from "@/firebaseConfig";
-import { doc, getDoc } from "firebase/firestore";
+import {
+  arrayRemove,
+  arrayUnion,
+  doc,
+  getDoc,
+  onSnapshot,
+  updateDoc,
+} from "firebase/firestore";
 
 export default function ProfileScreen() {
   const [recipes, setRecipes] = useState<RecipeData[]>([]);
@@ -39,18 +46,34 @@ export default function ProfileScreen() {
   }, []);
 
   useEffect(() => {
-    const loadRecipes = async () => {
-      try {
-        const data = await fetchRecipes();
-        setRecipes(data.filter((recipe) => recipe.favorite));
-      } catch (error: any) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+    const currentUser = auth.currentUser;
+    if (currentUser) {
+      const userDocRef = doc(db, "users", currentUser.uid);
 
-    loadRecipes();
+      const unsubscribe = onSnapshot(userDocRef, (doc) => {
+        if (doc.exists()) {
+          const userData = doc.data();
+          const likedRecipeIds = userData.favorites_recipes;
+
+          const loadRecipes = async () => {
+            try {
+              const data = await fetchRecipes();
+              setRecipes(
+                data.filter((recipe) => likedRecipeIds.includes(recipe.id))
+              );
+            } catch (error: any) {
+              setError(error.message);
+            } finally {
+              setLoading(false);
+            }
+          };
+
+          loadRecipes();
+        }
+      });
+
+      return () => unsubscribe();
+    }
   }, []);
 
   const openModal = (recipeId: string) => {
@@ -64,12 +87,40 @@ export default function ProfileScreen() {
     setSelectedRecipe(null);
   };
 
-  const toggleFavorite = (id: string) => {
-    setRecipes((prevRecipes) =>
-      prevRecipes.map((recipe) =>
-        recipe.id === id ? { ...recipe, favorite: !recipe.favorite } : recipe
-      )
-    );
+  const toggleFavorite = async (id: string) => {
+    const currentUser = auth.currentUser;
+    if (currentUser) {
+      const userDocRef = doc(db, "users", currentUser.uid);
+      const recipeDocRef = doc(db, "recipes", id);
+
+      const recipe = recipes.find((r) => r.id === id);
+      if (recipe) {
+        const newFavoriteStatus = !recipe.favorite;
+
+        // Update the recipe's favorite status in Firestore
+        await updateDoc(recipeDocRef, { favorite: newFavoriteStatus });
+
+        // Update the user's favorites_recipes array in Firestore
+        if (newFavoriteStatus) {
+          await updateDoc(userDocRef, {
+            favorites_recipes: arrayUnion(id),
+          });
+        } else {
+          await updateDoc(userDocRef, {
+            favorites_recipes: arrayRemove(id),
+          });
+        }
+
+        // Update the local state
+        setRecipes((prevRecipes) =>
+          prevRecipes.map((recipe) =>
+            recipe.id === id
+              ? { ...recipe, favorite: newFavoriteStatus }
+              : recipe
+          )
+        );
+      }
+    }
   };
 
   const renderRecipe = ({ item }: { item: RecipeData }) => (
