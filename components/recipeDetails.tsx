@@ -1,9 +1,24 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { RecipeData } from "../types";
 
-const RecipeDetails: React.FC<{ recipe: RecipeData }> = ({ recipe }) => {
+interface RecipeDetailsProps {
+  recipe: RecipeData;
+  onToggleFavorite: (id: string) => void;
+}
+
+const RecipeDetails: React.FC<RecipeDetailsProps> = ({
+  recipe,
+  onToggleFavorite,
+}) => {
   const renderIngredient = ({
     item,
   }: {
@@ -23,7 +38,13 @@ const RecipeDetails: React.FC<{ recipe: RecipeData }> = ({ recipe }) => {
       <View style={styles.recipeInfo}>
         <View style={styles.header}>
           <Text style={styles.title}>{recipe.title}</Text>
-          <Icon name="favorite" size={30} color="red" />
+          <TouchableOpacity onPress={() => onToggleFavorite(recipe.id)}>
+            <Icon
+              name={recipe.favorite ? "favorite" : "favorite-outline"}
+              size={30}
+              color="red"
+            />
+          </TouchableOpacity>
         </View>
         <View style={styles.details}>
           <View style={styles.detailItem}>

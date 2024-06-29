@@ -7,12 +7,14 @@ interface RecipeModalProps {
   visible: boolean;
   recipe: RecipeData | null;
   onClose: () => void;
+  onToggleFavorite: (id: string) => void;
 }
 
 const RecipeModal: React.FC<RecipeModalProps> = ({
   visible,
   recipe,
   onClose,
+  onToggleFavorite,
 }) => {
   return (
     <Modal
@@ -24,7 +26,12 @@ const RecipeModal: React.FC<RecipeModalProps> = ({
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
           <Text style={styles.modalTitle}>Recipe Details</Text>
-          {recipe && <RecipeDetails recipe={recipe} />}
+          {recipe && (
+            <RecipeDetails
+              recipe={recipe}
+              onToggleFavorite={onToggleFavorite}
+            />
+          )}
           <Pressable style={styles.closeButton} onPress={onClose}>
             <Text style={styles.closeButtonText}>Close</Text>
           </Pressable>

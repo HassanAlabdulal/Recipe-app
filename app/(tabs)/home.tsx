@@ -256,6 +256,7 @@ const HomeScreen: React.FC = () => {
           visible={modalVisible}
           recipe={selectedRecipe}
           onClose={closeModal}
+          onToggleFavorite={toggleFavorite}
         />
       </ScrollView>
     </View>

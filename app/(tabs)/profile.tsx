@@ -8,12 +8,12 @@ import { RecipeData } from "../../types";
 import * as Progress from "react-native-progress";
 import { auth, db } from "@/firebaseConfig";
 import {
-  arrayRemove,
-  arrayUnion,
   doc,
   getDoc,
-  onSnapshot,
   updateDoc,
+  arrayUnion,
+  arrayRemove,
+  onSnapshot,
 } from "firebase/firestore";
 
 export default function ProfileScreen() {
@@ -179,6 +179,7 @@ export default function ProfileScreen() {
         visible={modalVisible}
         recipe={selectedRecipe}
         onClose={closeModal}
+        onToggleFavorite={toggleFavorite}
       />
     </View>
   );
