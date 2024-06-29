@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Modal, Pressable } from "react-native";
 import RecipeDetails from "./recipeDetails";
 import { RecipeData } from "../types";
@@ -16,6 +16,19 @@ const RecipeModal: React.FC<RecipeModalProps> = ({
   onClose,
   onToggleFavorite,
 }) => {
+  const [localRecipe, setLocalRecipe] = useState<RecipeData | null>(recipe);
+
+  useEffect(() => {
+    setLocalRecipe(recipe);
+  }, [recipe]);
+
+  const handleToggleFavorite = () => {
+    if (localRecipe) {
+      onToggleFavorite(localRecipe.id);
+      setLocalRecipe({ ...localRecipe, favorite: !localRecipe.favorite });
+    }
+  };
+
   return (
     <Modal
       animationType="slide"
@@ -26,10 +39,10 @@ const RecipeModal: React.FC<RecipeModalProps> = ({
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
           <Text style={styles.modalTitle}>Recipe Details</Text>
-          {recipe && (
+          {localRecipe && (
             <RecipeDetails
-              recipe={recipe}
-              onToggleFavorite={onToggleFavorite}
+              recipe={localRecipe}
+              onToggleFavorite={handleToggleFavorite}
             />
           )}
           <Pressable style={styles.closeButton} onPress={onClose}>

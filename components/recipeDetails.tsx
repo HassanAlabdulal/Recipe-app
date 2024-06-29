@@ -12,7 +12,7 @@ import { RecipeData } from "../types";
 
 interface RecipeDetailsProps {
   recipe: RecipeData;
-  onToggleFavorite: (id: string) => void;
+  onToggleFavorite: () => void;
 }
 
 const RecipeDetails: React.FC<RecipeDetailsProps> = ({
@@ -38,7 +38,7 @@ const RecipeDetails: React.FC<RecipeDetailsProps> = ({
       <View style={styles.recipeInfo}>
         <View style={styles.header}>
           <Text style={styles.title}>{recipe.title}</Text>
-          <TouchableOpacity onPress={() => onToggleFavorite(recipe.id)}>
+          <TouchableOpacity onPress={onToggleFavorite}>
             <Icon
               name={recipe.favorite ? "favorite" : "favorite-outline"}
               size={30}
