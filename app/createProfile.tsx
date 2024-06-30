@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import LottieView from "lottie-react-native";
-
 import { useRouter } from "expo-router";
 import { getAuth } from "firebase/auth";
 import { app, db } from "@/firebaseConfig";

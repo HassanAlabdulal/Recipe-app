@@ -1,4 +1,3 @@
-// components/recipeCard.tsx
 import React from "react";
 import {
   View,
@@ -42,11 +41,26 @@ const styles = StyleSheet.create({
     alignItems: "center",
     margin: 5,
     width: Dimensions.get("window").width / 2 - 30,
+    backgroundColor: "#fff",
+    paddingHorizontal: 16,
+    paddingBottom: 12,
+    borderRadius: 12,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   recipeImage: {
     width: 150,
     height: 150,
-    borderRadius: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
   },
   heartIcon: {
     position: "absolute",
