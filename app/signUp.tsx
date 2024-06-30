@@ -33,11 +33,9 @@ const SignUpScreen = () => {
       try {
         const auth = getAuth(app);
         await createUserWithEmailAndPassword(auth, email, password);
-        console.log("Sign up successful");
         router.push("/createProfile");
       } catch (error: any) {
         const errorMessage = getErrorMessage(error.code);
-        console.error("Sign up error:", error);
         setAlertTitle("Error");
         setAlertMessage(errorMessage);
         setAlertVisible(true);

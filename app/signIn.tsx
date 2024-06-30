@@ -31,7 +31,6 @@ const LoginScreen = () => {
       try {
         const auth = getAuth(app);
         await signInWithEmailAndPassword(auth, email, password);
-        console.log("Login successful");
         router.push("/home");
       } catch (error: any) {
         const errorMessage = getErrorMessage(error.code);
