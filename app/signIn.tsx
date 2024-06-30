@@ -83,9 +83,6 @@ const LoginScreen = () => {
                 title="Don't have an account? Sign Up"
                 style={styles.signUpButton}
                 textStyle={styles.signUpButtonText}
-                onPress={function (): void {
-                  throw new Error("Function not implemented.");
-                }}
               />
             </Link>
           </ScrollView>

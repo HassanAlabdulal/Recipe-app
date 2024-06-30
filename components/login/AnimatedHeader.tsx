@@ -1,8 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
 import LottieView from "lottie-react-native";
 
-const AnimatedHeader = () => {
+interface AnimatedHeaderProps {
+  title?: string;
+}
+
+const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({ title }) => {
   return (
     <View style={styles.topSection}>
       <View style={styles.animationOuterBorder}>
@@ -15,7 +19,7 @@ const AnimatedHeader = () => {
           />
         </View>
       </View>
-      <Text style={styles.title}>Login</Text>
+      {title && <Text style={styles.title}>{title}</Text>}
     </View>
   );
 };
