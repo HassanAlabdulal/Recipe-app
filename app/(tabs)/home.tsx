@@ -34,6 +34,7 @@ const HomeScreen: React.FC = () => {
     { name: "Dinner", image: require("../../assets/images/spaghetti.png") },
     { name: "Dessert", image: require("../../assets/images/dessert.png") },
     { name: "Diet", image: require("../../assets/images/vegetable.png") },
+    { name: "Smoothie", image: require("../../assets/images/smoothie.png") },
   ];
 
   const [recipes, setRecipes] = useState<RecipeData[]>([]);
