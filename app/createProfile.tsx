@@ -5,8 +5,6 @@ import {
   TextInput,
   ScrollView,
   StyleSheet,
-  KeyboardAvoidingView,
-  Platform,
   TouchableWithoutFeedback,
   Keyboard,
   TouchableOpacity,
@@ -45,6 +43,7 @@ const CreateProfileScreen = () => {
             age,
             bio,
             location,
+            favorites_recipes: [],
           });
           setAlertTitle("Success!");
           setAlertMessage("Your profile has been created successfully! 🎉");
