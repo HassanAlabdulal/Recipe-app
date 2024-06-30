@@ -182,21 +182,23 @@ export default function ProfileScreen() {
       ) : recipes.length === 0 ? (
         <Text style={styles.noRecipesText}>You have no starred recipes.</Text>
       ) : (
-        <Animatable.View
-          animation="slideInUp"
-          easing="ease-in"
-          duration={500}
-          style={styles.recipesContainer}
-        >
-          <FlatList
-            data={recipes}
-            renderItem={renderRecipe}
-            keyExtractor={(item) => item.id}
-            numColumns={2}
-            contentContainerStyle={styles.recipesContainer}
-            columnWrapperStyle={styles.columnWrapper}
-          />
-        </Animatable.View>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <Animatable.View
+            animation="slideInUp"
+            easing="ease-in"
+            duration={500}
+            style={styles.recipesContainer}
+          >
+            <FlatList
+              data={recipes}
+              renderItem={renderRecipe}
+              keyExtractor={(item) => item.id}
+              numColumns={2}
+              contentContainerStyle={styles.recipesContainer}
+              columnWrapperStyle={styles.columnWrapper}
+            />
+          </Animatable.View>
+        </ScrollView>
       )}
       <RecipeModal
         visible={modalVisible}
@@ -219,8 +221,8 @@ const styles = StyleSheet.create({
   starredRecipesTitle: {
     fontSize: 18,
     fontWeight: "bold",
-    marginBottom: 10,
-    marginLeft: 11,
+    marginVertical: 10,
+    marginLeft: 8,
     textAlign: "left",
     alignSelf: "flex-start",
   },
