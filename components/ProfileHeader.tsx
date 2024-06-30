@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import * as Animatable from "react-native-animatable";
 
@@ -19,102 +19,161 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   imageSource,
 }) => {
   return (
-    <Animatable.View
-      animation="slideInDown"
-      easing="ease-in-out"
-      style={styles.headerContainer}
-    >
-      <Image source={imageSource} style={styles.profileImage} />
-      <View style={styles.textContainer}>
-        <View style={styles.nameContainer}>
+    <View style={styles.headerWrapper}>
+      <Animatable.View
+        animation="slideInDown"
+        easing="ease-in-out"
+        style={styles.headerContainer}
+      >
+        <Image source={imageSource} style={styles.profileImage} />
+        <View style={styles.textContainer}>
           <Text style={styles.profileName}>{name}</Text>
-          <Icon
-            name="checkmark-circle"
-            size={16}
-            color="#000"
-            style={styles.verifiedIcon}
-          />
+          <Text style={styles.profileBio}>{bio}</Text>
+          <View style={styles.infoContainer}>
+            <View style={styles.iconWrapper}>
+              <Icon
+                name="location-outline"
+                size={16}
+                color="#fff"
+                style={styles.icon}
+              />
+              <Text style={styles.profileInfo}>{location}</Text>
+            </View>
+
+            <View style={styles.iconWrapper}>
+              <Icon
+                name="calendar-outline"
+                size={16}
+                color="#fff"
+                style={styles.icon}
+              />
+              <Text style={styles.profileInfo}>{age} years</Text>
+            </View>
+          </View>
         </View>
-        <Text style={styles.profileBio}>{bio}</Text>
-        <View style={styles.infoContainer}>
-          <Icon
-            name="calendar-outline"
-            size={16}
-            color="#F6A028"
-            style={styles.icon}
-          />
-          <Text style={styles.profileInfo}>{age} years</Text>
-          <Icon
-            name="location-outline"
-            size={16}
-            color="#F6A028"
-            style={[styles.icon, styles.locationIcon]}
-          />
-          <Text style={styles.profileInfo}>{location}</Text>
+      </Animatable.View>
+      <View style={styles.statsContainer}>
+        <View style={styles.statItem}>
+          <Text style={styles.statNumber}>122</Text>
+          <Text style={styles.statLabel}>Followers</Text>
+        </View>
+        <View style={styles.statItem}>
+          <Text style={styles.statNumber}>67</Text>
+          <Text style={styles.statLabel}>Following</Text>
+        </View>
+        <View style={styles.statItem}>
+          <Text style={styles.statNumber}>12K</Text>
+          <Text style={styles.statLabel}>Likes</Text>
         </View>
       </View>
-    </Animatable.View>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Edit Profile</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.button, styles.followButton]}>
+          <Text style={styles.followText}>Add Friends</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  headerWrapper: {
+    backgroundColor: "#F6A028",
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    paddingBottom: 30,
+    paddingTop: 50,
+    paddingHorizontal: 20,
+  },
   headerContainer: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#fff",
-    padding: 20,
-    borderRadius: 12,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-    marginBottom: 30,
-    marginTop: 32,
   },
   profileImage: {
     width: 80,
     height: 80,
     borderRadius: 40,
     marginRight: 15,
+    borderWidth: 2,
+    borderColor: "#fff",
   },
   textContainer: {
     flex: 1,
   },
-  nameContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
   profileName: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#000",
-  },
-  verifiedIcon: {
-    marginLeft: 5,
+    color: "#fff",
   },
   profileBio: {
     fontSize: 16,
-    color: "#777",
+    color: "#fff",
     marginVertical: 8,
   },
   infoContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginVertical: 4,
-  },
-  icon: {
-    marginRight: 5,
-  },
-  locationIcon: {
-    marginLeft: 5,
+    gap: 8,
   },
   profileInfo: {
     fontSize: 16,
-    color: "#555",
+    color: "#fff",
+    marginLeft: 1,
+  },
+  iconWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  icon: {
+    marginRight: 1,
+  },
+  statsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginTop: 20,
+  },
+  statItem: {
+    alignItems: "center",
+  },
+  statNumber: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#fff",
+  },
+  statLabel: {
+    fontSize: 14,
+    color: "#fff",
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 20,
+  },
+  button: {
+    flex: 1,
+    backgroundColor: "#fff",
+    borderRadius: 20,
+    paddingVertical: 10,
+    marginHorizontal: 5,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#F6A028",
+  },
+  followButton: {
+    backgroundColor: "#F6A028",
+    borderWidth: 1,
+    borderColor: "#fff",
+  },
+  followText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#fff",
   },
 });
 

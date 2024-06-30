@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, FlatList, StyleSheet, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import RecipeCard from "../../components/recipeCard";
 import ProfileHeader from "../../components/ProfileHeader";
 import RecipeModal from "../../components/RecipeModal";
@@ -133,7 +140,7 @@ export default function ProfileScreen() {
   );
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       {profileLoading ? (
         <View style={styles.progressBar}>
           <Progress.Circle
@@ -175,25 +182,21 @@ export default function ProfileScreen() {
       ) : recipes.length === 0 ? (
         <Text style={styles.noRecipesText}>You have no starred recipes.</Text>
       ) : (
-        <ScrollView
-          contentContainerStyle={styles.recipesContainer}
-          showsVerticalScrollIndicator={false}
+        <Animatable.View
+          animation="slideInUp"
+          easing="ease-in"
+          duration={500}
+          style={styles.recipesContainer}
         >
-          <Animatable.View
-            animation="slideInUp"
-            easing="ease-in"
-            duration={500}
-          >
-            <FlatList
-              data={recipes}
-              renderItem={renderRecipe}
-              keyExtractor={(item) => item.id}
-              numColumns={2}
-              contentContainerStyle={styles.recipesContainer}
-              columnWrapperStyle={styles.columnWrapper}
-            />
-          </Animatable.View>
-        </ScrollView>
+          <FlatList
+            data={recipes}
+            renderItem={renderRecipe}
+            keyExtractor={(item) => item.id}
+            numColumns={2}
+            contentContainerStyle={styles.recipesContainer}
+            columnWrapperStyle={styles.columnWrapper}
+          />
+        </Animatable.View>
       )}
       <RecipeModal
         visible={modalVisible}
@@ -201,15 +204,15 @@ export default function ProfileScreen() {
         onClose={closeModal}
         onToggleFavorite={toggleFavorite}
       />
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    paddingTop: 20,
+    backgroundColor: "#f8f8f8",
+    paddingTop: 0,
     width: "100%",
     paddingHorizontal: 20,
   },
@@ -230,6 +233,7 @@ const styles = StyleSheet.create({
   recipesContainer: {
     justifyContent: "flex-start",
     alignItems: "flex-start",
+    paddingBottom: 30,
   },
   columnWrapper: {
     justifyContent: "flex-start",
@@ -240,5 +244,28 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginVertical: 64,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginVertical: 20,
+  },
+  button: {
+    flex: 1,
+    backgroundColor: "#f0f0f0",
+    borderRadius: 20,
+    paddingVertical: 10,
+    marginHorizontal: 5,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  followText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#4A90E2",
   },
 });
