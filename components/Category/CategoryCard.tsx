@@ -1,5 +1,6 @@
 import React from "react";
 import { TouchableOpacity, Image, Text, StyleSheet } from "react-native";
+import * as Animatable from "react-native-animatable";
 
 interface Category {
   name: string;
@@ -18,17 +19,27 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
   onPress,
 }) => {
   return (
-    <TouchableOpacity
-      style={[styles.category, isSelected && styles.selectedCategory]}
-      onPress={onPress}
+    <Animatable.View
+      animation="zoomIn"
+      easing="ease-in"
+      duration={500}
+      style={styles.animatableContainer}
     >
-      <Image source={category.image} style={styles.categoryImage} />
-      <Text style={styles.categoryText}>{category.name}</Text>
-    </TouchableOpacity>
+      <TouchableOpacity
+        style={[styles.category, isSelected && styles.selectedCategory]}
+        onPress={onPress}
+      >
+        <Image source={category.image} style={styles.categoryImage} />
+        <Text style={styles.categoryText}>{category.name}</Text>
+      </TouchableOpacity>
+    </Animatable.View>
   );
 };
 
 const styles = StyleSheet.create({
+  animatableContainer: {
+    marginRight: 10,
+  },
   category: {
     paddingTop: 10,
     paddingBottom: 6,
@@ -37,7 +48,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: 80,
     height: 85,
-    marginRight: 10,
   },
   selectedCategory: {
     backgroundColor: "#F6A028",

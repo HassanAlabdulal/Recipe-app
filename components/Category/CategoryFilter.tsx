@@ -1,14 +1,7 @@
 import React from "react";
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-  ScrollView,
-} from "react-native";
+import { View, ScrollView, StyleSheet } from "react-native";
 import { categories } from "../../utils/categoriesData";
-import * as Animatable from "react-native-animatable";
+import CategoryCard from "./CategoryCard";
 
 interface CategoryFilterProps {
   selectedCategory: number;
@@ -26,17 +19,12 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
       contentContainerStyle={styles.categories}
     >
       {categories.map((category, index) => (
-        <TouchableOpacity
+        <CategoryCard
           key={index}
-          style={[
-            styles.category,
-            index === selectedCategory && styles.selectedCategory,
-          ]}
+          category={category}
+          isSelected={index === selectedCategory}
           onPress={() => onSelectCategory(index)}
-        >
-          <Image source={category.image} style={styles.categoryImage} />
-          <Text style={styles.categoryText}>{category.name}</Text>
-        </TouchableOpacity>
+        />
       ))}
     </ScrollView>
   );
@@ -47,30 +35,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginVertical: 12,
-  },
-  category: {
-    paddingTop: 10,
-    paddingBottom: 6,
-    backgroundColor: "#FFF",
-    borderRadius: 12,
-    alignItems: "center",
-    width: 80,
-    height: 85,
-    marginRight: 10,
-  },
-  selectedCategory: {
-    backgroundColor: "#F6A028",
-  },
-  categoryImage: {
-    width: 45,
-    height: 45,
-    borderRadius: 20,
-    marginBottom: 4,
-    objectFit: "contain",
-  },
-  categoryText: {
-    fontSize: 12,
-    fontWeight: "bold",
   },
 });
 
