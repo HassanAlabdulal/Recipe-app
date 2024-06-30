@@ -6,13 +6,13 @@ import {
   StyleSheet,
   ScrollView,
   Pressable,
-  TouchableOpacity,
   Animated,
 } from "react-native";
 import { Link } from "expo-router";
 import RecipeCard from "../../components/recipeCard";
 import RecipeModal from "../../components/RecipeModal";
 import SearchBar from "../../components/SearchBar";
+import CategoryFilter from "../../components/Category/CategoryFilter";
 import { RecipeData } from "../../types";
 import { fetchRecipes } from "../../utils/recipeUtils";
 import * as Progress from "react-native-progress";
@@ -25,17 +25,9 @@ import {
   arrayRemove,
   onSnapshot,
 } from "firebase/firestore";
+import { categories } from "../../utils/categoriesData";
 
 const HomeScreen: React.FC = () => {
-  const categories = [
-    { name: "Breakfast", image: require("../../assets/images/egg.png") },
-    { name: "Lunch", image: require("../../assets/images/burger.png") },
-    { name: "Dinner", image: require("../../assets/images/spaghetti.png") },
-    { name: "Dessert", image: require("../../assets/images/dessert.png") },
-    { name: "Diet", image: require("../../assets/images/vegetable.png") },
-    { name: "Smoothie", image: require("../../assets/images/smoothie.png") },
-  ];
-
   const [recipes, setRecipes] = useState<RecipeData[]>([]);
   const [filteredRecipes, setFilteredRecipes] = useState<RecipeData[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
@@ -130,6 +122,20 @@ const HomeScreen: React.FC = () => {
     }
   }, [searchTerm, recipes]);
 
+  useEffect(() => {
+    if (selectedCategory !== null) {
+      if (categories[selectedCategory].name === "All") {
+        setFilteredRecipes(recipes);
+      } else {
+        const category = categories[selectedCategory].name;
+        const filtered = recipes.filter((recipe) =>
+          recipe.recipe_type.includes(category)
+        );
+        setFilteredRecipes(filtered);
+      }
+    }
+  }, [selectedCategory, recipes]);
+
   const openModal = (recipeId: string) => {
     const recipe = recipes.find((r) => r.id === recipeId);
     setSelectedRecipe(recipe || null);
@@ -200,7 +206,7 @@ const HomeScreen: React.FC = () => {
                 },
               ]}
             >
-              {userName ? userName : ""} 👋
+              {userName ? userName : ""}👋
             </Animated.Text>
           </View>
           <View>
@@ -219,25 +225,10 @@ const HomeScreen: React.FC = () => {
           <SearchBar searchTerm={searchTerm} onSearch={setSearchTerm} />
         </View>
 
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.categories}
-        >
-          {categories.map((category, index) => (
-            <TouchableOpacity
-              key={index}
-              style={[
-                styles.category,
-                index === selectedCategory && styles.selectedCategory,
-              ]}
-              onPress={() => setSelectedCategory(index)}
-            >
-              <Image source={category.image} style={styles.categoryImage} />
-              <Text style={styles.categoryText}>{category.name}</Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
+        <CategoryFilter
+          selectedCategory={selectedCategory}
+          onSelectCategory={setSelectedCategory}
+        />
 
         <Text style={styles.recommendationsTitle}>Recommendations</Text>
 
@@ -327,35 +318,6 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     marginBottom: 4,
     fontSize: 16,
-    fontWeight: "bold",
-  },
-  categories: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginVertical: 12,
-  },
-  category: {
-    paddingTop: 10,
-    paddingBottom: 6,
-    backgroundColor: "#FFF",
-    borderRadius: 12,
-    alignItems: "center",
-    width: 80,
-    height: 85,
-    marginRight: 10,
-  },
-  selectedCategory: {
-    backgroundColor: "#F6A028",
-  },
-  categoryImage: {
-    width: 45,
-    height: 45,
-    borderRadius: 20,
-    marginBottom: 4,
-    objectFit: "contain",
-  },
-  categoryText: {
-    fontSize: 12,
     fontWeight: "bold",
   },
   recommendationsTitle: {

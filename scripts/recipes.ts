@@ -5,7 +5,8 @@ export const recipes = [
     calories: "239 Cal",
     image: "",
     favorite: false,
-    description: "A delicious and creamy pasta dish perfect for any meal.",
+    description:
+      "Cook pasta according to package instructions. In a separate pan, sauté garlic in butter until fragrant. Add cream and bring to a simmer. Stir in Parmesan cheese until melted. Combine pasta with the sauce and garnish with parsley.",
     ingredients: [
       { name: "Pasta", image: "" },
       { name: "Cream", image: "" },
@@ -13,6 +14,7 @@ export const recipes = [
       { name: "Parmesan Cheese", image: "" },
       { name: "Parsley", image: "" },
     ],
+    recipe_type: ["Lunch", "Dinner"],
   },
   {
     title: "Grilled Chicken Salad",
@@ -20,7 +22,8 @@ export const recipes = [
     calories: "150 Cal",
     image: "",
     favorite: false,
-    description: "A healthy and refreshing salad with grilled chicken.",
+    description:
+      "Grill chicken breast until fully cooked. Chop lettuce, tomato, and cucumber. Mix together with grilled chicken slices and drizzle with olive oil.",
     ingredients: [
       { name: "Chicken Breast", image: "" },
       { name: "Lettuce", image: "" },
@@ -28,6 +31,7 @@ export const recipes = [
       { name: "Cucumber", image: "" },
       { name: "Olive Oil", image: "" },
     ],
+    recipe_type: ["Lunch", "Dinner", "Diet"],
   },
   {
     title: "Vegetable Stir Fry",
@@ -35,7 +39,8 @@ export const recipes = [
     calories: "200 Cal",
     image: "",
     favorite: false,
-    description: "A quick and easy vegetable stir fry.",
+    description:
+      "Heat oil in a large pan. Add garlic and ginger and sauté for a minute. Add broccoli, carrot, and bell pepper, and stir-fry for 5-7 minutes. Add soy sauce and cook for another 2 minutes.",
     ingredients: [
       { name: "Broccoli", image: "" },
       { name: "Carrot", image: "" },
@@ -44,6 +49,7 @@ export const recipes = [
       { name: "Ginger", image: "" },
       { name: "Garlic", image: "" },
     ],
+    recipe_type: ["Lunch", "Dinner", "Diet"],
   },
   {
     title: "Beef Tacos",
@@ -51,7 +57,8 @@ export const recipes = [
     calories: "300 Cal",
     image: "",
     favorite: false,
-    description: "Delicious and easy-to-make beef tacos.",
+    description:
+      "Cook ground beef in a skillet until browned. Fill taco shells with beef, cheese, lettuce, and salsa.",
     ingredients: [
       { name: "Ground Beef", image: "" },
       { name: "Taco Shells", image: "" },
@@ -59,6 +66,7 @@ export const recipes = [
       { name: "Lettuce", image: "" },
       { name: "Salsa", image: "" },
     ],
+    recipe_type: ["Lunch", "Dinner"],
   },
   {
     title: "Chocolate Cake",
@@ -66,7 +74,8 @@ export const recipes = [
     calories: "400 Cal",
     image: "",
     favorite: false,
-    description: "A rich and moist chocolate cake.",
+    description:
+      "Mix flour, cocoa powder, sugar, baking powder, and eggs. Pour the batter into a greased pan and bake at 350°F for 30-35 minutes. Let it cool before serving.",
     ingredients: [
       { name: "Flour", image: "" },
       { name: "Cocoa Powder", image: "" },
@@ -75,6 +84,7 @@ export const recipes = [
       { name: "Butter", image: "" },
       { name: "Baking Powder", image: "" },
     ],
+    recipe_type: ["Dessert"],
   },
   {
     title: "Caesar Salad",
@@ -82,13 +92,15 @@ export const recipes = [
     calories: "180 Cal",
     image: "",
     favorite: false,
-    description: "A classic Caesar salad with creamy dressing.",
+    description:
+      "Chop romaine lettuce and mix with croutons and Parmesan cheese. Drizzle with Caesar dressing and toss to combine.",
     ingredients: [
       { name: "Romaine Lettuce", image: "" },
       { name: "Croutons", image: "" },
       { name: "Parmesan Cheese", image: "" },
       { name: "Caesar Dressing", image: "" },
     ],
+    recipe_type: ["Lunch", "Dinner", "Diet"],
   },
   {
     title: "Mushroom Risotto",
@@ -96,7 +108,8 @@ export const recipes = [
     calories: "320 Cal",
     image: "",
     favorite: false,
-    description: "A creamy and flavorful mushroom risotto.",
+    description:
+      "Sauté onions and garlic in butter. Add Arborio rice and cook for 2 minutes. Gradually add broth while stirring until rice is tender. Stir in mushrooms, Parmesan cheese, and white wine.",
     ingredients: [
       { name: "Arborio Rice", image: "" },
       { name: "Mushrooms", image: "" },
@@ -106,6 +119,7 @@ export const recipes = [
       { name: "Butter", image: "" },
       { name: "White Wine", image: "" },
     ],
+    recipe_type: ["Lunch", "Dinner"],
   },
   {
     title: "Pancakes",
@@ -113,7 +127,8 @@ export const recipes = [
     calories: "250 Cal",
     image: "",
     favorite: false,
-    description: "Fluffy and delicious pancakes.",
+    description:
+      "Mix flour, eggs, milk, and baking powder to form a batter. Pour batter onto a heated pan and cook until bubbles form on the surface. Flip and cook until golden brown. Serve with butter and maple syrup.",
     ingredients: [
       { name: "Flour", image: "" },
       { name: "Eggs", image: "" },
@@ -122,6 +137,7 @@ export const recipes = [
       { name: "Butter", image: "" },
       { name: "Maple Syrup", image: "" },
     ],
+    recipe_type: ["Breakfast"],
   },
   {
     title: "Chicken Curry",
@@ -129,7 +145,8 @@ export const recipes = [
     calories: "350 Cal",
     image: "",
     favorite: false,
-    description: "A spicy and flavorful chicken curry.",
+    description:
+      "Cook chicken in a pot until browned. Add onions, garlic, and ginger, and cook until fragrant. Stir in curry powder, tomatoes, and coconut milk. Simmer until chicken is fully cooked.",
     ingredients: [
       { name: "Chicken", image: "" },
       { name: "Curry Powder", image: "" },
@@ -139,6 +156,7 @@ export const recipes = [
       { name: "Ginger", image: "" },
       { name: "Tomatoes", image: "" },
     ],
+    recipe_type: ["Lunch", "Dinner"],
   },
   {
     title: "Fruit Smoothie",
@@ -146,13 +164,15 @@ export const recipes = [
     calories: "150 Cal",
     image: "",
     favorite: false,
-    description: "A refreshing and healthy fruit smoothie.",
+    description:
+      "Blend banana, strawberries, orange juice, and yogurt until smooth.",
     ingredients: [
       { name: "Banana", image: "" },
       { name: "Strawberries", image: "" },
       { name: "Orange Juice", image: "" },
       { name: "Yogurt", image: "" },
     ],
+    recipe_type: ["Smoothie", "Diet"],
   },
   {
     title: "Spaghetti Bolognese",
@@ -160,7 +180,8 @@ export const recipes = [
     calories: "320 Cal",
     image: "",
     favorite: false,
-    description: "A classic Italian pasta dish with a rich meat sauce.",
+    description:
+      "Cook spaghetti according to package instructions. In a separate pan, cook ground beef until browned. Add onions, garlic, carrots, and tomato sauce. Simmer for 20 minutes. Serve sauce over spaghetti.",
     ingredients: [
       { name: "Spaghetti", image: "" },
       { name: "Ground Beef", image: "" },
@@ -169,6 +190,7 @@ export const recipes = [
       { name: "Garlic", image: "" },
       { name: "Carrot", image: "" },
     ],
+    recipe_type: ["Lunch", "Dinner"],
   },
   {
     title: "Avocado Toast",
@@ -176,7 +198,8 @@ export const recipes = [
     calories: "200 Cal",
     image: "",
     favorite: false,
-    description: "A simple and healthy avocado toast.",
+    description:
+      "Mash avocado and spread on toasted bread. Squeeze lemon juice on top and season with salt and pepper.",
     ingredients: [
       { name: "Bread", image: "" },
       { name: "Avocado", image: "" },
@@ -184,6 +207,7 @@ export const recipes = [
       { name: "Salt", image: "" },
       { name: "Pepper", image: "" },
     ],
+    recipe_type: ["Breakfast", "Diet"],
   },
   {
     title: "Tomato Soup",
@@ -191,7 +215,8 @@ export const recipes = [
     calories: "180 Cal",
     image: "",
     favorite: false,
-    description: "A warm and comforting tomato soup.",
+    description:
+      "Sauté onions and garlic in olive oil. Add chopped tomatoes and cook until soft. Blend the mixture until smooth and add basil. Simmer for 10 minutes.",
     ingredients: [
       { name: "Tomatoes", image: "" },
       { name: "Onion", image: "" },
@@ -199,6 +224,7 @@ export const recipes = [
       { name: "Basil", image: "" },
       { name: "Olive Oil", image: "" },
     ],
+    recipe_type: ["Lunch", "Dinner", "Diet"],
   },
   {
     title: "Baked Salmon",
@@ -206,13 +232,15 @@ export const recipes = [
     calories: "250 Cal",
     image: "",
     favorite: false,
-    description: "A healthy and delicious baked salmon.",
+    description:
+      "Place salmon fillets on a baking sheet. Drizzle with olive oil, and lemon juice, and sprinkle with dill. Bake at 375°F for 20-25 minutes.",
     ingredients: [
       { name: "Salmon", image: "" },
       { name: "Lemon", image: "" },
       { name: "Dill", image: "" },
       { name: "Olive Oil", image: "" },
     ],
+    recipe_type: ["Lunch", "Dinner", "Diet"],
   },
   {
     title: "French Toast",
@@ -220,7 +248,8 @@ export const recipes = [
     calories: "290 Cal",
     image: "",
     favorite: false,
-    description: "A sweet and tasty French toast.",
+    description:
+      "Whisk together eggs, milk, and cinnamon. Dip bread slices in the mixture and cook on a heated pan until golden brown. Serve with maple syrup.",
     ingredients: [
       { name: "Bread", image: "" },
       { name: "Eggs", image: "" },
@@ -228,5 +257,6 @@ export const recipes = [
       { name: "Cinnamon", image: "" },
       { name: "Maple Syrup", image: "" },
     ],
+    recipe_type: ["Breakfast"],
   },
 ];

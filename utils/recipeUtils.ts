@@ -17,6 +17,7 @@ export const fetchRecipes = async (): Promise<RecipeData[]> => {
       favorite: data.favorite,
       description: data.description,
       ingredients: [],
+      recipe_type: data.recipe_type || [],
     };
 
     const ingredientsCollection = await getDocs(

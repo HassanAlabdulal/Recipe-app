@@ -13,4 +13,5 @@ export interface RecipeData {
   favorite: boolean;
   description: string;
   ingredients: Ingredient[];
+  recipe_type: string[];
 }
