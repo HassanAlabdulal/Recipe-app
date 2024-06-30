@@ -175,7 +175,10 @@ export default function ProfileScreen() {
       ) : recipes.length === 0 ? (
         <Text style={styles.noRecipesText}>You have no starred recipes.</Text>
       ) : (
-        <ScrollView contentContainerStyle={styles.recipesContainer}>
+        <ScrollView
+          contentContainerStyle={styles.recipesContainer}
+          showsVerticalScrollIndicator={false}
+        >
           <Animatable.View
             animation="slideInUp"
             easing="ease-in"
