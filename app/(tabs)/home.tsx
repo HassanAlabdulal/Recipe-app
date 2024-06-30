@@ -2,18 +2,17 @@ import React, { useState, useEffect, useRef } from "react";
 import {
   View,
   Text,
-  TextInput,
-  TouchableOpacity,
   Image,
   StyleSheet,
   ScrollView,
   Pressable,
+  TouchableOpacity,
   Animated,
 } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
 import { Link } from "expo-router";
 import RecipeCard from "../../components/recipeCard";
 import RecipeModal from "../../components/RecipeModal";
+import SearchBar from "../../components/SearchBar";
 import { RecipeData } from "../../types";
 import { fetchRecipes } from "../../utils/recipeUtils";
 import * as Progress from "react-native-progress";
@@ -38,12 +37,14 @@ const HomeScreen: React.FC = () => {
   ];
 
   const [recipes, setRecipes] = useState<RecipeData[]>([]);
+  const [filteredRecipes, setFilteredRecipes] = useState<RecipeData[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [selectedRecipe, setSelectedRecipe] = useState<RecipeData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const animatedValue = useRef(new Animated.Value(-200)).current;
 
   useEffect(() => {
@@ -51,6 +52,7 @@ const HomeScreen: React.FC = () => {
       try {
         const data = await fetchRecipes();
         setRecipes(data);
+        setFilteredRecipes(data);
       } catch (error: any) {
         setError(error.message);
       } finally {
@@ -96,6 +98,12 @@ const HomeScreen: React.FC = () => {
                   favorite: likedRecipeIds.includes(recipe.id),
                 }))
               );
+              setFilteredRecipes(
+                data.map((recipe) => ({
+                  ...recipe,
+                  favorite: likedRecipeIds.includes(recipe.id),
+                }))
+              );
             } catch (error: any) {
               setError(error.message);
             } finally {
@@ -110,6 +118,17 @@ const HomeScreen: React.FC = () => {
       return () => unsubscribe();
     }
   }, []);
+
+  useEffect(() => {
+    if (searchTerm) {
+      const filtered = recipes.filter((recipe) =>
+        recipe.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredRecipes(filtered);
+    } else {
+      setFilteredRecipes(recipes);
+    }
+  }, [searchTerm, recipes]);
 
   const openModal = (recipeId: string) => {
     const recipe = recipes.find((r) => r.id === recipeId);
@@ -146,8 +165,14 @@ const HomeScreen: React.FC = () => {
           });
         }
 
-        // Update the local state
         setRecipes((prevRecipes) =>
+          prevRecipes.map((recipe) =>
+            recipe.id === id
+              ? { ...recipe, favorite: newFavoriteStatus }
+              : recipe
+          )
+        );
+        setFilteredRecipes((prevRecipes) =>
           prevRecipes.map((recipe) =>
             recipe.id === id
               ? { ...recipe, favorite: newFavoriteStatus }
@@ -191,19 +216,7 @@ const HomeScreen: React.FC = () => {
         </View>
         <View style={styles.searchWrapper}>
           <Text style={styles.prompt}>What would you like to cook today?</Text>
-          <View style={styles.inputContainer}>
-            <Icon
-              name="search-outline"
-              size={20}
-              color="#666"
-              style={styles.icon}
-            />
-            <TextInput
-              placeholder="Search any recipe"
-              style={styles.searchInput}
-              keyboardType="default"
-            />
-          </View>
+          <SearchBar searchTerm={searchTerm} onSearch={setSearchTerm} />
         </View>
 
         <ScrollView
@@ -240,9 +253,13 @@ const HomeScreen: React.FC = () => {
           </View>
         ) : error ? (
           <Text>Error: {error}</Text>
+        ) : filteredRecipes.length === 0 ? (
+          <Text style={styles.noRecipesText}>
+            No recipes found with this name
+          </Text>
         ) : (
           <View style={styles.recommendations}>
-            {recipes.map((recipe) => (
+            {filteredRecipes.map((recipe) => (
               <RecipeCard
                 key={recipe.id}
                 recipe={recipe}
@@ -312,24 +329,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
-  inputContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#F2F4FA",
-    borderRadius: 10,
-    marginBottom: 20,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    width: "100%",
-  },
-  icon: {
-    marginRight: 10,
-  },
-  searchInput: {
-    flex: 1,
-    fontSize: 16,
-  },
   categories: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -377,6 +376,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     height: 200,
+  },
+  noRecipesText: {
+    fontSize: 16,
+    color: "#555",
+    textAlign: "center",
+    marginTop: 32,
   },
 });
 
