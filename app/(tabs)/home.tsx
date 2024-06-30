@@ -17,15 +17,16 @@ import { RecipeData } from "../../types";
 import { fetchRecipes } from "../../utils/recipeUtils";
 import * as Progress from "react-native-progress";
 import { auth, db } from "@/firebaseConfig";
+import * as Animatable from "react-native-animatable";
+import { categories } from "../../utils/categoriesData";
 import {
-  doc,
   getDoc,
+  doc,
+  onSnapshot,
   updateDoc,
   arrayUnion,
   arrayRemove,
-  onSnapshot,
 } from "firebase/firestore";
-import { categories } from "../../utils/categoriesData";
 
 const HomeScreen: React.FC = () => {
   const [recipes, setRecipes] = useState<RecipeData[]>([]);
@@ -249,7 +250,11 @@ const HomeScreen: React.FC = () => {
             No recipes found with this name
           </Text>
         ) : (
-          <View style={styles.recommendations}>
+          <Animatable.View
+            key={selectedCategory}
+            animation="zoomInUp"
+            style={styles.recommendations}
+          >
             {filteredRecipes.map((recipe) => (
               <RecipeCard
                 key={recipe.id}
@@ -258,7 +263,7 @@ const HomeScreen: React.FC = () => {
                 onToggleFavorite={() => toggleFavorite(recipe.id)}
               />
             ))}
-          </View>
+          </Animatable.View>
         )}
 
         <RecipeModal

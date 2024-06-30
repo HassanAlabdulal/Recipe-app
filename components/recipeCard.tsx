@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { RecipeData } from "../types";
+import * as Animatable from "react-native-animatable";
 
 interface RecipeCardProps {
   recipe: RecipeData;
