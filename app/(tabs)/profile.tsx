@@ -165,6 +165,8 @@ export default function ProfileScreen() {
         </View>
       ) : error ? (
         <Text>Error: {error}</Text>
+      ) : recipes.length === 0 ? (
+        <Text style={styles.noRecipesText}>You have no starred recipes.</Text>
       ) : (
         <FlatList
           data={recipes}
@@ -200,6 +202,12 @@ const styles = StyleSheet.create({
     marginLeft: 11,
     textAlign: "left",
     alignSelf: "flex-start",
+  },
+  noRecipesText: {
+    fontSize: 16,
+    color: "#555",
+    textAlign: "center",
+    marginTop: 32,
   },
   recipesContainer: {
     justifyContent: "flex-start",
