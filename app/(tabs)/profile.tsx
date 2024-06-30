@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, FlatList, StyleSheet } from "react-native";
+import { View, Text, FlatList, StyleSheet, ScrollView } from "react-native";
 import RecipeCard from "../../components/recipeCard";
 import ProfileHeader from "../../components/ProfileHeader";
 import RecipeModal from "../../components/RecipeModal";
@@ -175,21 +175,22 @@ export default function ProfileScreen() {
       ) : recipes.length === 0 ? (
         <Text style={styles.noRecipesText}>You have no starred recipes.</Text>
       ) : (
-        <Animatable.View
-          animation="slideInUp"
-          easing="ease-in"
-          duration={500}
-          style={styles.recipesContainer}
-        >
-          <FlatList
-            data={recipes}
-            renderItem={renderRecipe}
-            keyExtractor={(item) => item.id}
-            numColumns={2}
-            contentContainerStyle={styles.recipesContainer}
-            columnWrapperStyle={styles.columnWrapper}
-          />
-        </Animatable.View>
+        <ScrollView contentContainerStyle={styles.recipesContainer}>
+          <Animatable.View
+            animation="slideInUp"
+            easing="ease-in"
+            duration={500}
+          >
+            <FlatList
+              data={recipes}
+              renderItem={renderRecipe}
+              keyExtractor={(item) => item.id}
+              numColumns={2}
+              contentContainerStyle={styles.recipesContainer}
+              columnWrapperStyle={styles.columnWrapper}
+            />
+          </Animatable.View>
+        </ScrollView>
       )}
       <RecipeModal
         visible={modalVisible}
