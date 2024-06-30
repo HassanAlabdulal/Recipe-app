@@ -39,7 +39,6 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
               />
               <Text style={styles.profileInfo}>{location}</Text>
             </View>
-
             <View style={styles.iconWrapper}>
               <Icon
                 name="calendar-outline"
@@ -53,18 +52,30 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
         </View>
       </Animatable.View>
       <View style={styles.statsContainer}>
-        <View style={styles.statItem}>
+        <Animatable.View
+          animation="fadeInUp"
+          delay={300}
+          style={styles.statItem}
+        >
           <Text style={styles.statNumber}>122</Text>
           <Text style={styles.statLabel}>Followers</Text>
-        </View>
-        <View style={styles.statItem}>
+        </Animatable.View>
+        <Animatable.View
+          animation="fadeInUp"
+          delay={600}
+          style={styles.statItem}
+        >
           <Text style={styles.statNumber}>67</Text>
           <Text style={styles.statLabel}>Following</Text>
-        </View>
-        <View style={styles.statItem}>
+        </Animatable.View>
+        <Animatable.View
+          animation="fadeInUp"
+          delay={900}
+          style={styles.statItem}
+        >
           <Text style={styles.statNumber}>12K</Text>
           <Text style={styles.statLabel}>Likes</Text>
-        </View>
+        </Animatable.View>
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button}>
@@ -120,7 +131,7 @@ const styles = StyleSheet.create({
   profileInfo: {
     fontSize: 16,
     color: "#fff",
-    marginLeft: 1,
+    marginLeft: 2,
   },
   iconWrapper: {
     flexDirection: "row",
