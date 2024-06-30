@@ -8,8 +8,8 @@ import {
   Dimensions,
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { RecipeData } from "../types";
-import * as Animatable from "react-native-animatable";
 
 interface RecipeCardProps {
   recipe: RecipeData;
@@ -25,14 +25,21 @@ const RecipeCard: React.FC<RecipeCardProps> = ({
   return (
     <TouchableOpacity style={styles.recipeCard} onPress={onPress}>
       <Image source={{ uri: recipe.image }} style={styles.recipeImage} />
-      <Ionicons
-        name={recipe.favorite ? "heart" : "heart-outline"}
-        size={24}
-        color="red"
-        style={styles.heartIcon}
-        onPress={onToggleFavorite}
-      />
-      <Text style={styles.recipeTitle}>{recipe.title}</Text>
+      <View style={styles.infoContainer}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.recipeTitle}>{recipe.title}</Text>
+          <Ionicons
+            name={recipe.favorite ? "heart" : "heart-outline"}
+            size={24}
+            color="red"
+            onPress={onToggleFavorite}
+          />
+        </View>
+        <View style={styles.detailsContainer}>
+          <MaterialIcons name="timer" size={20} color="#666" />
+          <Text style={styles.detailText}>{recipe.time}</Text>
+        </View>
+      </View>
     </TouchableOpacity>
   );
 };
@@ -43,9 +50,8 @@ const styles = StyleSheet.create({
     margin: 5,
     width: Dimensions.get("window").width / 2 - 30,
     backgroundColor: "#fff",
-    paddingHorizontal: 16,
-    paddingBottom: 12,
     borderRadius: 12,
+    overflow: "hidden",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -56,22 +62,31 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   recipeImage: {
-    width: 150,
+    width: "100%",
     height: 150,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
   },
-  heartIcon: {
-    position: "absolute",
-    top: 10,
-    right: 10,
+  infoContainer: {
+    padding: 10,
+    width: "100%",
+  },
+  titleContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 4,
   },
   recipeTitle: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: "bold",
-    marginTop: 10,
+  },
+  detailsContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  detailText: {
+    fontSize: 14,
+    color: "#666",
+    marginLeft: 4,
   },
 });
 
