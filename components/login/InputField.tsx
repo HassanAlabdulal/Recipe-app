@@ -7,6 +7,7 @@ interface InputFieldProps {
   placeholder: string;
   secureTextEntry?: boolean;
   value: string;
+  keyboardType?: any;
   onChangeText: (text: string) => void;
   onFocus?: () => void;
   onBlur?: () => void;
