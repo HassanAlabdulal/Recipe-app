@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import * as Animatable from "react-native-animatable";
 
 interface ProfileHeaderProps {
   name: string;
@@ -18,7 +19,11 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   imageSource,
 }) => {
   return (
-    <View style={styles.headerContainer}>
+    <Animatable.View
+      animation="slideInDown"
+      easing="ease-in-out"
+      style={styles.headerContainer}
+    >
       <Image source={imageSource} style={styles.profileImage} />
       <View style={styles.textContainer}>
         <View style={styles.nameContainer}>
@@ -48,7 +53,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
           <Text style={styles.profileInfo}>{location}</Text>
         </View>
       </View>
-    </View>
+    </Animatable.View>
   );
 };
 

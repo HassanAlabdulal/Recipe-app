@@ -6,6 +6,7 @@ import RecipeModal from "../../components/RecipeModal";
 import { fetchRecipes } from "../../utils/recipeUtils";
 import { RecipeData } from "../../types";
 import * as Progress from "react-native-progress";
+import * as Animatable from "react-native-animatable";
 import { auth, db } from "@/firebaseConfig";
 import {
   doc,
@@ -152,7 +153,13 @@ export default function ProfileScreen() {
           imageSource={require("../../assets/images/profile.png")}
         />
       )}
-      <Text style={styles.starredRecipesTitle}>My Starred Recipes</Text>
+      <Animatable.Text
+        animation="slideInLeft"
+        easing="ease-in-out"
+        style={styles.starredRecipesTitle}
+      >
+        My Starred Recipes
+      </Animatable.Text>
       {loading ? (
         <View style={styles.progressBar}>
           <Progress.Circle
@@ -168,14 +175,21 @@ export default function ProfileScreen() {
       ) : recipes.length === 0 ? (
         <Text style={styles.noRecipesText}>You have no starred recipes.</Text>
       ) : (
-        <FlatList
-          data={recipes}
-          renderItem={renderRecipe}
-          keyExtractor={(item) => item.id}
-          numColumns={2}
-          contentContainerStyle={styles.recipesContainer}
-          columnWrapperStyle={styles.columnWrapper}
-        />
+        <Animatable.View
+          animation="slideInUp"
+          easing="ease-in"
+          duration={500}
+          style={styles.recipesContainer}
+        >
+          <FlatList
+            data={recipes}
+            renderItem={renderRecipe}
+            keyExtractor={(item) => item.id}
+            numColumns={2}
+            contentContainerStyle={styles.recipesContainer}
+            columnWrapperStyle={styles.columnWrapper}
+          />
+        </Animatable.View>
       )}
       <RecipeModal
         visible={modalVisible}

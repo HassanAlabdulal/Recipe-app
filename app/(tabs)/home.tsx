@@ -252,7 +252,9 @@ const HomeScreen: React.FC = () => {
         ) : (
           <Animatable.View
             key={selectedCategory}
-            animation="zoomInUp"
+            animation="slideInUp"
+            easing="ease-in"
+            duration={500}
             style={styles.recommendations}
           >
             {filteredRecipes.map((recipe) => (

@@ -8,6 +8,7 @@ import {
   ScrollView,
 } from "react-native";
 import { categories } from "../../utils/categoriesData";
+import * as Animatable from "react-native-animatable";
 
 interface CategoryFilterProps {
   selectedCategory: number;
