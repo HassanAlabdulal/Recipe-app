@@ -1,8 +1,7 @@
-// screens/ProfileScreen.tsx
 import React, { useState } from "react";
 import { View, Text, FlatList, StyleSheet, ScrollView } from "react-native";
 import RecipeCard from "../../components/Recipe/recipeCard";
-import ProfileHeader from "../../components/ProfileHeader";
+import ProfileHeader from "../../components/Profile/ProfileHeader";
 import RecipeModal from "../../components/Recipe/RecipeModal";
 import useProfileData from "../../hooks/useProfileData";
 import useRecipes from "../../hooks/useRecipes";
@@ -14,7 +13,7 @@ import * as Animatable from "react-native-animatable";
 
 const ProfileScreen: React.FC = () => {
   const { profileData, loading: profileLoading } = useProfileData();
-  const { recipes, setRecipes, loading, error } = useRecipes(true); // Pass true to filter favorites
+  const { recipes, setRecipes, loading, error } = useRecipes(true);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [selectedRecipe, setSelectedRecipe] = useState<RecipeData | null>(null);
 
