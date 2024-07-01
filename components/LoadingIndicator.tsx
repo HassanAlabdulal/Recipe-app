@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import * as Progress from "react-native-progress";
 
 const LoadingIndicator: React.FC = () => {
@@ -12,6 +12,7 @@ const LoadingIndicator: React.FC = () => {
         borderColor={"#F6A028"}
         borderWidth={2}
       />
+      <Text style={styles.loadingText}>Getting recipes for you...</Text>
     </View>
   );
 };
@@ -22,6 +23,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     height: 200,
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
   },
 });
 
