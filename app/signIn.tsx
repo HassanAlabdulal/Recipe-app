@@ -1,4 +1,3 @@
-// screens/LoginScreen.tsx
 import React, { useState } from "react";
 import { Link, router } from "expo-router";
 import {

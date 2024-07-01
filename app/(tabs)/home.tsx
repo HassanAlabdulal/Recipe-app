@@ -1,24 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  ScrollView,
-  Pressable,
-  Animated,
-} from "react-native";
-import { Link } from "expo-router";
-import RecipeCard from "../../components/recipeCard";
-import RecipeModal from "../../components/RecipeModal";
-import SearchBar from "../../components/SearchBar";
-import CategoryFilter from "../../components/Category/CategoryFilter";
-import { RecipeData } from "../../types";
+import { View, Text, StyleSheet, ScrollView, Animated } from "react-native";
 import { fetchRecipes } from "../../utils/recipeUtils";
-import * as Progress from "react-native-progress";
 import { auth, db } from "@/firebaseConfig";
-import * as Animatable from "react-native-animatable";
-import { categories } from "../../utils/categoriesData";
 import {
   getDoc,
   doc,
@@ -27,6 +10,15 @@ import {
   arrayUnion,
   arrayRemove,
 } from "firebase/firestore";
+import Header from "../../components/HomeScreen/Header";
+import SearchBar from "../../components/SearchBar";
+import CategoryFilter from "../../components/Category/CategoryFilter";
+import RecipeList from "../../components/Recipe/RecipeList";
+import RecipeModal from "../../components/RecipeModal";
+import { RecipeData } from "../../types";
+import LoadingIndicator from "../../components/LoadingIndicator";
+import ErrorMessage from "../../components/ErrorMessage";
+import { categories } from "@/utils/categoriesData";
 
 const HomeScreen: React.FC = () => {
   const [recipes, setRecipes] = useState<RecipeData[]>([]);
@@ -158,10 +150,8 @@ const HomeScreen: React.FC = () => {
       if (recipe) {
         const newFavoriteStatus = !recipe.favorite;
 
-        // Update the recipe's favorite status in Firestore
         await updateDoc(recipeDocRef, { favorite: newFavoriteStatus });
 
-        // Update the user's favorites_recipes array in Firestore
         if (newFavoriteStatus) {
           await updateDoc(userDocRef, {
             favorites_recipes: arrayUnion(id),
@@ -196,78 +186,31 @@ const HomeScreen: React.FC = () => {
         contentContainerStyle={styles.scrollContainer}
         showsVerticalScrollIndicator={false}
       >
-        <View style={styles.header}>
-          <View style={styles.headerLeftSide}>
-            <Text style={styles.greeting}>Hello,</Text>
-            <Animated.Text
-              style={[
-                styles.name,
-                {
-                  transform: [{ translateX: animatedValue }],
-                },
-              ]}
-            >
-              {userName ? userName : ""}👋
-            </Animated.Text>
-          </View>
-          <View>
-            <Link href="/profile" asChild>
-              <Pressable>
-                <Image
-                  style={styles.profileImage}
-                  source={require("../../assets/images/profile.png")}
-                />
-              </Pressable>
-            </Link>
-          </View>
-        </View>
+        <Header animatedValue={animatedValue} userName={userName} />
         <View style={styles.searchWrapper}>
-          <Text style={styles.prompt}>What would you like to cook today?</Text>
           <SearchBar searchTerm={searchTerm} onSearch={setSearchTerm} />
         </View>
-
         <CategoryFilter
           selectedCategory={selectedCategory}
           onSelectCategory={setSelectedCategory}
         />
-
         <Text style={styles.recommendationsTitle}>Recommendations</Text>
-
         {loading ? (
-          <View style={styles.loadingContainer}>
-            <Progress.Circle
-              size={40}
-              indeterminate={true}
-              thickness={3}
-              borderColor={"#F6A028"}
-              borderWidth={2}
-            />
-          </View>
+          <LoadingIndicator />
         ) : error ? (
-          <Text>Error: {error}</Text>
+          <ErrorMessage message={error} />
         ) : filteredRecipes.length === 0 ? (
           <Text style={styles.noRecipesText}>
             No recipes found with this name
           </Text>
         ) : (
-          <Animatable.View
-            key={selectedCategory}
-            animation="slideInUp"
-            easing="ease-in"
-            duration={500}
-            style={styles.recommendations}
-          >
-            {filteredRecipes.map((recipe) => (
-              <RecipeCard
-                key={recipe.id}
-                recipe={recipe}
-                onPress={() => openModal(recipe.id)}
-                onToggleFavorite={() => toggleFavorite(recipe.id)}
-              />
-            ))}
-          </Animatable.View>
+          <RecipeList
+            recipes={filteredRecipes}
+            onOpenModal={openModal}
+            onToggleFavorite={toggleFavorite}
+            selectedCategory={selectedCategory}
+          />
         )}
-
         <RecipeModal
           visible={modalVisible}
           recipe={selectedRecipe}
@@ -288,44 +231,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 48,
   },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  headerLeftSide: {
-    flexDirection: "row",
-  },
-  greeting: {
-    fontSize: 24,
-    fontWeight: "normal",
-    color: "#666",
-  },
-  name: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginLeft: 4,
-  },
-  profileImage: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    marginLeft: "auto",
-  },
   searchWrapper: {
     marginTop: 8,
-  },
-  prompt: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginVertical: 16,
-  },
-  inputText: {
-    width: "100%",
-    marginLeft: 8,
-    marginBottom: 4,
-    fontSize: 16,
-    fontWeight: "bold",
   },
   recommendationsTitle: {
     fontSize: 18,
@@ -333,18 +240,6 @@ const styles = StyleSheet.create({
     textAlign: "left",
     alignSelf: "flex-start",
     marginVertical: 8,
-  },
-  recommendations: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-    width: "100%",
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    height: 200,
   },
   noRecipesText: {
     fontSize: 16,
