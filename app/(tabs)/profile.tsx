@@ -1,88 +1,24 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  FlatList,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+// screens/ProfileScreen.tsx
+import React, { useState } from "react";
+import { View, Text, FlatList, StyleSheet, ScrollView } from "react-native";
 import RecipeCard from "../../components/recipeCard";
 import ProfileHeader from "../../components/ProfileHeader";
 import RecipeModal from "../../components/RecipeModal";
-import { fetchRecipes } from "../../utils/recipeUtils";
+import useProfileData from "../../hooks/useProfileData";
+import useRecipes from "../../hooks/useRecipes";
+import useToggleFavorite from "../../hooks/useToggleFavorite";
+import LoadingIndicator from "../../components/LoadingIndicator";
+import ErrorMessage from "../../components/ErrorMessage";
 import { RecipeData } from "../../types";
-import * as Progress from "react-native-progress";
 import * as Animatable from "react-native-animatable";
-import { auth, db } from "@/firebaseConfig";
-import {
-  doc,
-  getDoc,
-  updateDoc,
-  arrayUnion,
-  arrayRemove,
-  onSnapshot,
-} from "firebase/firestore";
 
-export default function ProfileScreen() {
-  const [recipes, setRecipes] = useState<RecipeData[]>([]);
+const ProfileScreen: React.FC = () => {
+  const { profileData, loading: profileLoading } = useProfileData();
+  const { recipes, setRecipes, loading, error } = useRecipes(true); // Pass true to filter favorites
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [selectedRecipe, setSelectedRecipe] = useState<RecipeData | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  const [profileData, setProfileData] = useState<any>({
-    name: "",
-    age: "",
-    bio: "",
-    location: "",
-  });
-  const [profileLoading, setProfileLoading] = useState<boolean>(true);
 
-  useEffect(() => {
-    const fetchProfileData = async () => {
-      const currentUser = auth.currentUser;
-      if (currentUser) {
-        const userDoc = await getDoc(doc(db, "users", currentUser.uid));
-        if (userDoc.exists()) {
-          setProfileData(userDoc.data());
-        }
-      }
-      setProfileLoading(false);
-    };
-
-    fetchProfileData();
-  }, []);
-
-  useEffect(() => {
-    const currentUser = auth.currentUser;
-    if (currentUser) {
-      const userDocRef = doc(db, "users", currentUser.uid);
-
-      const unsubscribe = onSnapshot(userDocRef, (doc) => {
-        if (doc.exists()) {
-          const userData = doc.data();
-          const likedRecipeIds = userData.favorites_recipes;
-
-          const loadRecipes = async () => {
-            try {
-              const data = await fetchRecipes();
-              setRecipes(
-                data.filter((recipe) => likedRecipeIds.includes(recipe.id))
-              );
-            } catch (error: any) {
-              setError(error.message);
-            } finally {
-              setLoading(false);
-            }
-          };
-
-          loadRecipes();
-        }
-      });
-
-      return () => unsubscribe();
-    }
-  }, []);
+  const { toggleFavorite } = useToggleFavorite(recipes, setRecipes);
 
   const openModal = (recipeId: string) => {
     const recipe = recipes.find((r) => r.id === recipeId);
@@ -93,42 +29,6 @@ export default function ProfileScreen() {
   const closeModal = () => {
     setModalVisible(false);
     setSelectedRecipe(null);
-  };
-
-  const toggleFavorite = async (id: string) => {
-    const currentUser = auth.currentUser;
-    if (currentUser) {
-      const userDocRef = doc(db, "users", currentUser.uid);
-      const recipeDocRef = doc(db, "recipes", id);
-
-      const recipe = recipes.find((r) => r.id === id);
-      if (recipe) {
-        const newFavoriteStatus = !recipe.favorite;
-
-        // Update the recipe's favorite status in Firestore
-        await updateDoc(recipeDocRef, { favorite: newFavoriteStatus });
-
-        // Update the user's favorites_recipes array in Firestore
-        if (newFavoriteStatus) {
-          await updateDoc(userDocRef, {
-            favorites_recipes: arrayUnion(id),
-          });
-        } else {
-          await updateDoc(userDocRef, {
-            favorites_recipes: arrayRemove(id),
-          });
-        }
-
-        // Update the local state
-        setRecipes((prevRecipes) =>
-          prevRecipes.map((recipe) =>
-            recipe.id === id
-              ? { ...recipe, favorite: newFavoriteStatus }
-              : recipe
-          )
-        );
-      }
-    }
   };
 
   const renderRecipe = ({ item }: { item: RecipeData }) => (
@@ -142,15 +42,7 @@ export default function ProfileScreen() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {profileLoading ? (
-        <View style={styles.progressBar}>
-          <Progress.Circle
-            size={40}
-            indeterminate={true}
-            thickness={3}
-            borderColor={"#F6A028"}
-            borderWidth={2}
-          />
-        </View>
+        <LoadingIndicator />
       ) : (
         <ProfileHeader
           name={profileData.name}
@@ -168,17 +60,9 @@ export default function ProfileScreen() {
         My Starred Recipes
       </Animatable.Text>
       {loading ? (
-        <View style={styles.progressBar}>
-          <Progress.Circle
-            size={40}
-            indeterminate={true}
-            thickness={3}
-            borderColor={"#F6A028"}
-            borderWidth={2}
-          />
-        </View>
+        <LoadingIndicator />
       ) : error ? (
-        <Text>Error: {error}</Text>
+        <ErrorMessage message={error} />
       ) : recipes.length === 0 ? (
         <Text style={styles.noRecipesText}>You have no starred recipes.</Text>
       ) : (
@@ -208,12 +92,12 @@ export default function ProfileScreen() {
       />
     </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f8f8f8",
+    backgroundColor: "#fff",
     paddingTop: 0,
     width: "100%",
     paddingHorizontal: 20,
@@ -241,33 +125,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     width: "100%",
   },
-  progressBar: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginVertical: 64,
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginVertical: 20,
-  },
-  button: {
-    flex: 1,
-    backgroundColor: "#f0f0f0",
-    borderRadius: 20,
-    paddingVertical: 10,
-    marginHorizontal: 5,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  buttonText: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  followText: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#4A90E2",
-  },
 });
+
+export default ProfileScreen;
