@@ -40,10 +40,12 @@ const RecipeModal: React.FC<RecipeModalProps> = ({
         <View style={styles.modalContent}>
           <Text style={styles.modalTitle}>Recipe Details</Text>
           {localRecipe && (
-            <RecipeDetails
-              recipe={localRecipe}
-              onToggleFavorite={handleToggleFavorite}
-            />
+            <View style={styles.scrollViewContent}>
+              <RecipeDetails
+                recipe={localRecipe}
+                onToggleFavorite={handleToggleFavorite}
+              />
+            </View>
           )}
           <Pressable style={styles.closeButton} onPress={onClose}>
             <Text style={styles.closeButtonText}>Close</Text>
@@ -73,6 +75,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 10,
     textAlign: "center",
+  },
+  scrollViewContent: {
+    flexGrow: 1,
   },
   closeButton: {
     alignSelf: "center",

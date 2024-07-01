@@ -1,4 +1,3 @@
-// hooks/useProfileData.ts
 import { useState, useEffect } from "react";
 import { auth, db } from "@/firebaseConfig";
 import { getDoc, doc } from "firebase/firestore";
