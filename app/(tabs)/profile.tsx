@@ -1,9 +1,9 @@
 // screens/ProfileScreen.tsx
 import React, { useState } from "react";
 import { View, Text, FlatList, StyleSheet, ScrollView } from "react-native";
-import RecipeCard from "../../components/recipeCard";
+import RecipeCard from "../../components/Recipe/recipeCard";
 import ProfileHeader from "../../components/ProfileHeader";
-import RecipeModal from "../../components/RecipeModal";
+import RecipeModal from "../../components/Recipe/RecipeModal";
 import useProfileData from "../../hooks/useProfileData";
 import useRecipes from "../../hooks/useRecipes";
 import useToggleFavorite from "../../hooks/useToggleFavorite";

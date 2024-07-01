@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { RecipeData } from "../types";
+import { RecipeData } from "../../types";
 
 interface RecipeCardProps {
   recipe: RecipeData;

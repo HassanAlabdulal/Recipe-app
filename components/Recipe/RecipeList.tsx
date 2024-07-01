@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import RecipeCard from "../../components/recipeCard";
+import RecipeCard from "./recipeCard";
 import * as Animatable from "react-native-animatable";
 import { RecipeData } from "../../types";
 

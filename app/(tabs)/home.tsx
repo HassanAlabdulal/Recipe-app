@@ -4,7 +4,7 @@ import Header from "../../components/HomeScreen/Header";
 import SearchBar from "../../components/SearchBar";
 import CategoryFilter from "../../components/Category/CategoryFilter";
 import RecipeList from "../../components/Recipe/RecipeList";
-import RecipeModal from "../../components/RecipeModal";
+import RecipeModal from "../../components/Recipe/RecipeModal";
 import LoadingIndicator from "../../components/LoadingIndicator";
 import ErrorMessage from "../../components/ErrorMessage";
 import { categories } from "@/utils/categoriesData";

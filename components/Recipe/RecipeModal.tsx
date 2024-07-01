@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Modal, Pressable } from "react-native";
 import RecipeDetails from "./recipeDetails";
-import { RecipeData } from "../types";
+import { RecipeData } from "../../types";
 
 interface RecipeModalProps {
   visible: boolean;
