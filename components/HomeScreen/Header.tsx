@@ -1,5 +1,12 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, Animated } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Animated,
+  Pressable,
+} from "react-native";
 import { Link } from "expo-router";
 
 interface HeaderProps {
@@ -24,10 +31,12 @@ const Header: React.FC<HeaderProps> = ({ animatedValue, userName }) => {
         </Animated.Text>
       </View>
       <Link href="/profile" asChild>
-        <Image
-          style={styles.profileImage}
-          source={require("../../assets/images/profile.png")}
-        />
+        <Pressable>
+          <Image
+            style={styles.profileImage}
+            source={require("../../assets/images/profile.png")}
+          />
+        </Pressable>
       </Link>
     </View>
   );

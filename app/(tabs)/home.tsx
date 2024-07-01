@@ -1,108 +1,43 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView, Animated } from "react-native";
-import { fetchRecipes } from "../../utils/recipeUtils";
-import { auth, db } from "@/firebaseConfig";
-import {
-  getDoc,
-  doc,
-  onSnapshot,
-  updateDoc,
-  arrayUnion,
-  arrayRemove,
-} from "firebase/firestore";
 import Header from "../../components/HomeScreen/Header";
 import SearchBar from "../../components/SearchBar";
 import CategoryFilter from "../../components/Category/CategoryFilter";
 import RecipeList from "../../components/Recipe/RecipeList";
 import RecipeModal from "../../components/RecipeModal";
-import { RecipeData } from "../../types";
 import LoadingIndicator from "../../components/LoadingIndicator";
 import ErrorMessage from "../../components/ErrorMessage";
 import { categories } from "@/utils/categoriesData";
+import useRecipes from "../../hooks/useRecipes";
+import useProfileData from "../../hooks/useProfileData";
+import useToggleFavorite from "../../hooks/useToggleFavorite";
+import { RecipeData } from "../../types";
 
 const HomeScreen: React.FC = () => {
-  const [recipes, setRecipes] = useState<RecipeData[]>([]);
-  const [filteredRecipes, setFilteredRecipes] = useState<RecipeData[]>([]);
+  const { recipes, setRecipes, loading, error } = useRecipes();
+  const { profileData } = useProfileData();
+  const [filteredRecipes, setFilteredRecipes] = useState<RecipeData[]>(recipes);
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [selectedRecipe, setSelectedRecipe] = useState<RecipeData | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  const [userName, setUserName] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const animatedValue = useRef(new Animated.Value(-200)).current;
 
-  useEffect(() => {
-    const loadRecipes = async () => {
-      try {
-        const data = await fetchRecipes();
-        setRecipes(data);
-        setFilteredRecipes(data);
-      } catch (error: any) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    const fetchProfileData = async () => {
-      const currentUser = auth.currentUser;
-      if (currentUser) {
-        const userDoc = await getDoc(doc(db, "users", currentUser.uid));
-        if (userDoc.exists()) {
-          setUserName(userDoc.data().name);
-          Animated.timing(animatedValue, {
-            toValue: 0,
-            duration: 500,
-            useNativeDriver: true,
-          }).start();
-        }
-      }
-    };
-
-    loadRecipes();
-    fetchProfileData();
-  }, [animatedValue]);
+  const { toggleFavorite } = useToggleFavorite(recipes, setRecipes);
 
   useEffect(() => {
-    const currentUser = auth.currentUser;
-    if (currentUser) {
-      const userDocRef = doc(db, "users", currentUser.uid);
-
-      const unsubscribe = onSnapshot(userDocRef, (doc) => {
-        if (doc.exists()) {
-          const userData = doc.data();
-          const likedRecipeIds = userData.favorites_recipes;
-
-          const loadRecipes = async () => {
-            try {
-              const data = await fetchRecipes();
-              setRecipes(
-                data.map((recipe) => ({
-                  ...recipe,
-                  favorite: likedRecipeIds.includes(recipe.id),
-                }))
-              );
-              setFilteredRecipes(
-                data.map((recipe) => ({
-                  ...recipe,
-                  favorite: likedRecipeIds.includes(recipe.id),
-                }))
-              );
-            } catch (error: any) {
-              setError(error.message);
-            } finally {
-              setLoading(false);
-            }
-          };
-
-          loadRecipes();
-        }
-      });
-
-      return () => unsubscribe();
+    if (profileData?.name) {
+      Animated.timing(animatedValue, {
+        toValue: 0,
+        duration: 500,
+        useNativeDriver: true,
+      }).start();
     }
-  }, []);
+  }, [profileData?.name]);
+
+  useEffect(() => {
+    setFilteredRecipes(recipes);
+  }, [recipes]);
 
   useEffect(() => {
     if (searchTerm) {
@@ -140,53 +75,16 @@ const HomeScreen: React.FC = () => {
     setSelectedRecipe(null);
   };
 
-  const toggleFavorite = async (id: string) => {
-    const currentUser = auth.currentUser;
-    if (currentUser) {
-      const userDocRef = doc(db, "users", currentUser.uid);
-      const recipeDocRef = doc(db, "recipes", id);
-
-      const recipe = recipes.find((r) => r.id === id);
-      if (recipe) {
-        const newFavoriteStatus = !recipe.favorite;
-
-        await updateDoc(recipeDocRef, { favorite: newFavoriteStatus });
-
-        if (newFavoriteStatus) {
-          await updateDoc(userDocRef, {
-            favorites_recipes: arrayUnion(id),
-          });
-        } else {
-          await updateDoc(userDocRef, {
-            favorites_recipes: arrayRemove(id),
-          });
-        }
-
-        setRecipes((prevRecipes) =>
-          prevRecipes.map((recipe) =>
-            recipe.id === id
-              ? { ...recipe, favorite: newFavoriteStatus }
-              : recipe
-          )
-        );
-        setFilteredRecipes((prevRecipes) =>
-          prevRecipes.map((recipe) =>
-            recipe.id === id
-              ? { ...recipe, favorite: newFavoriteStatus }
-              : recipe
-          )
-        );
-      }
-    }
-  };
-
   return (
     <View style={styles.container}>
       <ScrollView
         contentContainerStyle={styles.scrollContainer}
         showsVerticalScrollIndicator={false}
       >
-        <Header animatedValue={animatedValue} userName={userName} />
+        <Header
+          animatedValue={animatedValue}
+          userName={profileData?.name || ""}
+        />
         <View style={styles.searchWrapper}>
           <SearchBar searchTerm={searchTerm} onSearch={setSearchTerm} />
         </View>
