@@ -9,6 +9,7 @@ interface ProfileHeaderProps {
   bio: string;
   location: string;
   imageSource: any;
+  likes: number;
 }
 
 const ProfileHeader: React.FC<ProfileHeaderProps> = ({
@@ -17,6 +18,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   bio,
   location,
   imageSource,
+  likes,
 }) => {
   return (
     <View style={styles.headerWrapper}>
@@ -73,7 +75,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
           delay={900}
           style={styles.statItem}
         >
-          <Text style={styles.statNumber}>12K</Text>
+          <Text style={styles.statNumber}>{likes}</Text>
           <Text style={styles.statLabel}>Likes</Text>
         </Animatable.View>
       </View>

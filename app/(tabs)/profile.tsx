@@ -38,6 +38,8 @@ const ProfileScreen: React.FC = () => {
     />
   );
 
+  const likedRecipesCount = recipes.length;
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {profileLoading ? (
@@ -49,6 +51,7 @@ const ProfileScreen: React.FC = () => {
           bio={profileData.bio}
           location={profileData.location}
           imageSource={require("../../assets/images/profile.png")}
+          likes={likedRecipesCount} // Updated
         />
       )}
       <Animatable.Text
