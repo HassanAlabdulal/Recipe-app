@@ -2,17 +2,25 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import * as Progress from "react-native-progress";
 
-const LoadingIndicator: React.FC = () => {
+interface LoadingIndicatorProps {
+  showText?: boolean;
+}
+
+const LoadingIndicator: React.FC<LoadingIndicatorProps> = ({
+  showText = true,
+}) => {
   return (
     <View style={styles.loadingContainer}>
       <Progress.Circle
-        size={40}
+        size={30}
         indeterminate={true}
         thickness={3}
         borderColor={"#F6A028"}
         borderWidth={2}
       />
-      <Text style={styles.loadingText}>Getting recipes for you...</Text>
+      {showText && (
+        <Text style={styles.loadingText}>Getting recipes for you...</Text>
+      )}
     </View>
   );
 };

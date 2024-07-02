@@ -94,7 +94,7 @@ const HomeScreen: React.FC = () => {
         />
         <Text style={styles.recommendationsTitle}>Recommendations</Text>
         {loading ? (
-          <LoadingIndicator />
+          <LoadingIndicator showText={true} />
         ) : error ? (
           <ErrorMessage message={error} />
         ) : filteredRecipes.length === 0 ? (

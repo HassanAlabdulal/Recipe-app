@@ -43,7 +43,7 @@ const ProfileScreen: React.FC = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {profileLoading ? (
-        <LoadingIndicator />
+        <LoadingIndicator showText={true} />
       ) : (
         <ProfileHeader
           name={profileData.name}
