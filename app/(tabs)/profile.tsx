@@ -51,7 +51,7 @@ const ProfileScreen: React.FC = () => {
           bio={profileData.bio}
           location={profileData.location}
           imageSource={require("../../assets/images/profile.png")}
-          likes={likedRecipesCount} // Updated
+          likes={likedRecipesCount}
         />
       )}
       <Animatable.Text
@@ -59,14 +59,14 @@ const ProfileScreen: React.FC = () => {
         easing="ease-in-out"
         style={styles.starredRecipesTitle}
       >
-        My Starred Recipes
+        My Liked Recipes
       </Animatable.Text>
       {loading ? (
         <LoadingIndicator />
       ) : error ? (
         <ErrorMessage message={error} />
       ) : recipes.length === 0 ? (
-        <Text style={styles.noRecipesText}>You have no starred recipes.</Text>
+        <Text style={styles.noRecipesText}>You have no liked recipes.</Text>
       ) : (
         <ScrollView showsVerticalScrollIndicator={false}>
           <Animatable.View
