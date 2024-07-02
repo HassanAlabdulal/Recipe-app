@@ -38,7 +38,7 @@ const ProfileScreen: React.FC = () => {
     />
   );
 
-  const likedRecipesCount = recipes.length;
+  const likedRecipesCount = recipes.filter((recipe) => recipe.favorite).length;
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

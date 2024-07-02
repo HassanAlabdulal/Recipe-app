@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Modal, Pressable } from "react-native";
 import RecipeDetails from "./recipeDetails";
 import { RecipeData } from "../../types";
+import { fetchIngredients } from "../../utils/recipeUtils";
 
 interface RecipeModalProps {
   visible: boolean;
@@ -17,10 +18,26 @@ const RecipeModal: React.FC<RecipeModalProps> = ({
   onToggleFavorite,
 }) => {
   const [localRecipe, setLocalRecipe] = useState<RecipeData | null>(recipe);
+  const [ingredientsLoading, setIngredientsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     setLocalRecipe(recipe);
+    if (recipe && recipe.ingredients.length === 0) {
+      fetchRecipeIngredients(recipe.id);
+    }
   }, [recipe]);
+
+  const fetchRecipeIngredients = async (recipeId: string) => {
+    setIngredientsLoading(true);
+    const ingredients = await fetchIngredients(recipeId);
+    setLocalRecipe((prevRecipe) => {
+      if (prevRecipe) {
+        return { ...prevRecipe, ingredients };
+      }
+      return prevRecipe;
+    });
+    setIngredientsLoading(false);
+  };
 
   const handleToggleFavorite = () => {
     if (localRecipe) {
@@ -45,6 +62,9 @@ const RecipeModal: React.FC<RecipeModalProps> = ({
                 recipe={localRecipe}
                 onToggleFavorite={handleToggleFavorite}
               />
+              {ingredientsLoading && (
+                <Text style={styles.loadingText}>Loading Ingredients...</Text>
+              )}
             </View>
           )}
           <Pressable style={styles.closeButton} onPress={onClose}>
@@ -78,6 +98,11 @@ const styles = StyleSheet.create({
   },
   scrollViewContent: {
     flexGrow: 1,
+  },
+  loadingText: {
+    textAlign: "center",
+    color: "#666",
+    marginTop: 10,
   },
   closeButton: {
     alignSelf: "center",

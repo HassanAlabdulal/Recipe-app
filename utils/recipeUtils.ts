@@ -1,5 +1,6 @@
+// utils/recipeUtils.ts
 import { db } from "../firebaseConfig";
-import { RecipeData, Ingredient } from "../types";
+import { RecipeData } from "../types";
 import { collection, getDocs } from "firebase/firestore";
 
 export const fetchRecipes = async (): Promise<RecipeData[]> => {
@@ -20,24 +21,24 @@ export const fetchRecipes = async (): Promise<RecipeData[]> => {
       recipe_type: data.recipe_type || [],
     };
 
-    const ingredientsCollection = await getDocs(
-      collection(db, "recipes", doc.id, "ingredients")
-    );
-
-    const ingredients: Ingredient[] = ingredientsCollection.docs.map(
-      (ingredientDoc) => {
-        const ingredientData = ingredientDoc.data();
-        return {
-          id: ingredientDoc.id,
-          name: ingredientData.name,
-          image: ingredientData.image,
-        };
-      }
-    );
-
-    recipe.ingredients = ingredients;
     recipes.push(recipe);
   }
 
   return recipes;
+};
+
+// Add a function to fetch ingredients for a specific recipe
+export const fetchIngredients = async (recipeId: string) => {
+  const ingredientsCollection = await getDocs(
+    collection(db, "recipes", recipeId, "ingredients")
+  );
+
+  return ingredientsCollection.docs.map((ingredientDoc) => {
+    const ingredientData = ingredientDoc.data();
+    return {
+      id: ingredientDoc.id,
+      name: ingredientData.name,
+      image: ingredientData.image,
+    };
+  });
 };

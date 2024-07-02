@@ -10,14 +10,18 @@ const useToggleFavorite = (
     const currentUser = auth.currentUser;
     if (currentUser) {
       const userDocRef = doc(db, "users", currentUser.uid);
-      const recipeDocRef = doc(db, "recipes", id);
 
+      // Optimistically update the local state
+      setRecipes((prevRecipes: RecipeData[]) =>
+        prevRecipes.map((recipe) =>
+          recipe.id === id ? { ...recipe, favorite: !recipe.favorite } : recipe
+        )
+      );
+
+      const recipeDocRef = doc(db, "recipes", id);
       const recipe = recipes.find((r) => r.id === id);
       if (recipe) {
         const newFavoriteStatus = !recipe.favorite;
-
-        // Update the recipe's favorite status in Firestore
-        await updateDoc(recipeDocRef, { favorite: newFavoriteStatus });
 
         // Update the user's favorites_recipes array in Firestore
         if (newFavoriteStatus) {
@@ -30,14 +34,8 @@ const useToggleFavorite = (
           });
         }
 
-        // Update the local state
-        setRecipes((prevRecipes: RecipeData[]) =>
-          prevRecipes.map((recipe) =>
-            recipe.id === id
-              ? { ...recipe, favorite: newFavoriteStatus }
-              : recipe
-          )
-        );
+        // Update the recipe's favorite status in Firestore
+        await updateDoc(recipeDocRef, { favorite: newFavoriteStatus });
       }
     }
   };

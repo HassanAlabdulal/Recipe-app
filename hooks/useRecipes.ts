@@ -1,9 +1,8 @@
-// hooks/useRecipes.ts
 import { useState, useEffect } from "react";
 import { RecipeData } from "../types";
 import { fetchRecipes } from "../utils/recipeUtils";
 import { auth, db } from "@/firebaseConfig";
-import { doc, getDoc, onSnapshot } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 
 const useRecipes = (filterFavorites: boolean = false) => {
   const [recipes, setRecipes] = useState<RecipeData[]>([]);
@@ -13,8 +12,34 @@ const useRecipes = (filterFavorites: boolean = false) => {
   useEffect(() => {
     const loadRecipes = async () => {
       try {
-        const data = await fetchRecipes();
-        setRecipes(data);
+        const recipesData = await fetchRecipes();
+        const currentUser = auth.currentUser;
+
+        if (currentUser) {
+          const userDocRef = doc(db, "users", currentUser.uid);
+
+          onSnapshot(userDocRef, (doc) => {
+            if (doc.exists()) {
+              const userData = doc.data();
+              const likedRecipeIds = userData.favorites_recipes || [];
+
+              const updatedRecipes = recipesData.map((recipe) => ({
+                ...recipe,
+                favorite: likedRecipeIds.includes(recipe.id),
+              }));
+
+              setRecipes(
+                filterFavorites
+                  ? updatedRecipes.filter((recipe) => recipe.favorite)
+                  : updatedRecipes
+              );
+            } else {
+              setRecipes(filterFavorites ? [] : recipesData);
+            }
+          });
+        } else {
+          setRecipes(recipesData);
+        }
       } catch (error: any) {
         setError(error.message);
       } finally {
@@ -23,43 +48,6 @@ const useRecipes = (filterFavorites: boolean = false) => {
     };
 
     loadRecipes();
-  }, []);
-
-  useEffect(() => {
-    const currentUser = auth.currentUser;
-    if (currentUser) {
-      const userDocRef = doc(db, "users", currentUser.uid);
-
-      const unsubscribe = onSnapshot(userDocRef, (doc) => {
-        if (doc.exists()) {
-          const userData = doc.data();
-          const likedRecipeIds = userData.favorites_recipes;
-
-          const loadRecipes = async () => {
-            try {
-              const data = await fetchRecipes();
-              const updatedRecipes = data.map((recipe) => ({
-                ...recipe,
-                favorite: likedRecipeIds.includes(recipe.id),
-              }));
-              setRecipes(
-                filterFavorites
-                  ? updatedRecipes.filter((recipe) => recipe.favorite)
-                  : updatedRecipes
-              );
-            } catch (error: any) {
-              setError(error.message);
-            } finally {
-              setLoading(false);
-            }
-          };
-
-          loadRecipes();
-        }
-      });
-
-      return () => unsubscribe();
-    }
   }, [filterFavorites]);
 
   return { recipes, setRecipes, loading, error };
