@@ -51,7 +51,7 @@ const LoginScreen = () => {
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
-          <AnimatedHeader />
+          <AnimatedHeader title="Sign In" />
           <ScrollView
             contentContainerStyle={[
               styles.bottomSection,
